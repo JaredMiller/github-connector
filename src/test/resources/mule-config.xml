@@ -20,17 +20,16 @@
 
 <mule xmlns="http://www.mulesoft.org/schema/mule/core"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:spring="http://www.springframework.org/schema/beans"
       xmlns:github="http://www.mulesoft.org/schema/mule/github"
-      xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-        http://www.mulesoft.org/schema/mule/github http://www.mulesoft.org/schema/mule/github/1.0-SNAPSHOT/mule-github.xsd">
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd
+        http://www.mulesoft.org/schema/mule/github http://www.mulesoft.org/schema/mule/github/1.0/mule-github.xsd">
 
-    <github:config myProperty="Some string"/>
+    <github:config user="##" password="##" defaultUser="##"/>
 
     <flow name="testFlow">
-        <github:my-processor content="Another string"/>
+        <github:create-issue user="evangelina" repository="github-connector" title="Test issue" body="Testing issue"/>
+        <github:get-issues-creted-after user="evangelina" repository="github-connector" minutes="5"/>
+        <logger level="WARN" message="#[payload]"/>
     </flow>
 
 </mule>

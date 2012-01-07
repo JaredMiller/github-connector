@@ -20,50 +20,244 @@
  */
 package org.mule.modules;
 
-import org.mule.api.annotations.Module;
-import org.mule.api.ConnectionException;
+import org.eclipse.egit.github.core.Comment;
+import org.eclipse.egit.github.core.Issue;
+import org.eclipse.egit.github.core.IssueEvent;
+import org.eclipse.egit.github.core.User;
+import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.service.IssueService;
 import org.mule.api.annotations.Configurable;
+import org.mule.api.annotations.Module;
 import org.mule.api.annotations.Processor;
+import org.mule.api.annotations.lifecycle.Start;
+import org.mule.api.annotations.param.Optional;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Generic module
  *
  * @author MuleSoft, Inc.
  */
-@Module(name="github", schemaVersion="1.0-SNAPSHOT")
-public class GitHubModule
-{
-    /**
-     * Configurable
-     */
-    @Configurable
-    private String myProperty;
+@Module(name = "github", schemaVersion = "1.0")
+public class GitHubModule {
+
+    private static final String BASE_URL = "api.github.com";
 
     /**
-     * Set property
-     *
-     * @param myProperty My property
+     * The user name
      */
-    public void setMyProperty(String myProperty)
-    {
-        this.myProperty = myProperty;
+    @Configurable
+    private String user;
+    /**
+     * The password
+     */
+    @Configurable
+    private String password;
+
+    /**
+     * The default user
+     */
+    @Configurable
+    private String defaultUser;
+    private IssueService issueService;
+
+    @Start
+    public void createConnection() {
+        GitHubClient client = new GitHubClient(BASE_URL);
+        client.setCredentials(user, password);
+        issueService = new IssueService(client);
+    }
+
+    /**
+     * Get a list of {@link Issue} objects that match the specified filter data
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param repository the repostory name
+     * @param filterData data to filter issues, if non is specified all issues will be returned
+     * @return list of {@link Issue}
+     * @throws java.io.IOException
+     * @
+     */
+    @Processor
+    public List<Issue> getIssues(@Optional String user, String repository, @Optional Map<String, String> filterData) throws IOException {
+        if (filterData == null) {
+            filterData = Collections.emptyMap();
+        }
+        return issueService.getIssues(getUser(user), repository, filterData);
     }
 
     /**
      * Custom processor
-     *
+     * <p/>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param content Content to be processed
-     * @return Some string
+     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param repository the repository name
+     * @param minutes    minutes
+     * @return a list of {@link Issue}
+     * @throws java.io.IOException
      */
     @Processor
-    public String myProcessor(String content)
-    {
-        /*
-         * MESSAGE PROCESSOR CODE GOES HERE
-         */
+    public List<Issue> getIssuesCretedAfter(@Optional String user, String repository, int minutes) throws IOException {
+        List<Issue> issues = issueService.getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
+        Iterator<Issue> iterator = issues.iterator();
+        Date since = new Date(System.currentTimeMillis() - minutes * 60 * 1000);
+        while (iterator.hasNext()) {
+            if (since.after(iterator.next().getUpdatedAt())) {
+                iterator.remove();
+            }
+        }
+        return issues;
+    }
 
-        return content;
+    /**
+     * Custom processor
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user            the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param repository      the repository name
+     * @param fromIssueNumber from issue number
+     * @return a list of {@link Issue}
+     * @throws java.io.IOException
+     */
+    @Processor
+    public List<Issue> getIssuesSinceNumber(@Optional String user, String repository, int fromIssueNumber) throws IOException {
+        List<Issue> issues = issueService.getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
+        Iterator<Issue> iterator = issues.iterator();
+        while (iterator.hasNext()) {
+            if (fromIssueNumber >= iterator.next().getNumber()) {
+                iterator.remove();
+            }
+        }
+        return issues;
+    }
+
+    /**
+     * Creates a GitHub issue
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param repository the repository name
+     * @param title      the issues's title
+     * @param body       the issuess's body
+     * @param assignee   optionally specify a asignee for the issue
+     * @throws java.io.IOException
+     */
+    @Processor
+    public void createIssue(@Optional String user, String repository, String title, String body, @Optional String assignee) throws IOException {
+        Issue issue = new Issue();
+        issue.setTitle(title);
+        issue.setBody(body);
+        if (assignee != null) {
+            User assigneeUser = new User().setName(assignee);
+            issue.setAssignee(assigneeUser);
+        }
+        issueService.createIssue(getUser(user), repository, issue);
+    }
+
+    /**
+     * Get the issue represented by the given issueId
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param repository the repostory name
+     * @param issueId    the id of the issue
+     * @return a {@link Issue}
+     * @throws java.io.IOException
+     */
+    @Processor
+    public Issue getIssue(@Optional String user, String repository, String issueId) throws IOException {
+        return issueService.getIssue(getUser(user), repository, issueId);
+    }
+
+    /**
+     * Get an issue's comments
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param repository the repostory name
+     * @param issueId    the id of the issue
+     * @return a list of {@link Comment}
+     * @throws java.io.IOException
+     */
+    @Processor
+    public List<Comment> getComments(@Optional String user, String repository, String issueId) throws IOException {
+        return issueService.getComments(getUser(user), repository, issueId);
+    }
+
+    /**
+     * Create comment on specified issue id
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param repository the repostory name
+     * @param issueId    the issue id
+     * @param comment    the text of the comment
+     * @return the created {@link Comment}
+     * @throws java.io.IOException
+     */
+    @Processor
+    public Comment createComment(@Optional String user, String repository, String issueId, String comment) throws IOException {
+        return issueService.createComment(getUser(user), repository, issueId, comment);
+    }
+
+    /**
+     * Delete the issue comment with the given id
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param repository the repostory name
+     * @param commentId  the id of the comment to delete
+     * @throws java.io.IOException
+     */
+    @Processor
+    public void deleteComment(@Optional String user, String repository, String commentId) throws IOException {
+        issueService.deleteComment(getUser(user), repository, commentId);
+    }
+
+    /**
+     * Get issue event for repository
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param repository the repostory name
+     * @param eventId    the id of the event
+     * @return a {@link IssueEvent}
+     * @throws java.io.IOException
+     */
+    @Processor
+    public IssueEvent getIssueEvent(@Optional String user, String repository, long eventId) throws IOException {
+        return issueService.getIssueEvent(getUser(user), repository, eventId);
+    }
+
+    public void setDefaultUser(String defaultUser) {
+        this.defaultUser = defaultUser;
+    }
+
+    public void setUser(@Optional String user) {
+        this.user = user;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private String getUser(@Optional String user) {
+        return user != null ? user : defaultUser;
     }
 }
