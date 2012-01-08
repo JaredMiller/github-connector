@@ -107,7 +107,7 @@ public class GitHubModule {
         Iterator<Issue> iterator = issues.iterator();
         Date since = new Date(System.currentTimeMillis() - minutes * 60 * 1000);
         while (iterator.hasNext()) {
-            if (since.after(iterator.next().getUpdatedAt())) {
+            if (since.after(iterator.next().getCreatedAt())) {
                 iterator.remove();
             }
         }
@@ -224,7 +224,7 @@ public class GitHubModule {
      * @throws java.io.IOException
      */
     @Processor
-    public Comment editComment(@Optional String user, String repository, long commentId, String body) throws IOException {
+    public Comment editComment(@Optional String user, String repository, Long commentId, String body) throws IOException {
         Comment comment = createIssueService().getComment(getUser(user), repository, commentId);
         comment.setBody(body);
         return createIssueService().editComment(getUser(user), repository, comment);
