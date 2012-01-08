@@ -212,6 +212,25 @@ public class GitHubModule {
     }
 
     /**
+     * Edits the body of the comment represented by the given comment id
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
+     * @param repository the repostory name
+     * @param commentId  the comment id
+     * @param body       the new text of the comment
+     * @return the created {@link Comment}
+     * @throws java.io.IOException
+     */
+    @Processor
+    public Comment editComment(@Optional String user, String repository, long commentId, String body) throws IOException {
+        Comment comment = createIssueService().getComment(getUser(user), repository, commentId);
+        comment.setBody(body);
+        return createIssueService().editComment(getUser(user), repository, comment);
+    }
+
+    /**
      * Delete the issue comment with the given id
      * <p/>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
