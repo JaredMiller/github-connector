@@ -29,7 +29,8 @@ import org.eclipse.egit.github.core.service.IssueService;
 import org.mule.api.annotations.Configurable;
 import org.mule.api.annotations.Module;
 import org.mule.api.annotations.Processor;
-import org.mule.api.annotations.lifecycle.Start;
+import org.mule.api.annotations.display.Password;
+import org.mule.api.annotations.display.Placement;
 import org.mule.api.annotations.param.Optional;
 
 import java.io.IOException;
@@ -53,25 +54,20 @@ public class GitHubModule {
      * The user name
      */
     @Configurable
+    @Placement(order = 1)
     private String user;
     /**
      * The password
      */
     @Configurable
+    @Placement(order = 2)
+    @Password
     private String password;
 
-    /**
-     * The default user
-     */
-    @Configurable
-    private String defaultUser;
-    private IssueService issueService;
-
-    @Start
-    public void createConnection() {
+    private IssueService createIssueService() {
         GitHubClient client = new GitHubClient(BASE_URL);
         client.setCredentials(user, password);
-        issueService = new IssueService(client);
+        return new IssueService(client);
     }
 
     /**
@@ -79,7 +75,7 @@ public class GitHubModule {
      * <p/>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repostory name
      * @param filterData data to filter issues, if non is specified all issues will be returned
      * @return list of {@link Issue}
@@ -91,7 +87,7 @@ public class GitHubModule {
         if (filterData == null) {
             filterData = Collections.emptyMap();
         }
-        return issueService.getIssues(getUser(user), repository, filterData);
+        return createIssueService().getIssues(getUser(user), repository, filterData);
     }
 
     /**
@@ -99,7 +95,7 @@ public class GitHubModule {
      * <p/>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repository name
      * @param minutes    minutes
      * @return a list of {@link Issue}
@@ -107,7 +103,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Issue> getIssuesCretedAfter(@Optional String user, String repository, int minutes) throws IOException {
-        List<Issue> issues = issueService.getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
+        List<Issue> issues = createIssueService().getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
         Iterator<Issue> iterator = issues.iterator();
         Date since = new Date(System.currentTimeMillis() - minutes * 60 * 1000);
         while (iterator.hasNext()) {
@@ -123,7 +119,7 @@ public class GitHubModule {
      * <p/>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user            the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param user            the owner of the repository, leave empty to use {@link this#user}
      * @param repository      the repository name
      * @param fromIssueNumber from issue number
      * @return a list of {@link Issue}
@@ -131,7 +127,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Issue> getIssuesSinceNumber(@Optional String user, String repository, int fromIssueNumber) throws IOException {
-        List<Issue> issues = issueService.getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
+        List<Issue> issues = createIssueService().getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
         Iterator<Issue> iterator = issues.iterator();
         while (iterator.hasNext()) {
             if (fromIssueNumber >= iterator.next().getNumber()) {
@@ -146,7 +142,7 @@ public class GitHubModule {
      * <p/>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repository name
      * @param title      the issues's title
      * @param body       the issuess's body
@@ -162,7 +158,7 @@ public class GitHubModule {
             User assigneeUser = new User().setName(assignee);
             issue.setAssignee(assigneeUser);
         }
-        issueService.createIssue(getUser(user), repository, issue);
+        createIssueService().createIssue(getUser(user), repository, issue);
     }
 
     /**
@@ -170,7 +166,7 @@ public class GitHubModule {
      * <p/>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repostory name
      * @param issueId    the id of the issue
      * @return a {@link Issue}
@@ -178,7 +174,7 @@ public class GitHubModule {
      */
     @Processor
     public Issue getIssue(@Optional String user, String repository, String issueId) throws IOException {
-        return issueService.getIssue(getUser(user), repository, issueId);
+        return createIssueService().getIssue(getUser(user), repository, issueId);
     }
 
     /**
@@ -186,7 +182,7 @@ public class GitHubModule {
      * <p/>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repostory name
      * @param issueId    the id of the issue
      * @return a list of {@link Comment}
@@ -194,7 +190,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Comment> getComments(@Optional String user, String repository, String issueId) throws IOException {
-        return issueService.getComments(getUser(user), repository, issueId);
+        return createIssueService().getComments(getUser(user), repository, issueId);
     }
 
     /**
@@ -202,7 +198,7 @@ public class GitHubModule {
      * <p/>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repostory name
      * @param issueId    the issue id
      * @param comment    the text of the comment
@@ -211,7 +207,7 @@ public class GitHubModule {
      */
     @Processor
     public Comment createComment(@Optional String user, String repository, String issueId, String comment) throws IOException {
-        return issueService.createComment(getUser(user), repository, issueId, comment);
+        return createIssueService().createComment(getUser(user), repository, issueId, comment);
     }
 
     /**
@@ -219,14 +215,14 @@ public class GitHubModule {
      * <p/>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repostory name
      * @param commentId  the id of the comment to delete
      * @throws java.io.IOException
      */
     @Processor
     public void deleteComment(@Optional String user, String repository, String commentId) throws IOException {
-        issueService.deleteComment(getUser(user), repository, commentId);
+        createIssueService().deleteComment(getUser(user), repository, commentId);
     }
 
     /**
@@ -234,7 +230,7 @@ public class GitHubModule {
      * <p/>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user       the owner of the repository, leave empty to use {@link this#defaultUser}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repostory name
      * @param eventId    the id of the event
      * @return a {@link IssueEvent}
@@ -242,11 +238,11 @@ public class GitHubModule {
      */
     @Processor
     public IssueEvent getIssueEvent(@Optional String user, String repository, long eventId) throws IOException {
-        return issueService.getIssueEvent(getUser(user), repository, eventId);
+        return createIssueService().getIssueEvent(getUser(user), repository, eventId);
     }
 
-    public void setDefaultUser(String defaultUser) {
-        this.defaultUser = defaultUser;
+    public void setuser(String user) {
+        this.user = user;
     }
 
     public void setUser(@Optional String user) {
@@ -258,6 +254,6 @@ public class GitHubModule {
     }
 
     private String getUser(@Optional String user) {
-        return user != null ? user : defaultUser;
+        return user != null ? user : this.user;
     }
 }

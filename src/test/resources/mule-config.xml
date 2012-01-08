@@ -30,6 +30,7 @@
         <github:create-issue user="evangelina" repository="github-connector" title="Test issue" body="Testing issue"/>
         <github:get-issues-creted-after user="evangelina" repository="github-connector" minutes="5"/>
         <logger level="WARN" message="#[payload]"/>
+        <null-component/>
     </flow>
 
 </mule>
