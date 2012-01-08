@@ -147,10 +147,11 @@ public class GitHubModule {
      * @param title      the issues's title
      * @param body       the issuess's body
      * @param assignee   optionally specify a asignee for the issue
+     * @return the newly created {@link Issue}
      * @throws java.io.IOException
      */
     @Processor
-    public void createIssue(@Optional String user, String repository, String title, String body, @Optional String assignee) throws IOException {
+    public Issue createIssue(@Optional String user, String repository, String title, String body, @Optional String assignee) throws IOException {
         Issue issue = new Issue();
         issue.setTitle(title);
         issue.setBody(body);
@@ -158,7 +159,7 @@ public class GitHubModule {
             User assigneeUser = new User().setName(assignee);
             issue.setAssignee(assigneeUser);
         }
-        createIssueService().createIssue(getUser(user), repository, issue);
+        return createIssueService().createIssue(getUser(user), repository, issue);
     }
 
     /**
