@@ -163,6 +163,24 @@ public class GitHubModule {
     }
 
     /**
+     * Closes a GitHub issue
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
+     * @param repository the repository name
+     * @param issueId    the issues's id
+     * @return the newly created {@link Issue}
+     * @throws java.io.IOException
+     */
+    @Processor
+    public Issue closeIssue(@Optional String user, String repository, String issueId) throws IOException {
+        Issue issue = getIssue(getUser(user), repository, issueId);
+        issue.setState("closed");
+        return createIssueService().editIssue(getUser(user), repository, issue);
+    }
+
+    /**
      * Get the issue represented by the given issueId
      * <p/>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
