@@ -19,9 +19,6 @@ import org.eclipse.egit.github.core.IssueEvent;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.User;
-import org.eclipse.egit.github.core.client.GitHubClient;
-import org.eclipse.egit.github.core.service.IssueService;
-import org.eclipse.egit.github.core.service.WatcherService;
 import org.mule.api.annotations.Configurable;
 import org.mule.api.annotations.Module;
 import org.mule.api.annotations.Processor;
@@ -44,8 +41,6 @@ import java.util.Map;
 @Module(name = "github", schemaVersion = "1.0")
 public class GitHubModule {
 
-    private static final String BASE_URL = "api.github.com";
-
     /**
      * The user name
      */
@@ -59,18 +54,6 @@ public class GitHubModule {
     @Placement(order = 2)
     @Password
     private String password;
-
-    private IssueService createIssueService() {
-        GitHubClient client = new GitHubClient(BASE_URL);
-        client.setCredentials(user, password);
-        return new IssueService(client);
-    }
-
-    private WatcherService createWatcherService() {
-        GitHubClient client = new GitHubClient(BASE_URL);
-        client.setCredentials(user, password);
-        return new WatcherService(client);
-    }
 
     /**
      * Get a list of {@link Issue} objects that match the specified filter data
@@ -89,7 +72,7 @@ public class GitHubModule {
         if (filterData == null) {
             filterData = Collections.emptyMap();
         }
-        return createIssueService().getIssues(getUser(user), repository, filterData);
+        return ServiceFactory.getIssueService(this.user, password).getIssues(getUser(user), repository, filterData);
     }
 
     /**
@@ -105,7 +88,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Issue> getIssuesCretedAfter(@Optional String user, String repository, int minutes) throws IOException {
-        List<Issue> issues = createIssueService().getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
+        List<Issue> issues = ServiceFactory.getIssueService(this.user, password).getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
         Iterator<Issue> iterator = issues.iterator();
         Date since = new Date(System.currentTimeMillis() - minutes * 60 * 1000);
         while (iterator.hasNext()) {
@@ -129,7 +112,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Issue> getIssuesSinceNumber(@Optional String user, String repository, int fromIssueNumber) throws IOException {
-        List<Issue> issues = createIssueService().getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
+        List<Issue> issues = ServiceFactory.getIssueService(this.user, password).getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
         Iterator<Issue> iterator = issues.iterator();
         while (iterator.hasNext()) {
             if (fromIssueNumber >= iterator.next().getNumber()) {
@@ -161,7 +144,7 @@ public class GitHubModule {
             User assigneeUser = new User().setName(assignee);
             issue.setAssignee(assigneeUser);
         }
-        return createIssueService().createIssue(getUser(user), repository, issue);
+        return ServiceFactory.getIssueService(this.user, password).createIssue(getUser(user), repository, issue);
     }
 
     /**
@@ -179,7 +162,7 @@ public class GitHubModule {
     public Issue closeIssue(@Optional String user, String repository, String issueId) throws IOException {
         Issue issue = getIssue(getUser(user), repository, issueId);
         issue.setState("closed");
-        return createIssueService().editIssue(getUser(user), repository, issue);
+        return ServiceFactory.getIssueService(this.user, password).editIssue(getUser(user), repository, issue);
     }
 
     /**
@@ -195,7 +178,7 @@ public class GitHubModule {
      */
     @Processor
     public Issue getIssue(@Optional String user, String repository, String issueId) throws IOException {
-        return createIssueService().getIssue(getUser(user), repository, issueId);
+        return ServiceFactory.getIssueService(this.user, password).getIssue(getUser(user), repository, issueId);
     }
 
     /**
@@ -211,7 +194,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Comment> getComments(@Optional String user, String repository, String issueId) throws IOException {
-        return createIssueService().getComments(getUser(user), repository, issueId);
+        return ServiceFactory.getIssueService(this.user, password).getComments(getUser(user), repository, issueId);
     }
 
     /**
@@ -228,7 +211,7 @@ public class GitHubModule {
      */
     @Processor
     public Comment createComment(@Optional String user, String repository, String issueId, String comment) throws IOException {
-        return createIssueService().createComment(getUser(user), repository, issueId, comment);
+        return ServiceFactory.getIssueService(this.user, password).createComment(getUser(user), repository, issueId, comment);
     }
 
     /**
@@ -245,9 +228,9 @@ public class GitHubModule {
      */
     @Processor
     public Comment editComment(@Optional String user, String repository, Long commentId, String body) throws IOException {
-        Comment comment = createIssueService().getComment(getUser(user), repository, commentId);
+        Comment comment = ServiceFactory.getIssueService(this.user, password).getComment(getUser(user), repository, commentId);
         comment.setBody(body);
-        return createIssueService().editComment(getUser(user), repository, comment);
+        return ServiceFactory.getIssueService(this.user, password).editComment(getUser(user), repository, comment);
     }
 
     /**
@@ -262,7 +245,7 @@ public class GitHubModule {
      */
     @Processor
     public void deleteComment(@Optional String user, String repository, String commentId) throws IOException {
-        createIssueService().deleteComment(getUser(user), repository, commentId);
+        ServiceFactory.getIssueService(this.user, password).deleteComment(getUser(user), repository, commentId);
     }
 
     /**
@@ -278,7 +261,7 @@ public class GitHubModule {
      */
     @Processor
     public IssueEvent getIssueEvent(@Optional String user, String repository, long eventId) throws IOException {
-        return createIssueService().getIssueEvent(getUser(user), repository, eventId);
+        return ServiceFactory.getIssueService(this.user, password).getIssueEvent(getUser(user), repository, eventId);
     }
 
     /**
@@ -293,7 +276,7 @@ public class GitHubModule {
      */
     @Processor
     public List<User> getWatchers(String owner, String name) throws IOException {
-        return createWatcherService().getWatchers(RepositoryId.create(owner, name));
+        return ServiceFactory.getWatcherService(user, password).getWatchers(RepositoryId.create(owner, name));
     }
 
     /**
@@ -307,7 +290,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Repository> getWatched(@Optional String user) throws IOException {
-        return createWatcherService().getWatched(getUser(user));
+        return ServiceFactory.getWatcherService(user, password).getWatched(getUser(user));
     }
 
     /**
@@ -322,7 +305,7 @@ public class GitHubModule {
      */
     @Processor
     public boolean isWatching(String owner, String name) throws IOException {
-        return createWatcherService().isWatching(RepositoryId.create(owner, name));
+        return ServiceFactory.getWatcherService(user, password).isWatching(RepositoryId.create(owner, name));
     }
 
     /**
@@ -336,7 +319,7 @@ public class GitHubModule {
      */
     @Processor
     public void watch(String owner, String name) throws IOException {
-        createWatcherService().watch(RepositoryId.create(owner, name));
+        ServiceFactory.getWatcherService(user, password).watch(RepositoryId.create(owner, name));
     }
 
     /**
@@ -350,14 +333,14 @@ public class GitHubModule {
      */
     @Processor
     public void unwatch(String owner, String name) throws IOException {
-        createWatcherService().unwatch(RepositoryId.create(owner, name));
+        ServiceFactory.getWatcherService(user, password).unwatch(RepositoryId.create(owner, name));
     }
 
     public void setuser(String user) {
         this.user = user;
     }
 
-    public void setUser(@Optional String user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
@@ -365,7 +348,7 @@ public class GitHubModule {
         this.password = password;
     }
 
-    private String getUser(@Optional String user) {
+    private String getUser(String user) {
         return user != null ? user : this.user;
     }
 }
