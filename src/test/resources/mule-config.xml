@@ -24,13 +24,13 @@
       xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd
         http://www.mulesoft.org/schema/mule/github http://www.mulesoft.org/schema/mule/github/1.0/mule-github.xsd">
 
-    <github:config user="##" password="##" defaultUser="##"/>
+    <github:config user="##" password="##"/>
 
-    <flow name="testFlow">
-        <github:create-issue user="evangelina" repository="github-connector" title="Test issue" body="Testing issue"/>
-        <github:get-issues-creted-after user="evangelina" repository="github-connector" minutes="5"/>
-        <logger level="WARN" message="#[payload]"/>
-        <null-component/>
-    </flow>
+    <!--<flow name="testFlow">-->
+    <!--<github:create-issue user="evangelina" repository="github-connector" title="Test issue" body="Testing issue"/>-->
+    <!--<github:get-issues-creted-after user="evangelina" repository="github-connector" minutes="5"/>-->
+    <!--<logger level="WARN" message="#[payload]"/>-->
+    <!--<null-component/>-->
+    <!--</flow>-->
 
 </mule>

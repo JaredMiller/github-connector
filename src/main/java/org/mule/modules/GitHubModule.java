@@ -1,18 +1,11 @@
 /**
- * Mule Development Kit
- * Copyright 2010-2011 (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
+ * Mule GitHub Connector
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * The software in this package is published under the terms of the CPAL v1.0
+ * license, a copy of which has been included with this distribution in the
+ * LICENSE.txt file.
  */
 
 /**
@@ -23,9 +16,12 @@ package org.mule.modules;
 import org.eclipse.egit.github.core.Comment;
 import org.eclipse.egit.github.core.Issue;
 import org.eclipse.egit.github.core.IssueEvent;
+import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.User;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.IssueService;
+import org.eclipse.egit.github.core.service.WatcherService;
 import org.mule.api.annotations.Configurable;
 import org.mule.api.annotations.Module;
 import org.mule.api.annotations.Processor;
@@ -68,6 +64,12 @@ public class GitHubModule {
         GitHubClient client = new GitHubClient(BASE_URL);
         client.setCredentials(user, password);
         return new IssueService(client);
+    }
+
+    private WatcherService createWatcherService() {
+        GitHubClient client = new GitHubClient(BASE_URL);
+        client.setCredentials(user, password);
+        return new WatcherService(client);
     }
 
     /**
@@ -277,6 +279,78 @@ public class GitHubModule {
     @Processor
     public IssueEvent getIssueEvent(@Optional String user, String repository, long eventId) throws IOException {
         return createIssueService().getIssueEvent(getUser(user), repository, eventId);
+    }
+
+    /**
+     * Get users watching given repository
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param owner the name of the user that owns the repository
+     * @param name  the name of the repository
+     * @return non-null but possibly empty list of users
+     * @throws IOException
+     */
+    @Processor
+    public List<User> getWatchers(String owner, String name) throws IOException {
+        return createWatcherService().getWatchers(RepositoryId.create(owner, name));
+    }
+
+    /**
+     * Get repositories watched by the given user
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user the user for which the get the watched repositories, leave empty to use {@link this#user}
+     * @return non-null but possibly empty list of repositories
+     * @throws IOException
+     */
+    @Processor
+    public List<Repository> getWatched(@Optional String user) throws IOException {
+        return createWatcherService().getWatched(getUser(user));
+    }
+
+    /**
+     * Is currently authenticated user watching given repository?
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param owner the name of the user that owns the repository
+     * @param name  the name of the repository
+     * @return true if watch, false otherwise
+     * @throws IOException
+     */
+    @Processor
+    public boolean isWatching(String owner, String name) throws IOException {
+        return createWatcherService().isWatching(RepositoryId.create(owner, name));
+    }
+
+    /**
+     * Add currently authenticated user as a watcher of the given repository
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param owner the name of the user that owns the repository
+     * @param name  the name of the repository
+     * @throws IOException
+     */
+    @Processor
+    public void watch(String owner, String name) throws IOException {
+        createWatcherService().watch(RepositoryId.create(owner, name));
+    }
+
+    /**
+     * Remove currently authenticated user as a watcher of the given repository
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param owner the name of the user that owns the repository
+     * @param name  the name of the repository
+     * @throws IOException
+     */
+    @Processor
+    public void unwatch(String owner, String name) throws IOException {
+        createWatcherService().unwatch(RepositoryId.create(owner, name));
     }
 
     public void setuser(String user) {
