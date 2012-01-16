@@ -13,61 +13,109 @@
  */
 package org.mule.modules;
 
+import org.eclipse.egit.github.core.Issue;
+import org.eclipse.egit.github.core.service.IssueService;
+import org.junit.Before;
 import org.junit.Test;
-import org.mule.api.MuleEvent;
-import org.mule.construct.Flow;
-import org.mule.tck.AbstractMuleTestCase;
-import org.mule.tck.FunctionalTestCase;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-public class GitHubModuleTest extends FunctionalTestCase {
-    @Override
-    protected String getConfigResources() {
-        return "mule-config.xml";
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+public class GitHubModuleTest {
+
+    private static final String REPOSITORY = "myRepo";
+    private static final String USER = "pepe";
+    private static final String ISSUE_ID = "321";
+    @Mock
+    private IssueService issueService;
+    @Mock
+    private Issue issue1;
+    @Mock
+    private Issue issue2;
+    @Captor
+    private ArgumentCaptor<Issue> issueCaptor;
+
+    private Map<String, String> filterData = new HashMap<String, String>(1);
+    private GitHubModule gitHubModule;
+
+    @Before
+    public void setUpTests() {
+        MockitoAnnotations.initMocks(this);
+        ServiceFactory.setDefaultIssueService(issueService);
+        filterData = new HashMap<String, String>(1);
+        filterData.put("status", "closed");
+        gitHubModule = new GitHubModule();
     }
 
     @Test
-    public void testFlow() throws Exception {
-//        Flow flow = lookupFlowConstruct("testFlow");
-//        MuleEvent event = AbstractMuleTestCase.getTestEvent(null);
-//        flow.process(event);
+    public void getIssues() throws Exception {
+        List<Issue> issues = createList(issue1, issue2);
+        when(issueService.getIssues(USER, REPOSITORY, filterData)).thenReturn(issues);
+        assertEquals(issues, gitHubModule.getIssues(USER, REPOSITORY, filterData));
     }
 
-    /**
-     * Run the flow specified by name and assert equality on the expected output
-     *
-     * @param flowName The name of the flow to run
-     * @param expect   The expected output
-     */
-    protected <T> void runFlowAndExpect(String flowName, T expect) throws Exception {
-        Flow flow = lookupFlowConstruct(flowName);
-        MuleEvent event = AbstractMuleTestCase.getTestEvent(null);
-        MuleEvent responseEvent = flow.process(event);
-
-        assertEquals(expect, responseEvent.getMessage().getPayload());
+    @Test
+    public void getIssuesCretedAfter() throws Exception {
+        List<Issue> issues = createList(issue1, issue2);
+        when(issueService.getIssues(USER, REPOSITORY, Collections.<String, String>emptyMap())).thenReturn(issues);
+        when(issue1.getCreatedAt()).thenReturn(new Date(System.currentTimeMillis() - 10 * 1000 * 60));
+        when(issue2.getCreatedAt()).thenReturn(new Date());
+        assertEquals(Arrays.asList(issue2), gitHubModule.getIssuesCretedAfter(USER, REPOSITORY, 1));
     }
 
-    /**
-     * Run the flow specified by name using the specified payload and assert
-     * equality on the expected output
-     *
-     * @param flowName The name of the flow to run
-     * @param expect   The expected output
-     * @param payload  The payload of the input event
-     */
-    protected <T, U> void runFlowWithPayloadAndExpect(String flowName, T expect, U payload) throws Exception {
-        Flow flow = lookupFlowConstruct(flowName);
-        MuleEvent event = AbstractMuleTestCase.getTestEvent(payload);
-        MuleEvent responseEvent = flow.process(event);
-
-        assertEquals(expect, responseEvent.getMessage().getPayload());
+    @Test
+    public void getIssuesSinceNumber() throws Exception {
+        List<Issue> issues = createList(issue1, issue2);
+        when(issueService.getIssues(USER, REPOSITORY, Collections.<String, String>emptyMap())).thenReturn(issues);
+        when(issue1.getNumber()).thenReturn(5);
+        when(issue2.getNumber()).thenReturn(15);
+        assertEquals(Arrays.asList(issue2), gitHubModule.getIssuesSinceNumber(USER, REPOSITORY, 10));
     }
 
-    /**
-     * Retrieve a flow by name from the registry
-     *
-     * @param name Name of the flow to retrieve
-     */
-    protected Flow lookupFlowConstruct(String name) {
-        return (Flow) AbstractMuleTestCase.muleContext.getRegistry().lookupFlowConstruct(name);
+    @Test
+    public void createIssue() throws Exception {
+        gitHubModule.createIssue(USER, REPOSITORY, "issue title", "issue body", "coco");
+        verify(issueService).createIssue(eq(USER), eq(REPOSITORY), issueCaptor.capture());
+        Issue issueSentToGitHub = issueCaptor.getValue();
+        assertEquals("issue title", issueSentToGitHub.getTitle());
+        assertEquals("issue body", issueSentToGitHub.getBody());
+        assertEquals("coco", issueSentToGitHub.getAssignee().getName());
+    }
+
+    @Test
+    public void closeIssue() throws Exception {
+        GitHubModule gitHubModuleSpy = spy(gitHubModule);
+        when(gitHubModuleSpy.getIssue(USER, REPOSITORY, ISSUE_ID)).thenReturn(issue1);
+        gitHubModule.closeIssue(USER, REPOSITORY, ISSUE_ID);
+        verify(issueService).editIssue(USER, REPOSITORY, issue1);
+        verify(issue1).setState("closed");
+    }
+
+    @Test
+    public void getIssue() throws Exception {
+        when(issueService.getIssue(USER, REPOSITORY, ISSUE_ID)).thenReturn(issue1);
+        assertEquals(issue1, gitHubModule.getIssue(USER, REPOSITORY, ISSUE_ID));
+        verify(issueService).getIssue(USER, REPOSITORY, ISSUE_ID);
+    }
+
+    private <T> List<T> createList(T... elements) {
+        List<T> result = new ArrayList<T>(elements.length);
+        Collections.addAll(result, elements);
+        return result;
     }
 }
