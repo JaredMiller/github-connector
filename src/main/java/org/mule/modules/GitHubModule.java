@@ -436,7 +436,7 @@ public class GitHubModule {
      * @throws IOException
      */
     @Processor
-    public List<RepositoryCommit> getCommits(String owner, String name, @Optional String sha, @Optional String path) throws IOException {
+    public List<RepositoryCommit> getCommitsBySha(String owner, String name, @Optional String sha, @Optional String path) throws IOException {
         return ServiceFactory.getCommitService(user, password).getCommits(RepositoryId.create(owner, name), sha, path);
     }
 
@@ -527,7 +527,7 @@ public class GitHubModule {
      * @param position line index in the diff to comment on
      */
     @Processor
-    public void editComment(String owner, String name, String body, String commitId, int line, String path, int position) throws IOException {
+    public void editCommitComment(String owner, String name, String body, String commitId, int line, String path, int position) throws IOException {
         CommitComment comment = new CommitComment();
         comment.setCommitId(commitId);
         comment.setLine(line);
@@ -549,7 +549,7 @@ public class GitHubModule {
      * @throws IOException
      */
     @Processor
-    public void deleteComment(String owner, String name, long commentId) throws IOException {
+    public void deleteCommitComment(String owner, String name, long commentId) throws IOException {
         ServiceFactory.getCommitService(user, password).deleteComment(RepositoryId.create(owner, name), commentId);
     }
 
@@ -791,7 +791,7 @@ public class GitHubModule {
      * @throws IOException
      */
     @Processor
-    public Comment createComment(String gistId, String comment) throws IOException {
+    public Comment createGistComment(String gistId, String comment) throws IOException {
         return ServiceFactory.getGistService(user, password).createComment(gistId, comment);
     }
 
@@ -805,7 +805,7 @@ public class GitHubModule {
      * @throws IOException
      */
     @Processor
-    public List<Comment> getComments(String gistId) throws IOException {
+    public List<Comment> getGistComments(String gistId) throws IOException {
         return ServiceFactory.getGistService(user, password).getComments(gistId);
     }
 
@@ -832,7 +832,7 @@ public class GitHubModule {
      * @throws IOException
      */
     @Processor
-    public Comment getComment(long commentId) throws IOException {
+    public Comment getGistComment(long commentId) throws IOException {
         return ServiceFactory.getGistService(user, password).getComment(commentId);
     }
 
@@ -845,7 +845,7 @@ public class GitHubModule {
      * @throws IOException
      */
     @Processor
-    public void deleteComment(long commentId) throws IOException {
+    public void deleteGistComment(long commentId) throws IOException {
         ServiceFactory.getGistService(user, password).deleteComment(commentId);
     }
 
@@ -860,7 +860,7 @@ public class GitHubModule {
      * @throws IOException
      */
     @Processor
-    public Comment editComment(long commentId, String body) throws IOException {
+    public Comment editGistComment(long commentId, String body) throws IOException {
         Comment comment = new Comment();
         comment.setId(commentId);
         comment.setBody(body);
@@ -1007,21 +1007,6 @@ public class GitHubModule {
         return ServiceFactory.getMilestoneService(this.user, password).getMilestones(getUser(user), repository, state);
     }
 
-    /**
-     * Returns a single milestone
-     * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
-     *
-     * @param user the owner of the repository, leave empty to use {@link this#user}
-     * @param repository the name of the repository
-     * @param number  milestone number
-     * @return returns a single milestone
-     * @throws IOException
-     */
-    @Processor
-    public Milestone getMilestone(@Optional String user, String repository, int number) throws IOException {
-        return ServiceFactory.getMilestoneService(this.user, password).getMilestone(getUser(user), repository, number);
-    }
 
     /**
      * Returns a single milestone
@@ -1039,20 +1024,6 @@ public class GitHubModule {
         return ServiceFactory.getMilestoneService(this.user, password).getMilestone(getUser(user), repository, number);
     }
 
-    /**
-     * Deletes a given milestone
-     * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
-     *
-     * @param user the owner of the repository, leave empty to use {@link this#user}
-     * @param repository the name of the repository
-     * @param number number of the milestone
-     * @throws IOException
-     */
-    @Processor
-    public void deleteMilestone(@Optional String user, String repository, int number) throws IOException {
-        ServiceFactory.getMilestoneService(this.user, password).deleteMilestone(getUser(user), repository, number);
-    }
 
     /**
      * Deletes a given milestone
