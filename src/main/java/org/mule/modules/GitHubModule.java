@@ -750,14 +750,14 @@ public class GitHubModule {
      * @return a new gist
      * @throws IOException
      */
-    @Processor
-    public Gist createGist(@Optional String description, boolean isPublic, Map<String, Map<String, String>> files) throws IOException {
-        Gist gist = new Gist();
-        gist.setDescription(description);
-        gist.setPublic(isPublic);
-        gist.setFiles(createGistFiles(files));
-        return ServiceFactory.getGistService(user, password).createGist(gist);
-    }
+    //@Processor
+    //public Gist createGist(@Optional String description, boolean isPublic, Map<String, Map<String, String>> files) throws IOException {
+    //    Gist gist = new Gist();
+    //    gist.setDescription(description);
+    //    gist.setPublic(isPublic);
+    //    gist.setFiles(createGistFiles(files));
+    //    return ServiceFactory.getGistService(user, password).createGist(gist);
+    //}
 
     /**
      * Updates the given gist
@@ -770,14 +770,14 @@ public class GitHubModule {
      * @return returns the updated gist
      * @throws IOException
      */
-    @Processor
-    public Gist updateGist(String gistId, @Optional String description, @Optional Map<String, Map<String, String>> files) throws IOException {
-        Gist gist = new Gist();
-        gist.setId(gistId);
-        gist.setDescription(description);
-        gist.setFiles(createGistFiles(files));
-        return ServiceFactory.getGistService(user, password).updateGist(gist);
-    }
+    //@Processor
+    //public Gist updateGist(String gistId, @Optional String description, @Optional Map<String, Map<String, String>> files) throws IOException {
+    //    Gist gist = new Gist();
+    //    gist.setId(gistId);
+    //    gist.setDescription(description);
+    //    gist.setFiles(createGistFiles(files));
+    //    return ServiceFactory.getGistService(user, password).updateGist(gist);
+    //}
 
     /**
      * Creates a comment on the specified gist id
