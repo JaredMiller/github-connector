@@ -75,7 +75,6 @@ public class GitHubModule {
      * @param filterData data to filter issues, if non is specified all issues will be returned
      * @return list of {@link Issue}
      * @throws java.io.IOException
-     * @
      */
     @Processor
     public List<Issue> getIssues(@Optional String user, String repository, @Optional Map<String, String> filterData) throws IOException {
@@ -352,8 +351,8 @@ public class GitHubModule {
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
-     * @return  non-null but possibly empty list of users
+     * @param name  the name of the repository
+     * @return non-null but possibly empty list of users
      * @throws IOException
      */
     @Processor
@@ -367,8 +366,8 @@ public class GitHubModule {
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
-     * @param user the user to consult if it's a collaborator or not, leave empty to use {@link this#user}
+     * @param name  the name of the repository
+     * @param user  the user to consult if it's a collaborator or not, leave empty to use {@link this#user}
      * @return true if the user is a collaborator, false otherwise
      * @throws IOException
      */
@@ -383,8 +382,8 @@ public class GitHubModule {
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
-     * @param user the user that's going to be added as a collaborator to the given repository, leave empty to use {@link this#user}
+     * @param name  the name of the repository
+     * @param user  the user that's going to be added as a collaborator to the given repository, leave empty to use {@link this#user}
      * @throws IOException
      */
     @Processor
@@ -398,8 +397,8 @@ public class GitHubModule {
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
-     * @param user the user that's going to be removed as a collaborator from the given repository, leave empty to use {@link this#user}
+     * @param name  the name of the repository
+     * @param user  the user that's going to be removed as a collaborator from the given repository, leave empty to use {@link this#user}
      * @throws IOException
      */
     @Processor
@@ -413,7 +412,7 @@ public class GitHubModule {
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
+     * @param name  the name of the repository
      * @return non-null but possibly empty list of repository commits
      * @throws IOException
      */
@@ -424,14 +423,14 @@ public class GitHubModule {
 
     /**
      * Returns all commits in given repository beginning at an optional commit SHA-1
-	 * and affecting an optional path.
+     * and affecting an optional path.
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
-     * @param sha an optional Sha or branch to start listing commits from
-     * @param path optional Only commits containing this file path will be returned
+     * @param name  the name of the repository
+     * @param sha   an optional Sha or branch to start listing commits from
+     * @param path  optional Only commits containing this file path will be returned
      * @return non-null but possibly empty list of repository commits
      * @throws IOException
      */
@@ -446,8 +445,8 @@ public class GitHubModule {
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
-     * @param sha Sha from comment
+     * @param name  the name of the repository
+     * @param sha   Sha from comment
      * @return a commit for the given Sha and repository
      * @throws IOException
      */
@@ -462,14 +461,14 @@ public class GitHubModule {
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
-     * @param sha Sha or branch to start listing commits comments from
+     * @param name  the name of the repository
+     * @param sha   Sha or branch to start listing commits comments from
      * @return non-null but possibly empty list of commits comments
      * @throws IOException
      */
     @Processor
     public List<CommitComment> getCommmitComments(String owner, String name, String sha) throws IOException {
-        return ServiceFactory.getCommitService(user, password).getComments(RepositoryId.create(owner, name),sha);
+        return ServiceFactory.getCommitService(user, password).getComments(RepositoryId.create(owner, name), sha);
     }
 
     /**
@@ -477,15 +476,15 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
+     * @param owner     the name of the user that owns the repository
+     * @param name      the name of the repository
      * @param commentId id from the comment
      * @return a commit that corresponds to the given id
      * @throws IOException
      */
     @Processor
     public CommitComment getComment(String owner, String name, long commentId) throws IOException {
-        return ServiceFactory.getCommitService(user, password).getComment(RepositoryId.create(owner, name),commentId);
+        return ServiceFactory.getCommitService(user, password).getComment(RepositoryId.create(owner, name), commentId);
     }
 
     /**
@@ -493,12 +492,12 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
-     * @param body Body of the commit comment
+     * @param owner    the name of the user that owns the repository
+     * @param name     the name of the repository
+     * @param body     Body of the commit comment
      * @param commitId Sha of the commit to comment on
-     * @param line line number in the file to comment on
-     * @param path relative path of the file to comment on
+     * @param line     line number in the file to comment on
+     * @param path     relative path of the file to comment on
      * @param position line index in the diff to comment on
      */
     @Processor
@@ -518,12 +517,12 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
-     * @param body Body of the commit comment
+     * @param owner    the name of the user that owns the repository
+     * @param name     the name of the repository
+     * @param body     Body of the commit comment
      * @param commitId Sha of the commit to comment on
-     * @param line line number in the file to comment on
-     * @param path relative path of the file to comment on
+     * @param line     line number in the file to comment on
+     * @param path     relative path of the file to comment on
      * @param position line index in the diff to comment on
      */
     @Processor
@@ -543,8 +542,8 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
+     * @param owner     the name of the user that owns the repository
+     * @param name      the name of the repository
      * @param commentId id from the comment
      * @throws IOException
      */
@@ -575,8 +574,8 @@ public class GitHubModule {
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
-     * @param id the id of the key
+     * @param name  the name of the repository
+     * @param id    the id of the key
      * @return the key corresponding to the given id
      * @throws IOException
      */
@@ -594,7 +593,7 @@ public class GitHubModule {
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
      * @param title the title of the key
-     * @param key ssh key
+     * @param key   ssh key
      * @return a new Key created based on the given parameters
      * @throws IOException
      */
@@ -614,7 +613,7 @@ public class GitHubModule {
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
      * @param title the title of the key
-     * @param key ssh key
+     * @param key   ssh key
      * @return the modified deploy key
      * @throws IOException
      */
@@ -633,8 +632,8 @@ public class GitHubModule {
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
-     * @param id the id of the deploy key
+     * @param name  the name of the repository
+     * @param id    the id of the deploy key
      * @throws IOException
      */
     @Processor
@@ -648,9 +647,9 @@ public class GitHubModule {
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
-     * @param id  the id of the download
-     * @return  the download corresponding to the given id
+     * @param name  the name of the repository
+     * @param id    the id of the download
+     * @return the download corresponding to the given id
      * @throws IOException
      */
     @Processor
@@ -664,8 +663,8 @@ public class GitHubModule {
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
-     * @param id  the id of the download
+     * @param name  the name of the repository
+     * @param id    the id of the download
      * @throws IOException
      */
     @Processor
@@ -678,12 +677,12 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param owner the name of the user that owns the repository
-     * @param name the name of the repository
+     * @param owner        the name of the user that owns the repository
+     * @param name         the name of the repository
      * @param resourceName the name of the resource
-     * @param size  the size of the resource
-     * @param description an optional description
-     * @param contentType an optional content type
+     * @param size         the size of the resource
+     * @param description  an optional description
+     * @param contentType  an optional content type
      * @return a new download resource
      * @throws IOException
      */
@@ -746,9 +745,9 @@ public class GitHubModule {
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param description an optional description of the gist
-     * @param isPublic  states whether the gist is public or not
-     * @param files  a Map with the gist files
-     * @return  a new gist
+     * @param isPublic    states whether the gist is public or not
+     * @param files       a Map with the gist files
+     * @return a new gist
      * @throws IOException
      */
     @Processor
@@ -765,9 +764,9 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param gistId id of the gist to be updated
+     * @param gistId      id of the gist to be updated
      * @param description an optional description for the gist
-     * @param files an optional Map of files
+     * @param files       an optional Map of files
      * @return returns the updated gist
      * @throws IOException
      */
@@ -785,7 +784,7 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param gistId id of the gist
+     * @param gistId  id of the gist
      * @param comment comment to create in the gist
      * @return a new comment for the gist
      * @throws IOException
@@ -855,7 +854,7 @@ public class GitHubModule {
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
      * @param commentId id of the comment
-     * @param body new body of the comment
+     * @param body      new body of the comment
      * @return returns the updated comment
      * @throws IOException
      */
@@ -871,8 +870,9 @@ public class GitHubModule {
     /**
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
-     *
+     * <p/>
      * Star the gist with the given id
+     *
      * @param gistId id of the gist to be starred
      * @throws IOException
      */
@@ -884,8 +884,9 @@ public class GitHubModule {
     /**
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
-     *
+     * <p/>
      * Unstar the gist with the given id
+     *
      * @param gistId id of the gist to be unstarred
      * @throws IOException
      */
@@ -927,7 +928,7 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user the owner of the repository, leave empty to use {@link this#user}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
      * @return a list of labels for the given repository and user
      * @throws IOException
@@ -942,9 +943,9 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user the owner of the repository, leave empty to use {@link this#user}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
-     * @param label the label id
+     * @param label      the label id
      * @return the label associated to the given id
      * @throws IOException
      */
@@ -958,9 +959,9 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user the owner of the repository, leave empty to use {@link this#user}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
-     * @param label the label id
+     * @param label      the label id
      * @throws IOException
      */
     @Processor
@@ -973,10 +974,10 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user  the owner of the repository, leave empty to use {@link this#user}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
-     * @param name  the name of the label
-     * @param color  the color of the label, a 6 character hex code, without a leading #
+     * @param name       the name of the label
+     * @param color      the color of the label, a 6 character hex code, without a leading #
      * @return returns a new Label
      * @throws IOException
      */
@@ -996,9 +997,9 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user  the owner of the repository, leave empty to use {@link this#user}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
-     * @param state state of the milestone, open or closed
+     * @param state      state of the milestone, open or closed
      * @return s list of milestones for the given repository
      * @throws IOException
      */
@@ -1013,9 +1014,9 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user the owner of the repository, leave empty to use {@link this#user}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
-     * @param number  milestone number
+     * @param number     milestone number
      * @return returns a single milestone
      * @throws IOException
      */
@@ -1030,9 +1031,9 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user the owner of the repository, leave empty to use {@link this#user}
+     * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
-     * @param number number of the milestone
+     * @param number     number of the milestone
      * @throws IOException
      */
     @Processor
@@ -1045,12 +1046,12 @@ public class GitHubModule {
      * </p>
      * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
      *
-     * @param user the owner of the repository, leave empty to use {@link this#user}
+     * @param user        the owner of the repository, leave empty to use {@link this#user}
      * @param repository  the name of the repository
-     * @param title the title of the milestone
-     * @param state the state of the milestone, open or closed,  by default is open
+     * @param title       the title of the milestone
+     * @param state       the state of the milestone, open or closed,  by default is open
      * @param description the description of the milestone
-     * @param dueOn when the milestone is due
+     * @param dueOn       when the milestone is due
      * @return a new milestone with the given parameters
      * @throws IOException
      */
@@ -1066,22 +1067,293 @@ public class GitHubModule {
         return ServiceFactory.getMilestoneService(this.user, password).createMilestone(getUser(user), repository, milestone);
     }
 
+    /**
+     * Get user with given login name
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param loginName the login name of the user to look up
+     * @return a {@link User} instance
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/">Get a single user</a>
+     */
+    @Processor
+    public User getUserByLoginName(String loginName) throws IOException {
+        return ServiceFactory.getUserService(this.user, password).getUser(loginName);
+    }
+
+    /**
+     * Get the currently authenticated user
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @return a {@link User} instance representing the current user
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/">Get the authenticated user</a>
+     */
+    @Processor
+    public User getCurrentUser() throws IOException {
+        return ServiceFactory.getUserService(this.user, password).getUser();
+    }
+
+    /**
+     * Updates the currently authenticated user using the given attributes. Only provide values for the attributes
+     * you want to change.
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param name     a the name for the current user
+     * @param email    a publicly visibile email address for the current user
+     * @param blog     a blog for the current user
+     * @param company  a company for the current user
+     * @param location a location for the current user
+     * @param hireable whether the current user is hireable
+     * @return a {@link User} instance representing the current user
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/">Update the authenticated user</a>
+     */
+    @Processor
+    public User updateCurrentUser(@Optional String name, @Optional String email, @Optional String blog, @Optional String company,
+                                  @Optional String location, @Optional Boolean hireable) throws IOException {
+        User currentUser = getCurrentUser();
+        if (name != null) {
+            currentUser.setName(name);
+        }
+        if (email != null) {
+            currentUser.setEmail(email);
+        }
+        if (blog != null) {
+            currentUser.setBlog(blog);
+        }
+        if (company != null) {
+            currentUser.setCompany(company);
+        }
+        if (location != null) {
+            currentUser.setLocation(location);
+        }
+        if (hireable != null) {
+            currentUser.setHireable(hireable);
+        }
+        return ServiceFactory.getUserService(this.user, password).editUser(currentUser);
+    }
+
+    /**
+     * Returns a list of followers for given user, if no one is provided the current authenticated user will be used
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user the user for which to get the followers, leave empty to use current user
+     * @return a collection of {@link User} that follow the current user
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/followers/">List followers of a user</a>
+     */
+    @Processor
+    public List<User> getFollowers(@Optional String user) throws IOException {
+        return ServiceFactory.getUserService(this.user, password).getFollowers(getUser(user));
+    }
+
+    /**
+     * Returns a list users following the given user, if no one is provided the current authenticated user will be used
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user the user for which to get who is following, leave empty to use current user
+     * @return a collection of {@link User} the user is following
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/followers/">List users following another user</a>
+     */
+    @Processor
+    public List<User> getFollowing(@Optional String user) throws IOException {
+        return ServiceFactory.getUserService(this.user, password).getFollowing(getUser(user));
+    }
+
+    /**
+     * Returns wether the authenticated user is following the given user
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user the user to check
+     * @return wether the authenticated user is following the given user
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/followers/">Check if you are following a user</a>
+     */
+    @Processor
+    public boolean isFollowing(String user) throws IOException {
+        return ServiceFactory.getUserService(this.user, password).isFollowing(user);
+    }
+
+    /**
+     * Make the currently authenticated user follow the given user
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user the user to follow
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/followers/">Follow a user</a>
+     */
+    @Processor
+    public void follow(String user) throws IOException {
+        ServiceFactory.getUserService(this.user, password).follow(user);
+    }
+
+    /**
+     * Make the currently authenticated user unfollow the given user
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user the user to unfollow
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/followers/">Unfollow a user</a>
+     */
+    @Processor
+    public void unfollow(String user) throws IOException {
+        ServiceFactory.getUserService(this.user, password).unfollow(user);
+    }
+
+    /**
+     * Get all e-mail addresses for the currently authenticated user
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @return list of e-mail address
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/emails/">List email addresses for a user</a>
+     */
+    @Processor
+    public List<String> getEmails() throws IOException {
+        return ServiceFactory.getUserService(this.user, password).getEmails();
+    }
+
+    /**
+     * Add one or more e-mail addresses to the currently authenticated user's account
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param emails the email addresses to add
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/emails/">Add email address(es)</a>
+     */
+    @Processor
+    public void addEmails(List<String> emails) throws IOException {
+        ServiceFactory.getUserService(this.user, password).addEmail(emails.toArray(new String[emails.size()]));
+    }
+
+    /**
+     * Removes one or more e-mail addresses to the currently authenticated user's account
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param emails the email addresses to add
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/emails/">Delete email address(es)</a>
+     */
+    @Processor
+    public void removeEmails(List<String> emails) throws IOException {
+        ServiceFactory.getUserService(this.user, password).removeEmail(emails.toArray(new String[emails.size()]));
+    }
+
+    /**
+     * Get all public keys for currently authenticated user
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @return non-null list of {@link Key}
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/keys/">List public keys for a user</a>
+     */
+    @Processor
+    public List<Key> getKeys() throws IOException {
+        return ServiceFactory.getUserService(this.user, password).getKeys();
+    }
+
+    /**
+     * Get key with given id
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param id the id of the key of obtain
+     * @return a {@link Key} instance
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/keys/">Get a single public key</a>
+     */
+    @Processor
+    public Key getKey(int id) throws IOException {
+        return ServiceFactory.getUserService(this.user, password).getKey(id);
+    }
+
+    /**
+     * Create key for currently authenticated user
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param title the title of the new key
+     * @param key   the new key
+     * @return the created {@link Key}
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/keys/">Create a public key</a>
+     */
+    @Processor
+    public Key createKey(String title, String key) throws IOException {
+        Key newKey = new Key();
+        newKey.setTitle(title);
+        newKey.setKey(key);
+        return ServiceFactory.getUserService(this.user, password).createKey(newKey);
+    }
+
+    /**
+     * Edit key for currently authenticated user
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param keyId the id of the key to edit
+     * @param title a new title for the key
+     * @param key   a new key
+     * @return edited {@link Key}
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/keys/">Update a public key</a>
+     */
+    @Processor
+    public Key editKey(int keyId, @Optional String title, @Optional String key) throws IOException {
+        Key keyToEdit = getKey(keyId);
+        if (title != null) {
+            keyToEdit.setTitle(title);
+        }
+        if (key != null) {
+            keyToEdit.setKey(key);
+        }
+        return ServiceFactory.getUserService(this.user, password).editKey(keyToEdit);
+    }
+
+    /**
+     * Delete key with given id
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param id the id of the key to delete
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/users/keys/">Delete a public key</a>
+     */
+    @Processor
+    public void deleteKey(int id) throws IOException {
+        ServiceFactory.getUserService(this.user, password).deleteKey(id);
+    }
+
     private Map<String, GistFile> createGistFiles(Map<String, Map<String, String>> files) {
         Map<String, GistFile> gistFiles = new HashMap<String, GistFile>();
-        for(String fileName : files.keySet()) {
+        for (String fileName : files.keySet()) {
             Map<String, String> values = files.get(fileName);
             GistFile gistFile = new GistFile();
             gistFile.setFilename(fileName);
             String content = values.get("content");
-            if(content != null) {
+            if (content != null) {
                 gistFile.setContent(content);
             }
             String size = values.get("size");
-            if(size != null) {
+            if (size != null) {
                 gistFile.setSize(Integer.valueOf(size));
             }
             String rawUrl = values.get("raw_url");
-            if(rawUrl != null) {
+            if (rawUrl != null) {
                 gistFile.setRawUrl(rawUrl);
             }
             gistFiles.put(fileName, gistFile);

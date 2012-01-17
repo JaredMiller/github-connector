@@ -14,7 +14,10 @@
 package org.mule.modules;
 
 import org.eclipse.egit.github.core.Issue;
+import org.eclipse.egit.github.core.Key;
+import org.eclipse.egit.github.core.User;
 import org.eclipse.egit.github.core.service.IssueService;
+import org.eclipse.egit.github.core.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -31,7 +34,9 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,15 +46,27 @@ public class GitHubModuleTest {
     private static final String REPOSITORY = "myRepo";
     private static final String USER = "pepe";
     private static final String ISSUE_ID = "321";
+    private static final String LOGIN_NAME = "login name";
+    private static final List<String> EMAILS = Arrays.asList("email1", "email2");
+    private static final int KEY_ID = 6655;
     @Mock
     private IssueService issueService;
+    @Mock
+    private UserService userService;
     @Mock
     private Issue issue1;
     @Mock
     private Issue issue2;
+    @Mock
+    private Key key1;
+    @Mock
+    private Key key2;
+    @Mock
+    private User user;
     @Captor
     private ArgumentCaptor<Issue> issueCaptor;
-
+    @Captor
+    private ArgumentCaptor<Key> keyCaptor;
     private Map<String, String> filterData = new HashMap<String, String>(1);
     private GitHubModule gitHubModule;
 
@@ -57,9 +74,11 @@ public class GitHubModuleTest {
     public void setUpTests() {
         MockitoAnnotations.initMocks(this);
         ServiceFactory.setDefaultIssueService(issueService);
+        ServiceFactory.setDefaultUserService(userService);
         filterData = new HashMap<String, String>(1);
         filterData.put("status", "closed");
         gitHubModule = new GitHubModule();
+        gitHubModule.setUser(USER);
     }
 
     @Test
@@ -111,6 +130,108 @@ public class GitHubModuleTest {
         when(issueService.getIssue(USER, REPOSITORY, ISSUE_ID)).thenReturn(issue1);
         assertEquals(issue1, gitHubModule.getIssue(USER, REPOSITORY, ISSUE_ID));
         verify(issueService).getIssue(USER, REPOSITORY, ISSUE_ID);
+    }
+
+    @Test
+    public void getUserByLoginName() throws Exception {
+        when(userService.getUser(LOGIN_NAME)).thenReturn(user);
+        assertEquals(user, gitHubModule.getUserByLoginName(LOGIN_NAME));
+    }
+
+    @Test
+    public void getCurrentUser() throws Exception {
+        when(userService.getUser()).thenReturn(user);
+        assertEquals(user, gitHubModule.getCurrentUser());
+    }
+
+    @Test
+    public void updateCurrentUser() throws Exception {
+        GitHubModule gitHubModuleSpy = spy(gitHubModule);
+        when(gitHubModuleSpy.getCurrentUser()).thenReturn(user);
+        User updatedUser = mock(User.class);
+        when(userService.editUser(user)).thenReturn(updatedUser);
+        assertEquals(updatedUser, gitHubModule.updateCurrentUser("new name", "new email", "new blog", "new company", "new location", true));
+        verify(user).setName("new name");
+        verify(user).setEmail("new email");
+        verify(user).setBlog("new blog");
+        verify(user).setCompany("new company");
+        verify(user).setLocation("new location");
+        verify(user).setHireable(true);
+    }
+
+    @Test
+    public void getFollowers() throws Exception {
+        List<User> followers = Arrays.asList(user);
+        when(userService.getFollowers(USER)).thenReturn(followers);
+        assertEquals(followers, gitHubModule.getFollowers(null));
+    }
+
+    @Test
+    public void isFollowing() throws Exception {
+        when(userService.isFollowing("some user")).thenReturn(true);
+        assertTrue(gitHubModule.isFollowing("some user"));
+    }
+
+    @Test
+    public void follow() throws Exception {
+        gitHubModule.follow("some user");
+        verify(userService).follow("some user");
+    }
+
+    @Test
+    public void unfollow() throws Exception {
+        gitHubModule.unfollow("some user");
+        verify(userService).unfollow("some user");
+    }
+
+    @Test
+    public void getEmails() throws Exception {
+        when(userService.getEmails()).thenReturn(EMAILS);
+        assertEquals(EMAILS, gitHubModule.getEmails());
+    }
+
+    @Test
+    public void addEmails() throws Exception {
+        gitHubModule.addEmails(EMAILS);
+        verify(userService).addEmail((String[]) EMAILS.toArray());
+    }
+
+    @Test
+    public void removeEmails() throws Exception {
+        gitHubModule.removeEmails(EMAILS);
+        verify(userService).removeEmail((String[]) EMAILS.toArray());
+    }
+
+    @Test
+    public void getKeys() throws Exception {
+        List<Key> keys = Arrays.asList(key1, key2);
+        when(userService.getKeys()).thenReturn(keys);
+        assertEquals(keys, gitHubModule.getKeys());
+    }
+
+    @Test
+    public void getKey() throws Exception {
+        when(userService.getKey(KEY_ID)).thenReturn(key1);
+        assertEquals(key1, gitHubModule.getKey(KEY_ID));
+    }
+
+    @Test
+    public void createKey() throws Exception {
+        gitHubModule.createKey("key title", "key");
+        verify(userService).createKey(keyCaptor.capture());
+        Key keySentToGitHub = keyCaptor.getValue();
+        assertEquals("key title", keySentToGitHub.getTitle());
+        assertEquals("key", keySentToGitHub.getKey());
+    }
+
+    @Test
+    public void editKey() throws Exception {
+        GitHubModule gitHubModuleSpy = spy(gitHubModule);
+        when(gitHubModuleSpy.getKey(KEY_ID)).thenReturn(key1);
+        when(userService.editKey(key1)).thenReturn(key2);
+        assertEquals(key2, gitHubModule.editKey(KEY_ID, "new title", "new key"));
+        verify(key1).setTitle("new title");
+        verify(key1).setKey("new key");
     }
 
     private <T> List<T> createList(T... elements) {

@@ -1,7 +1,5 @@
 package org.mule.modules;
 
-import com.sun.xml.internal.rngom.parse.host.Base;
-
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.CollaboratorService;
 import org.eclipse.egit.github.core.service.CommitService;
@@ -11,6 +9,7 @@ import org.eclipse.egit.github.core.service.GistService;
 import org.eclipse.egit.github.core.service.IssueService;
 import org.eclipse.egit.github.core.service.LabelService;
 import org.eclipse.egit.github.core.service.MilestoneService;
+import org.eclipse.egit.github.core.service.UserService;
 import org.eclipse.egit.github.core.service.WatcherService;
 
 public class ServiceFactory {
@@ -25,6 +24,7 @@ public class ServiceFactory {
     private static GistService defaultGistService;
     private static LabelService defaultLabelService;
     private static MilestoneService defaultMilestoneService;
+    private static UserService defaultUserService;
 
     public static IssueService getIssueService(String user, String password) {
         if (defaultIssueService != null) {
@@ -45,7 +45,7 @@ public class ServiceFactory {
     }
 
     public static CommitService getCommitService(String user, String password) {
-        if(defaultCommitService != null) {
+        if (defaultCommitService != null) {
             return defaultCommitService;
         }
         GitHubClient client = new GitHubClient(BASE_URL);
@@ -54,7 +54,7 @@ public class ServiceFactory {
     }
 
     public static CollaboratorService getCollaboratorService(String user, String password) {
-        if(defaultCollaboratorService != null) {
+        if (defaultCollaboratorService != null) {
             return defaultCollaboratorService;
         }
         GitHubClient client = new GitHubClient(BASE_URL);
@@ -63,7 +63,7 @@ public class ServiceFactory {
     }
 
     public static DeployKeyService getDeployKeyService(String user, String password) {
-        if(defaultDeployKeyService != null) {
+        if (defaultDeployKeyService != null) {
             return defaultDeployKeyService;
         }
         GitHubClient client = new GitHubClient(BASE_URL);
@@ -72,7 +72,7 @@ public class ServiceFactory {
     }
 
     public static DownloadService getDownloadService(String user, String password) {
-        if(defaultDownloadService != null) {
+        if (defaultDownloadService != null) {
             return defaultDownloadService;
         }
         GitHubClient client = new GitHubClient(BASE_URL);
@@ -81,7 +81,7 @@ public class ServiceFactory {
     }
 
     public static GistService getGistService(String user, String password) {
-        if(defaultGistService != null) {
+        if (defaultGistService != null) {
             return defaultGistService;
         }
         GitHubClient client = new GitHubClient(BASE_URL);
@@ -90,7 +90,7 @@ public class ServiceFactory {
     }
 
     public static LabelService getLabelService(String user, String password) {
-        if(defaultLabelService != null) {
+        if (defaultLabelService != null) {
             return defaultLabelService;
         }
         GitHubClient client = new GitHubClient(BASE_URL);
@@ -99,7 +99,7 @@ public class ServiceFactory {
     }
 
     public static MilestoneService getMilestoneService(String user, String password) {
-        if(defaultMilestoneService != null) {
+        if (defaultMilestoneService != null) {
             return defaultMilestoneService;
         }
         GitHubClient client = new GitHubClient(BASE_URL);
@@ -107,6 +107,14 @@ public class ServiceFactory {
         return new MilestoneService(client);
     }
 
+    public static UserService getUserService(String user, String password) {
+        if (defaultUserService != null) {
+            return defaultUserService;
+        }
+        GitHubClient client = new GitHubClient(BASE_URL);
+        client.setCredentials(user, password);
+        return new UserService(client);
+    }
 
     public static void setDefaultIssueService(IssueService defaultIssueService) {
         ServiceFactory.defaultIssueService = defaultIssueService;
@@ -128,7 +136,7 @@ public class ServiceFactory {
         ServiceFactory.defaultDeployKeyService = defaultDeployKeyService;
     }
 
-   public static void setDownloadService(DownloadService defaultDownloadService) {
+    public static void setDownloadService(DownloadService defaultDownloadService) {
         ServiceFactory.defaultDownloadService = defaultDownloadService;
     }
 
@@ -142,5 +150,9 @@ public class ServiceFactory {
 
     public static void setMilestoneService(MilestoneService defaultMilestoneService) {
         ServiceFactory.defaultMilestoneService = defaultMilestoneService;
+    }
+
+    public static void setDefaultUserService(UserService defaultUserService) {
+        ServiceFactory.defaultUserService = defaultUserService;
     }
 }
