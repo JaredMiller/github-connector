@@ -563,7 +563,7 @@ public class GitHubModule {
      * @throws IOException
      */
     @Processor
-    public List<Key> getKeys(String owner, String name) throws IOException {
+    public List<Key> getDeployKeys(String owner, String name) throws IOException {
         return ServiceFactory.getDeployKeyService(user, password).getKeys(RepositoryId.create(owner, name));
     }
 
@@ -580,7 +580,7 @@ public class GitHubModule {
      * @throws IOException
      */
     @Processor
-    public Key getKey(String owner, String name, int id) throws IOException {
+    public Key getDeployKey(String owner, String name, int id) throws IOException {
         return ServiceFactory.getDeployKeyService(user, password).getKey(RepositoryId.create(owner, name), id);
     }
 
@@ -598,7 +598,7 @@ public class GitHubModule {
      * @throws IOException
      */
     @Processor
-    public Key createKey(String owner, String name, String title, String key) throws IOException {
+    public Key createDeployKey(String owner, String name, String title, String key) throws IOException {
         Key k = new Key();
         k.setTitle(title);
         k.setKey(key);
@@ -618,7 +618,7 @@ public class GitHubModule {
      * @throws IOException
      */
     @Processor
-    public Key editKey(String owner, String name, String title, String key) throws IOException {
+    public Key editDeployKey(String owner, String name, String title, String key) throws IOException {
         Key k = new Key();
         k.setTitle(title);
         k.setKey(key);
@@ -637,7 +637,7 @@ public class GitHubModule {
      * @throws IOException
      */
     @Processor
-    public void deleteKey(String owner, String name, int id) throws IOException {
+    public void deleteDeployKey(String owner, String name, int id) throws IOException {
         ServiceFactory.getDeployKeyService(user, password).deleteKey(RepositoryId.create(owner, name), id);
     }
 
