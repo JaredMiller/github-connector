@@ -19,6 +19,7 @@ import org.eclipse.egit.github.core.service.GistService;
 import org.eclipse.egit.github.core.service.IssueService;
 import org.eclipse.egit.github.core.service.LabelService;
 import org.eclipse.egit.github.core.service.MilestoneService;
+import org.eclipse.egit.github.core.service.TeamService;
 import org.eclipse.egit.github.core.service.UserService;
 import org.eclipse.egit.github.core.service.WatcherService;
 
@@ -35,6 +36,7 @@ public class ServiceFactory {
     private static LabelService defaultLabelService;
     private static MilestoneService defaultMilestoneService;
     private static UserService defaultUserService;
+    private static TeamService defaultTeamService;
 
     public static IssueService getIssueService(String user, String password) {
         if (defaultIssueService != null) {
@@ -126,6 +128,15 @@ public class ServiceFactory {
         return new UserService(client);
     }
 
+    public static TeamService getTeamService(String user, String password) {
+        if (defaultTeamService != null) {
+            return defaultTeamService;
+        }
+        GitHubClient client = new GitHubClient(BASE_URL);
+        client.setCredentials(user, password);
+        return new TeamService(client);
+    }
+
     public static void setDefaultIssueService(IssueService defaultIssueService) {
         ServiceFactory.defaultIssueService = defaultIssueService;
     }
@@ -164,5 +175,9 @@ public class ServiceFactory {
 
     public static void setDefaultUserService(UserService defaultUserService) {
         ServiceFactory.defaultUserService = defaultUserService;
+    }
+
+    public static void setDefaultTeamService(TeamService defaultTeamService) {
+        ServiceFactory.defaultTeamService = defaultTeamService;
     }
 }

@@ -15,8 +15,12 @@ package org.mule.modules;
 
 import org.eclipse.egit.github.core.Issue;
 import org.eclipse.egit.github.core.Key;
+import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.RepositoryId;
+import org.eclipse.egit.github.core.Team;
 import org.eclipse.egit.github.core.User;
 import org.eclipse.egit.github.core.service.IssueService;
+import org.eclipse.egit.github.core.service.TeamService;
 import org.eclipse.egit.github.core.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,10 +53,16 @@ public class GitHubModuleTest {
     private static final String LOGIN_NAME = "login name";
     private static final List<String> EMAILS = Arrays.asList("email1", "email2");
     private static final int KEY_ID = 6655;
+    private static final int TEAM_ID = 5322;
+    private static final String ORGANIZATION = "some org";
+    private static final String TEAM_NAME = "some team name";
+    private static final int ORG_ID = 12043;
     @Mock
     private IssueService issueService;
     @Mock
     private UserService userService;
+    @Mock
+    private TeamService teamService;
     @Mock
     private Issue issue1;
     @Mock
@@ -63,18 +73,27 @@ public class GitHubModuleTest {
     private Key key2;
     @Mock
     private User user;
+    @Mock
+    private Repository repository;
     @Captor
     private ArgumentCaptor<Issue> issueCaptor;
     @Captor
     private ArgumentCaptor<Key> keyCaptor;
+    @Captor
+    private ArgumentCaptor<Team> teamCaptor;
     private Map<String, String> filterData = new HashMap<String, String>(1);
     private GitHubModule gitHubModule;
+    @Mock
+    private Team team1;
+    @Mock
+    private Team team2;
 
     @Before
     public void setUpTests() {
         MockitoAnnotations.initMocks(this);
         ServiceFactory.setDefaultIssueService(issueService);
         ServiceFactory.setDefaultUserService(userService);
+        ServiceFactory.setDefaultTeamService(teamService);
         filterData = new HashMap<String, String>(1);
         filterData.put("status", "closed");
         gitHubModule = new GitHubModule();
@@ -232,6 +251,89 @@ public class GitHubModuleTest {
         assertEquals(key2, gitHubModule.editKey(KEY_ID, "new title", "new key"));
         verify(key1).setTitle("new title");
         verify(key1).setKey("new key");
+    }
+
+    @Test
+    public void getTeam() throws Exception {
+        when(teamService.getTeam(TEAM_ID)).thenReturn(team1);
+        assertEquals(team1, gitHubModule.getTeam(TEAM_ID));
+    }
+
+    @Test
+    public void getTeamsForOrg() throws Exception {
+        List<Team> teams = Arrays.asList(team1, team2);
+        when(teamService.getTeams(ORGANIZATION)).thenReturn(teams);
+        assertEquals(teams, gitHubModule.getTeamsForOrg(ORGANIZATION));
+    }
+
+    @Test
+    public void createTeam() throws Exception {
+        List<String> repos = Arrays.asList("repo1", "repo2");
+        gitHubModule.createTeam(ORGANIZATION, TEAM_NAME, TeamPermission.ADMIN, repos);
+        verify(teamService).createTeam(eq(ORGANIZATION), teamCaptor.capture(), eq(repos));
+        Team teamSentToGitHub = teamCaptor.getValue();
+        assertEquals(TEAM_NAME, teamSentToGitHub.getName());
+        assertEquals(TeamPermission.ADMIN.toString(), teamSentToGitHub.getPermission());
+    }
+
+    @Test
+    public void editTeam() throws Exception {
+        GitHubModule gitHubModuleSpy = spy(gitHubModule);
+        when(gitHubModuleSpy.getTeam(TEAM_ID)).thenReturn(team1);
+        gitHubModule.editTeam(TEAM_ID, TEAM_NAME, TeamPermission.ADMIN);
+        verify(teamService).editTeam(team1);
+        verify(team1).setName(TEAM_NAME);
+        verify(team1).setPermission(TeamPermission.ADMIN.toString());
+    }
+
+    @Test
+    public void deleteTeam() throws Exception {
+        gitHubModule.deleteTeam(TEAM_ID);
+        verify(teamService).deleteTeam(TEAM_ID);
+    }
+
+    @Test
+    public void getMembers() throws Exception {
+        List<User> teamMembers = Arrays.asList(user);
+        when(teamService.getMembers(TEAM_ID)).thenReturn(teamMembers);
+        assertEquals(teamMembers, gitHubModule.getTeamMembers(TEAM_ID));
+    }
+
+    @Test
+    public void isTeamMember() throws Exception {
+        when(teamService.isMember(TEAM_ID, USER)).thenReturn(true);
+        assertTrue(gitHubModule.isTeamMember(TEAM_ID, USER));
+    }
+
+    @Test
+    public void addTeamMember() throws Exception {
+        gitHubModule.addTeamMember(TEAM_ID, USER);
+        verify(teamService).addMember(TEAM_ID, USER);
+    }
+
+    @Test
+    public void removeTeamMember() throws Exception {
+        gitHubModule.removeTeamMember(TEAM_ID, USER);
+        verify(teamService).removeMember(TEAM_ID, USER);
+    }
+
+    @Test
+    public void getTeamRepositories() throws Exception {
+        List<Repository> repos = Arrays.asList(repository);
+        when(teamService.getRepositories(TEAM_ID)).thenReturn(repos);
+        assertEquals(repos, gitHubModule.getTeamRepositories(TEAM_ID));
+    }
+
+    @Test
+    public void addTeamRepository() throws Exception {
+        gitHubModule.addTeamRepository(TEAM_ID, "owner", "name");
+        verify(teamService).addRepository(eq(TEAM_ID), eq(new RepositoryId("owner", "name")));
+    }
+
+    @Test
+    public void removeTeamRepository() throws Exception {
+        gitHubModule.removeTeamRepository(TEAM_ID, "owner", "name");
+        verify(teamService).removeRepository(eq(TEAM_ID), eq(new RepositoryId("owner", "name")));
     }
 
     private <T> List<T> createList(T... elements) {

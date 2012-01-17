@@ -27,12 +27,14 @@ import org.eclipse.egit.github.core.Milestone;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryCommit;
 import org.eclipse.egit.github.core.RepositoryId;
+import org.eclipse.egit.github.core.Team;
 import org.eclipse.egit.github.core.User;
 import org.mule.api.annotations.Configurable;
 import org.mule.api.annotations.Module;
 import org.mule.api.annotations.Processor;
 import org.mule.api.annotations.display.Password;
 import org.mule.api.annotations.display.Placement;
+import org.mule.api.annotations.param.Default;
 import org.mule.api.annotations.param.Optional;
 
 import java.io.IOException;
@@ -1336,6 +1338,208 @@ public class GitHubModule {
     @Processor
     public void deleteKey(int id) throws IOException {
         ServiceFactory.getUserService(this.user, password).deleteKey(id);
+    }
+
+    /**
+     * Get team with given id
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param id the id of the team
+     * @return a {@link Team} instance
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/orgs/teams/">Get team</a>
+     */
+    @Processor
+    public Team getTeam(int id) throws IOException {
+        return ServiceFactory.getTeamService(this.user, password).getTeam(id);
+    }
+
+    /**
+     * Get all teams in the given organization
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param organization the organization for which te get the teams associated with
+     * @return list of {@link Team}
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/orgs/teams/">List teams</a>
+     */
+    @Processor
+    public List<Team> getTeamsForOrg(String organization) throws IOException {
+        return ServiceFactory.getTeamService(this.user, password).getTeams(organization);
+    }
+
+    /**
+     * Create the given team
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param organization   the organization
+     * @param teamName       the team name
+     * @param teamPermission the team's {@link TeamPermission}
+     * @param repoNames      the associated repository names
+     * @return the created {@link Team}
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/orgs/teams/">Create team</a>
+     */
+    @Processor
+    public Team createTeam(String organization, String teamName, @Optional @Default("PULL") TeamPermission teamPermission,
+                           @Optional List<String> repoNames) throws IOException {
+        Team team = new Team();
+        team.setName(teamName);
+        team.setPermission(teamPermission.toString());
+        if (repoNames != null) {
+            return ServiceFactory.getTeamService(this.user, password).createTeam(organization, team, repoNames);
+        } else {
+            return ServiceFactory.getTeamService(this.user, password).createTeam(organization, team);
+        }
+    }
+
+    /**
+     * Edit the given team. Only provide values for the attributes you want to update.
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param id             the id of the team to edit
+     * @param name           the new name of the team
+     * @param teamPermission the new {@link TeamPermission} for the team
+     * @return the edited {@link Team}
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/orgs/teams/">Edit team</a>
+     */
+    @Processor
+    public Team editTeam(int id, @Optional String name, @Optional TeamPermission teamPermission) throws IOException {
+        Team team = getTeam(id);
+        if (name != null) {
+            team.setName(name);
+        }
+        if (teamPermission != null) {
+            team.setPermission(teamPermission.toString());
+        }
+        return ServiceFactory.getTeamService(this.user, password).editTeam(team);
+    }
+
+    /**
+     * Delete the team with the given id
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param id the id of the team to delete.
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/orgs/teams/">Delete team</a>
+     */
+    @Processor
+    public void deleteTeam(int id) throws IOException {
+        ServiceFactory.getTeamService(this.user, password).deleteTeam(id);
+    }
+
+    /**
+     * Get members of team with given id
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param id the team id
+     * @return team members
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/orgs/teams/">List members</a>
+     */
+    @Processor
+    public List<User> getTeamMembers(int id) throws IOException {
+        return ServiceFactory.getTeamService(this.user, password).getMembers(id);
+    }
+
+    /**
+     * Is the given user a member of the team with the given id
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param id   the team id
+     * @param user the user name
+     * @return true if member, false if not member
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/orgs/teams/">Get if a user is a public member</a>
+     */
+    @Processor
+    public boolean isTeamMember(int id, String user) throws IOException {
+        return ServiceFactory.getTeamService(this.user, password).isMember(id, user);
+    }
+
+    /**
+     * Add given user to team with given id
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param id   the team id
+     * @param user the user name
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/orgs/teams/">Add a member</a>
+     */
+    @Processor
+    public void addTeamMember(int id, String user) throws IOException {
+        ServiceFactory.getTeamService(this.user, password).addMember(id, user);
+    }
+
+    /**
+     * Remove given user from team with given id
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param id   the team id
+     * @param user the user name
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/orgs/teams/">Remove a member</a>
+     */
+    @Processor
+    public void removeTeamMember(int id, String user) throws IOException {
+        ServiceFactory.getTeamService(this.user, password).removeMember(id, user);
+    }
+
+    /**
+     * Get all repositories for given team
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param id the team id
+     * @return non-null list of repositories
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/orgs/teams/">List team repos</a>
+     */
+    @Processor
+    public List<Repository> getTeamRepositories(int id) throws IOException {
+        return ServiceFactory.getTeamService(this.user, password).getRepositories(id);
+    }
+
+    /**
+     * Add repository to team
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param id    the team id
+     * @param owner the owner of the repository
+     * @param name  the name of the repository
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/orgs/teams/">Add team repo</a>
+     */
+    @Processor
+    public void addTeamRepository(int id, String owner, String name) throws IOException {
+        ServiceFactory.getTeamService(this.user, password).addRepository(id, RepositoryId.create(owner, name));
+    }
+
+    /**
+     * Remove repository from team
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param id    the team id
+     * @param owner the owner of the repository
+     * @param name  the name of the repository
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/orgs/teams/">Remove team repo</a>
+     */
+    @Processor
+    public void removeTeamRepository(int id, String owner, String name) throws IOException {
+        ServiceFactory.getTeamService(this.user, password).removeRepository(id, RepositoryId.create(owner, name));
     }
 
     private Map<String, GistFile> createGistFiles(Map<String, Map<String, String>> files) {
