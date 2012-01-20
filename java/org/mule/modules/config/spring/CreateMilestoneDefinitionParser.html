@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <meta name="description" content="Documentation for Mule Cloud Connector." />
+
+<link rel="shortcut icon" type="image/x-icon" href="../../../../../../favicon.ico" />
+<title>
+
+  CreateMilestoneDefinitionParser
+
+
+| Mule Cloud Connector
+
+</title>
+<link href="../../../../../../assets/mule-developer-docs.css" rel="stylesheet" type="text/css" />
+<link href="../../../../../../assets/mule-developer-prettify.css" rel="stylesheet" type="text/css" />
+<link href="../../../../../../assets/customizations.css" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:300' rel='stylesheet' type='text/css'>
+<script src="../../../../../../assets/search_autocomplete.js" type="text/javascript"></script>
+<script src="../../../../../../assets/jquery-resizable.min.js" type="text/javascript"></script>
+<script src="../../../../../../assets/mule-developer-docs.js" type="text/javascript"></script>
+<script src="../../../../../../assets/prettify.js" type="text/javascript"></script>
+<script type="text/javascript">
+  setToRoot("../../../../../../", "../../../../../../assets/");
+</script>
+<script src="../../../../../../assets/mule-developer-reference.js" type="text/javascript"></script>
+<script src="../../../../../../assets/navtree_data.js" type="text/javascript"></script>
+<script src="../../../../../../assets/customizations.js" type="text/javascript"></script>
+<noscript>
+  <style type="text/css">
+    html,body{overflow:auto;}
+    #body-content{position:relative; top:0;}
+    #doc-content{overflow:visible;border-left:3px solid #666;}
+    #side-nav{padding:0;}
+    #side-nav .toggle-list ul {display:block;}
+    #resize-packages-nav{border-bottom:3px solid #666;}
+  </style>
+</noscript>
+</head>
+
+<body class="">
+
+<div id="header">
+    <div id="headerLeft">
+    
+      <span id="masthead-title">Mule Cloud Connector</span>
+    
+    <ul id="header-tabs" class="">
+    
+    	<li id="guide"><a href="../../../../../../guide/install.html">
+	    	<span class="en">Install Guide</span>
+    	</a></li>
+    
+    	<li id="java"><a href="../../../../../../java/packages.html">
+	    	<span class="en">Java API Reference</span>
+    	</a></li>
+    
+    	<li id="mule"><a href="../../../../../../mule/modules.html">
+	    	<span class="en">Mule API Reference</span>
+    	</a></li>
+    
+    </ul>
+    </div>
+    <div id="headerRight">
+      <a href="http://www.mulesoft.com" tabindex="-1">
+      <img src="../../../../../../assets//images/mulesoft-logo-final.gif" alt="MuleSoft" border="0" id="mulesoftlogo"></a><br/>
+      
+  <div id="search" >
+      <div id="searchForm">
+          <form accept-charset="utf-8" class="gsc-search-box" 
+                onsubmit="return submit_search()">
+            <table class="gsc-search-box" cellpadding="0" cellspacing="0"><tbody>
+                <tr>
+                  <td class="gsc-input">
+                    <input id="search_autocomplete" class="gsc-input" type="text" size="33" autocomplete="off"
+                      title="search developer docs" name="q"
+                      value="search developer docs"
+                      onFocus="search_focus_changed(this, true)"
+                      onBlur="search_focus_changed(this, false)"
+                      onkeydown="return search_changed(event, true, '../../../../../../')"
+                      onkeyup="return search_changed(event, false, '../../../../../../')" />
+                  <div id="search_filtered_div" class="no-display">
+                      <table id="search_filtered" cellspacing=0>
+                      </table>
+                  </div>
+                  </td>
+                  <td class="gsc-search-button">
+                    <input type="submit" value="Search" title="search" id="search-button" class="gsc-search-button" />
+                  </td>
+                  <td class="gsc-clear-button">
+                    <div title="clear results" class="gsc-clear-button">&nbsp;</div>
+                  </td>
+                </tr></tbody>
+              </table>
+          </form>
+      </div><!-- searchForm -->
+  </div><!-- search -->
+      
+    </div>
+</div><!-- header -->
+
+
+  <div class="g-section g-tpl-240" id="body-content">
+    <div class="g-unit g-first side-nav-resizable" id="side-nav">
+      <div id="swapper">
+        <div id="nav-panels">
+          <div id="resize-packages-nav">
+            <div id="packages-nav">
+              <div id="index-links">
+                <a href="../../../../../../java/packages.html"  >Package Index</a> |
+                <a href="../../../../../../java/classes.html" >Class Index</a>
+              </div>
+              <ul>
+                
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/package-summary.html">org.mule.modules</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/config/package-summary.html">org.mule.modules.config</a></li>
+    <li class="selected api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/config/spring/package-summary.html">org.mule.modules.config.spring</a></li>
+              </ul><br/>
+            </div> <!-- end packages -->
+          </div> <!-- end resize-packages -->
+          <div id="classes-nav">
+            <ul>
+              
+              
+    <li><h2>Classes</h2>
+      <ul>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/AddCollaboratorDefinitionParser.html">AddCollaboratorDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/AddCommentDefinitionParser.html">AddCommentDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/AddEmailsDefinitionParser.html">AddEmailsDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/AddTeamMemberDefinitionParser.html">AddTeamMemberDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/AddTeamRepositoryDefinitionParser.html">AddTeamRepositoryDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/CloseIssueDefinitionParser.html">CloseIssueDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/CreateCommentDefinitionParser.html">CreateCommentDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/CreateDeployKeyDefinitionParser.html">CreateDeployKeyDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/CreateGistCommentDefinitionParser.html">CreateGistCommentDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/CreateIssueDefinitionParser.html">CreateIssueDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/CreateKeyDefinitionParser.html">CreateKeyDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/CreateLabelDefinitionParser.html">CreateLabelDefinitionParser</a></li>
+          <li class="selected api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/CreateMilestoneDefinitionParser.html">CreateMilestoneDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/CreateRepositoryDefinitionParser.html">CreateRepositoryDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/CreateRepositoryForOrgDefinitionParser.html">CreateRepositoryForOrgDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/CreateResourceDefinitionParser.html">CreateResourceDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/CreateTeamDefinitionParser.html">CreateTeamDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/DeleteCommentDefinitionParser.html">DeleteCommentDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/DeleteCommitCommentDefinitionParser.html">DeleteCommitCommentDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/DeleteDeployKeyDefinitionParser.html">DeleteDeployKeyDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/DeleteDownloadDefinitionParser.html">DeleteDownloadDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/DeleteGistCommentDefinitionParser.html">DeleteGistCommentDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/DeleteGistDefinitionParser.html">DeleteGistDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/DeleteKeyDefinitionParser.html">DeleteKeyDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/DeleteLabelDefinitionParser.html">DeleteLabelDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/DeleteMilestoneDefinitionParser.html">DeleteMilestoneDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/DeleteTeamDefinitionParser.html">DeleteTeamDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/EditCommentDefinitionParser.html">EditCommentDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/EditCommitCommentDefinitionParser.html">EditCommitCommentDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/EditDeployKeyDefinitionParser.html">EditDeployKeyDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/EditGistCommentDefinitionParser.html">EditGistCommentDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/EditKeyDefinitionParser.html">EditKeyDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/EditRepositoryDefinitionParser.html">EditRepositoryDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/EditTeamDefinitionParser.html">EditTeamDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/FollowDefinitionParser.html">FollowDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/ForkGistDefinitionParser.html">ForkGistDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/ForkRepositoryDefinitionParser.html">ForkRepositoryDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/ForkRepositoryForOrgDefinitionParser.html">ForkRepositoryForOrgDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetBranchesDefinitionParser.html">GetBranchesDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetCollaboratorsDefinitionParser.html">GetCollaboratorsDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetCommentDefinitionParser.html">GetCommentDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetCommentsDefinitionParser.html">GetCommentsDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetCommitDefinitionParser.html">GetCommitDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetCommitsByShaDefinitionParser.html">GetCommitsByShaDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetCommitsDefinitionParser.html">GetCommitsDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetCommmitCommentsDefinitionParser.html">GetCommmitCommentsDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetContributorsDefinitionParser.html">GetContributorsDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetCurrentUserDefinitionParser.html">GetCurrentUserDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetDeployKeyDefinitionParser.html">GetDeployKeyDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetDeployKeysDefinitionParser.html">GetDeployKeysDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetDownloadDefinitionParser.html">GetDownloadDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetEmailsDefinitionParser.html">GetEmailsDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetFollowersDefinitionParser.html">GetFollowersDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetFollowingDefinitionParser.html">GetFollowingDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetForksDefinitionParser.html">GetForksDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetGistCommentDefinitionParser.html">GetGistCommentDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetGistCommentsDefinitionParser.html">GetGistCommentsDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetGistDefinitionParser.html">GetGistDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetGistsDefinitionParser.html">GetGistsDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetIssueDefinitionParser.html">GetIssueDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetIssueEventDefinitionParser.html">GetIssueEventDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetIssuesCretedAfterDefinitionParser.html">GetIssuesCretedAfterDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetIssuesDefinitionParser.html">GetIssuesDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetIssuesSinceNumberDefinitionParser.html">GetIssuesSinceNumberDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetKeyDefinitionParser.html">GetKeyDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetKeysDefinitionParser.html">GetKeysDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetLabelDefinitionParser.html">GetLabelDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetLabelsDefinitionParser.html">GetLabelsDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetLanguagesDefinitionParser.html">GetLanguagesDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetMilestoneDefinitionParser.html">GetMilestoneDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetMilestonesDefinitionParser.html">GetMilestonesDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetOrgRepositoriesDefinitionParser.html">GetOrgRepositoriesDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetRepositoriesDefinitionParser.html">GetRepositoriesDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetRepositoriesForUserDefinitionParser.html">GetRepositoriesForUserDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetRepositoryDefinitionParser.html">GetRepositoryDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetStarredGistDefinitionParser.html">GetStarredGistDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetTagsDefinitionParser.html">GetTagsDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetTeamDefinitionParser.html">GetTeamDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetTeamMembersDefinitionParser.html">GetTeamMembersDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetTeamRepositoriesDefinitionParser.html">GetTeamRepositoriesDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetTeamsForOrgDefinitionParser.html">GetTeamsForOrgDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetUserByLoginNameDefinitionParser.html">GetUserByLoginNameDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetWatchedDefinitionParser.html">GetWatchedDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GetWatchersDefinitionParser.html">GetWatchersDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GitHubModuleConfigDefinitionParser.html">GitHubModuleConfigDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/GitHubModuleNamespaceHandler.html">GitHubModuleNamespaceHandler</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/IsCollaboratorDefinitionParser.html">IsCollaboratorDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/IsFollowingDefinitionParser.html">IsFollowingDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/IsStarredDefinitionParser.html">IsStarredDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/IsTeamMemberDefinitionParser.html">IsTeamMemberDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/IsWatchingDefinitionParser.html">IsWatchingDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/RemoveCollaboratorDefinitionParser.html">RemoveCollaboratorDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/RemoveEmailsDefinitionParser.html">RemoveEmailsDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/RemoveTeamMemberDefinitionParser.html">RemoveTeamMemberDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/RemoveTeamRepositoryDefinitionParser.html">RemoveTeamRepositoryDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/StarGistDefinitionParser.html">StarGistDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/UnfollowDefinitionParser.html">UnfollowDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/UnstarGistDefinitionParser.html">UnstarGistDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/UnwatchDefinitionParser.html">UnwatchDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/UpdateCurrentUserDefinitionParser.html">UpdateCurrentUserDefinitionParser</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/config/spring/WatchDefinitionParser.html">WatchDefinitionParser</a></li>
+      </ul>
+    </li>
+              
+              
+              
+              
+            </ul><br/>
+          </div><!-- end classes -->
+        </div><!-- end nav-panels -->
+        <div id="nav-tree" style="display:none">
+          <div id="index-links">
+            <a href="../../../../../../packages.html"  >Package Index</a> | 
+            <a href="../../../../../../classes.html" >Class Index</a>
+          </div>
+        </div><!-- end nav-tree -->
+      </div><!-- end swapper -->
+    </div> <!-- end side-nav -->
+    <script>
+      if (!isMobile) {
+        $("<a href='#' id='nav-swap' onclick='swapNav();return false;' style='font-size:10px;line-height:9px;margin-left:1em;text-decoration:none;'><span id='tree-link'>Use Tree Navigation</span><span id='panel-link' style='display:none'>Use Panel Navigation</span></a>").appendTo("#side-nav");
+        chooseDefaultNav();
+        if ($("#nav-tree").is(':visible')) {
+          init_default_navtree("../../../../../../");
+        } else {
+          addLoadEvent(function() {
+            scrollIntoView("packages-nav");
+            scrollIntoView("classes-nav");
+          });
+        }
+        $("#swapper").css({borderBottom:"2px solid #aaa"});
+      } else {
+        swapNav(); // tree view should be used on mobile
+      }
+    </script>
+
+
+
+<div class="g-unit" id="doc-content">
+
+<div id="api-info-block">
+
+
+
+  
+   
+  
+  
+  
+  
+
+  
+   
+  
+  
+  
+  
+
+
+<div class="sum-details-links">
+
+
+Summary:
+
+
+
+
+
+
+
+  <a href="#lfields">Fields</a>
+  
+
+
+
+  &#124; <a href="#pubctors">Ctors</a>
+  
+
+
+
+  &#124; <a href="#pubmethods">Methods</a>
+  
+
+
+  &#124; <a href="#promethods">Protected Methods</a>
+  
+
+
+  &#124; <a href="#inhmethods">Inherited Methods</a>
+
+&#124; <a href="#" onclick="return toggleAllClassInherited()" id="toggleAllClassInherited">[Expand All]</a>
+
+</div><!-- end sum-details-links -->
+<div class="api-level">
+  
+
+
+  
+  
+
+</div>
+</div><!-- end api-info-block -->
+
+
+<!-- ======== START OF CLASS DATA ======== -->
+
+<div id="jd-header">
+    public
+     
+     
+    
+    class
+<h1>CreateMilestoneDefinitionParser</h1>
+
+
+
+  
+    extends Object<br/>
+  
+  
+  
+
+  
+  
+      implements 
+      
+        BeanDefinitionParser 
+      
+  
+  
+
+
+</div><!-- end header -->
+
+<div id="naMessage"></div>
+
+<div id="jd-content" class="api apilevel-">
+<table class="jd-inheritance-table">
+
+
+    <tr>
+        
+        <td colspan="2" class="jd-inheritance-class-cell">java.lang.Object</td>
+    </tr>
+    
+
+    <tr>
+        
+            <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
+        
+        <td colspan="1" class="jd-inheritance-class-cell">org.mule.modules.config.spring.CreateMilestoneDefinitionParser</td>
+    </tr>
+    
+
+</table>
+
+
+
+
+
+
+
+<div class="jd-descr">
+
+
+
+
+
+
+</div><!-- jd-descr -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="jd-descr">
+
+
+<h2>Summary</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =========== FIELD SUMMARY =========== -->
+<table id="lfields" class="jd-sumtable"><tr><th colspan="12">Fields</th></tr>
+
+
+    
+      <tr class="alt-color api apilevel-" >
+          <td class="jd-typecol"><nobr>
+          private
+          
+          
+          TemplateParser.PatternInfo</nobr></td>
+          <td class="jd-linkcol"><a href="../../../../../../org/mule/modules/config/spring/CreateMilestoneDefinitionParser.html#patternInfo">patternInfo</a></td>
+          <td class="jd-descrcol" width="100%">Mule Pattern Info
+ 
+</td>
+      </tr>
+      
+    
+
+</table>
+
+
+
+
+
+
+
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<table id="pubctors" class="jd-sumtable"><tr><th colspan="12">Public Constructors</th></tr>
+
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            </nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/config/spring/CreateMilestoneDefinitionParser.html#CreateMilestoneDefinitionParser()">CreateMilestoneDefinitionParser</a></span>()</nobr>
+        
+  </td></tr>
+
+
+
+</table>
+
+
+
+
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+<table id="pubmethods" class="jd-sumtable"><tr><th colspan="12">Public Methods</th></tr>
+
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            BeanDefinition</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/config/spring/CreateMilestoneDefinitionParser.html#parse(org.w3c.dom.Element, org.springframework.beans.factory.xml.ParserContext)">parse</a></span>(Element element, ParserContext parserContent)</nobr>
+        
+  </td></tr>
+
+
+
+</table>
+
+
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+<table id="promethods" class="jd-sumtable"><tr><th colspan="12">Protected Methods</th></tr>
+
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/config/spring/CreateMilestoneDefinitionParser.html#getAttributeValue(org.w3c.dom.Element, java.lang.String)">getAttributeValue</a></span>(Element element, String attributeName)</nobr>
+        
+  </td></tr>
+
+
+
+</table>
+
+
+
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+<table id="inhmethods" class="jd-sumtable"><tr><th>
+  <a href="#" class="toggle-all" onclick="return toggleAllInherited(this, null)">[Expand]</a>
+  <div style="clear:left;">Inherited Methods</div></th></tr>
+
+
+<tr class="api apilevel-" >
+<td colspan="12">
+  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-java.lang.Object" class="jd-expando-trigger closed"
+          ><img id="inherited-methods-java.lang.Object-trigger"
+          src="../../../../../../assets/images/triangle-closed.png"
+          class="jd-expando-trigger-img" /></a>
+From class
+
+  java.lang.Object
+
+<div id="inherited-methods-java.lang.Object">
+  <div id="inherited-methods-java.lang.Object-list"
+        class="jd-inheritedlinks">
+  </div>
+  <div id="inherited-methods-java.lang.Object-summary" style="display: none;">
+    <table class="jd-sumtable-expando">
+    
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            Object</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">clone</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">equals</span>(Object arg0)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">finalize</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            Class&lt;?&gt;</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">getClass</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            int</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">hashCode</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">notify</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">notifyAll</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">toString</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">wait</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">wait</span>(long arg0, int arg1)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">wait</span>(long arg0)</nobr>
+        
+  </td></tr>
+
+
+</table>
+  </div>
+</div>
+</td></tr>
+
+
+
+<tr class="api apilevel-" >
+<td colspan="12">
+  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-org.springframework.beans.factory.xml.BeanDefinitionParser" class="jd-expando-trigger closed"
+          ><img id="inherited-methods-org.springframework.beans.factory.xml.BeanDefinitionParser-trigger"
+          src="../../../../../../assets/images/triangle-closed.png"
+          class="jd-expando-trigger-img" /></a>
+From interface
+
+  org.springframework.beans.factory.xml.BeanDefinitionParser
+
+<div id="inherited-methods-org.springframework.beans.factory.xml.BeanDefinitionParser">
+  <div id="inherited-methods-org.springframework.beans.factory.xml.BeanDefinitionParser-list"
+        class="jd-inheritedlinks">
+  </div>
+  <div id="inherited-methods-org.springframework.beans.factory.xml.BeanDefinitionParser-summary" style="display: none;">
+    <table class="jd-sumtable-expando">
+    
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            BeanDefinition</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">parse</span>(Element arg0, ParserContext arg1)</nobr>
+        
+  </td></tr>
+
+
+</table>
+  </div>
+</div>
+</td></tr>
+
+
+</table>
+
+
+</div><!-- jd-descr (summary) -->
+
+<!-- Details -->
+
+
+
+
+
+
+
+
+<!-- XML Attributes -->
+
+
+<!-- Enum Values -->
+
+
+<!-- Constants -->
+
+
+<!-- Fields -->
+
+
+<!-- ========= FIELD DETAIL ======== -->
+<h2>Fields</h2>
+
+
+
+
+<A NAME="patternInfo"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        private 
+         
+         
+        TemplateParser.PatternInfo
+      </span>
+        patternInfo
+    </h4>
+      <div class="api-level">
+        
+
+
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Mule Pattern Info
+ 
+</p></div>
+
+    
+    </div>
+</div>
+
+
+
+
+<!-- Public ctors -->
+
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<h2>Public Constructors</h2>
+
+
+
+<A NAME="CreateMilestoneDefinitionParser()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        
+      </span>
+      <span class="sympad">CreateMilestoneDefinitionParser</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+
+
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<!-- Protected ctors -->
+
+
+
+<!-- ========= METHOD DETAIL ======== -->
+<!-- Public methdos -->
+
+<h2>Public Methods</h2>
+
+
+
+<A NAME="parse(org.w3c.dom.Element, org.springframework.beans.factory.xml.ParserContext)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        BeanDefinition
+      </span>
+      <span class="sympad">parse</span>
+      <span class="normal">(Element element, ParserContext parserContent)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>element</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>parserContent</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+
+
+
+<!-- ========= METHOD DETAIL ======== -->
+
+<h2>Protected Methods</h2>
+
+
+
+<A NAME="getAttributeValue(org.w3c.dom.Element, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        protected 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getAttributeValue</span>
+      <span class="normal">(Element element, String attributeName)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>element</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>attributeName</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+
+
+
+<!-- ========= END OF CLASS DATA ========= -->
+<A NAME="navbar_top"></A>
+
+<div id="footer">
+Generated by <a href="http://www.mulesoft.com/devkit">Mule DevKit</a>. Document generation technology based on <a href="http://code.google.com/p/doclava/">Google's Doclava</a>.
+</div> <!-- end footer -->
+
+</div> <!-- jd-content -->
+
+</div><!-- end doc-content -->
+
+</div> <!-- end body-content --> 
+
+<script type="text/javascript">
+init(); /* initialize mule-developer-docs.js */
+</script>
+
+</body>
+</html>
