@@ -31,4 +31,12 @@
         </repository>
     </repositories>
 
+    <scm>
+        <connection>scm:git:git://github.com:mulesoft/github-connector.git
+        </connection>
+        <developerConnection>
+            scm:git:git@github.com:mulesoft/github-connector.git
+        </developerConnection>
+        <url>http://github.com/mulesoft/github-connector</url>
+    </scm>
 </project>
