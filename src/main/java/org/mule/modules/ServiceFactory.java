@@ -19,6 +19,7 @@ import org.eclipse.egit.github.core.service.GistService;
 import org.eclipse.egit.github.core.service.IssueService;
 import org.eclipse.egit.github.core.service.LabelService;
 import org.eclipse.egit.github.core.service.MilestoneService;
+import org.eclipse.egit.github.core.service.RepositoryService;
 import org.eclipse.egit.github.core.service.TeamService;
 import org.eclipse.egit.github.core.service.UserService;
 import org.eclipse.egit.github.core.service.WatcherService;
@@ -37,8 +38,16 @@ public class ServiceFactory {
     private static MilestoneService defaultMilestoneService;
     private static UserService defaultUserService;
     private static TeamService defaultTeamService;
+    private static RepositoryService defaultRepositoryService;
+    private final String password;
+    private final String user;
 
-    public static IssueService getIssueService(String user, String password) {
+    public ServiceFactory(String user, String password) {
+        this.user = user;
+        this.password = password;
+    }
+
+    public IssueService getIssueService() {
         if (defaultIssueService != null) {
             return defaultIssueService;
         }
@@ -47,7 +56,7 @@ public class ServiceFactory {
         return new IssueService(client);
     }
 
-    public static WatcherService getWatcherService(String user, String password) {
+    public WatcherService getWatcherService() {
         if (defaultWatcherService != null) {
             return defaultWatcherService;
         }
@@ -56,7 +65,7 @@ public class ServiceFactory {
         return new WatcherService(client);
     }
 
-    public static CommitService getCommitService(String user, String password) {
+    public CommitService getCommitService() {
         if (defaultCommitService != null) {
             return defaultCommitService;
         }
@@ -65,7 +74,7 @@ public class ServiceFactory {
         return new CommitService(client);
     }
 
-    public static CollaboratorService getCollaboratorService(String user, String password) {
+    public CollaboratorService getCollaboratorService() {
         if (defaultCollaboratorService != null) {
             return defaultCollaboratorService;
         }
@@ -74,7 +83,7 @@ public class ServiceFactory {
         return new CollaboratorService(client);
     }
 
-    public static DeployKeyService getDeployKeyService(String user, String password) {
+    public DeployKeyService getDeployKeyService() {
         if (defaultDeployKeyService != null) {
             return defaultDeployKeyService;
         }
@@ -83,7 +92,7 @@ public class ServiceFactory {
         return new DeployKeyService(client);
     }
 
-    public static DownloadService getDownloadService(String user, String password) {
+    public DownloadService getDownloadService() {
         if (defaultDownloadService != null) {
             return defaultDownloadService;
         }
@@ -92,7 +101,7 @@ public class ServiceFactory {
         return new DownloadService(client);
     }
 
-    public static GistService getGistService(String user, String password) {
+    public GistService getGistService() {
         if (defaultGistService != null) {
             return defaultGistService;
         }
@@ -101,7 +110,7 @@ public class ServiceFactory {
         return new GistService(client);
     }
 
-    public static LabelService getLabelService(String user, String password) {
+    public LabelService getLabelService() {
         if (defaultLabelService != null) {
             return defaultLabelService;
         }
@@ -110,7 +119,7 @@ public class ServiceFactory {
         return new LabelService(client);
     }
 
-    public static MilestoneService getMilestoneService(String user, String password) {
+    public MilestoneService getMilestoneService() {
         if (defaultMilestoneService != null) {
             return defaultMilestoneService;
         }
@@ -119,7 +128,7 @@ public class ServiceFactory {
         return new MilestoneService(client);
     }
 
-    public static UserService getUserService(String user, String password) {
+    public UserService getUserService() {
         if (defaultUserService != null) {
             return defaultUserService;
         }
@@ -128,13 +137,22 @@ public class ServiceFactory {
         return new UserService(client);
     }
 
-    public static TeamService getTeamService(String user, String password) {
+    public TeamService getTeamService() {
         if (defaultTeamService != null) {
             return defaultTeamService;
         }
         GitHubClient client = new GitHubClient(BASE_URL);
         client.setCredentials(user, password);
         return new TeamService(client);
+    }
+
+    public RepositoryService getRepositoryService() {
+        if (defaultRepositoryService != null) {
+            return defaultRepositoryService;
+        }
+        GitHubClient client = new GitHubClient(BASE_URL);
+        client.setCredentials(user, password);
+        return new RepositoryService(client);
     }
 
     public static void setDefaultIssueService(IssueService defaultIssueService) {
@@ -179,5 +197,9 @@ public class ServiceFactory {
 
     public static void setDefaultTeamService(TeamService defaultTeamService) {
         ServiceFactory.defaultTeamService = defaultTeamService;
+    }
+
+    public static void setDefaultRepositoryService(RepositoryService defaultRepositoryService) {
+        ServiceFactory.defaultRepositoryService = defaultRepositoryService;
     }
 }

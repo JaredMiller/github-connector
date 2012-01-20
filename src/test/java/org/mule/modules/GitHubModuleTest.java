@@ -13,13 +13,17 @@
  */
 package org.mule.modules;
 
+import org.eclipse.egit.github.core.Contributor;
 import org.eclipse.egit.github.core.Issue;
 import org.eclipse.egit.github.core.Key;
 import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.RepositoryBranch;
 import org.eclipse.egit.github.core.RepositoryId;
+import org.eclipse.egit.github.core.RepositoryTag;
 import org.eclipse.egit.github.core.Team;
 import org.eclipse.egit.github.core.User;
 import org.eclipse.egit.github.core.service.IssueService;
+import org.eclipse.egit.github.core.service.RepositoryService;
 import org.eclipse.egit.github.core.service.TeamService;
 import org.eclipse.egit.github.core.service.UserService;
 import org.junit.Before;
@@ -64,6 +68,8 @@ public class GitHubModuleTest {
     @Mock
     private TeamService teamService;
     @Mock
+    private RepositoryService repositoryService;
+    @Mock
     private Issue issue1;
     @Mock
     private Issue issue2;
@@ -81,6 +87,8 @@ public class GitHubModuleTest {
     private ArgumentCaptor<Key> keyCaptor;
     @Captor
     private ArgumentCaptor<Team> teamCaptor;
+    @Captor
+    private ArgumentCaptor<Repository> repositoryCaptor;
     private Map<String, String> filterData = new HashMap<String, String>(1);
     private GitHubModule gitHubModule;
     @Mock
@@ -94,8 +102,9 @@ public class GitHubModuleTest {
         ServiceFactory.setDefaultIssueService(issueService);
         ServiceFactory.setDefaultUserService(userService);
         ServiceFactory.setDefaultTeamService(teamService);
+        ServiceFactory.setDefaultRepositoryService(repositoryService);
         filterData = new HashMap<String, String>(1);
-        filterData.put("status", "closed");
+        filterData.put("key1", "value1");
         gitHubModule = new GitHubModule();
         gitHubModule.setUser(USER);
     }
@@ -334,6 +343,123 @@ public class GitHubModuleTest {
     public void removeTeamRepository() throws Exception {
         gitHubModule.removeTeamRepository(TEAM_ID, "owner", "name");
         verify(teamService).removeRepository(eq(TEAM_ID), eq(new RepositoryId("owner", "name")));
+    }
+
+    @Test
+    public void getRepositories() throws Exception {
+        List<Repository> repositories = Arrays.asList(repository);
+        when(repositoryService.getRepositories(filterData)).thenReturn(repositories);
+        assertEquals(repositories, gitHubModule.getRepositories(filterData));
+    }
+
+    @Test
+    public void getRepositoriesForUser() throws Exception {
+        List<Repository> repositories = Arrays.asList(repository);
+        when(repositoryService.getRepositories(USER)).thenReturn(repositories);
+        assertEquals(repositories, gitHubModule.getRepositoriesForUser(USER));
+    }
+
+    @Test
+    public void getOrgRepositories() throws Exception {
+        List<Repository> repositories = Arrays.asList(repository);
+        when(repositoryService.getOrgRepositories(ORGANIZATION, filterData)).thenReturn(repositories);
+        assertEquals(repositories, gitHubModule.getOrgRepositories(ORGANIZATION, filterData));
+    }
+
+    @Test
+    public void createRepository() throws Exception {
+        gitHubModule.createRepository("repo name", "repo desc", true, true, true, true);
+        verify(repositoryService).createRepository(repositoryCaptor.capture());
+        Repository repositorySentToGitHub = repositoryCaptor.getValue();
+        assertEquals("repo name", repositorySentToGitHub.getName());
+        assertEquals("repo desc", repositorySentToGitHub.getDescription());
+        assertTrue(repositorySentToGitHub.isPrivate());
+        assertTrue(repositorySentToGitHub.isHasIssues());
+        assertTrue(repositorySentToGitHub.isHasWiki());
+        assertTrue(repositorySentToGitHub.isHasDownloads());
+    }
+
+    @Test
+    public void createRepositoryForOrg() throws Exception {
+        gitHubModule.createRepositoryForOrg(ORGANIZATION, "repo name", "repo desc", true, true, true, true);
+        verify(repositoryService).createRepository(eq(ORGANIZATION), repositoryCaptor.capture());
+        Repository repositorySentToGitHub = repositoryCaptor.getValue();
+        assertEquals("repo name", repositorySentToGitHub.getName());
+        assertEquals("repo desc", repositorySentToGitHub.getDescription());
+        assertTrue(repositorySentToGitHub.isPrivate());
+        assertTrue(repositorySentToGitHub.isHasIssues());
+        assertTrue(repositorySentToGitHub.isHasWiki());
+        assertTrue(repositorySentToGitHub.isHasDownloads());
+    }
+
+    @Test
+    public void getRepository() throws Exception {
+        GitHubModule gitHubModuleSpy = spy(gitHubModule);
+        when(gitHubModuleSpy.getRepository("owner", "repo name")).thenReturn(repository);
+        gitHubModule.editRepository("owner", "repo name", "repo desc", true, true, true, true);
+        verify(repositoryService).editRepository(repository);
+        verify(repository).setDescription("repo desc");
+        verify(repository).setPrivate(true);
+        verify(repository).setHasIssues(true);
+        verify(repository).setHasWiki(true);
+        verify(repository).setHasDownloads(true);
+    }
+
+    @Test
+    public void editRepository() throws Exception {
+        when(repositoryService.getRepository("owner", "name")).thenReturn(repository);
+        assertEquals(repository, gitHubModule.getRepository("owner", "name"));
+    }
+
+    @Test
+    public void getForks() throws Exception {
+        List<Repository> repositories = Arrays.asList(repository);
+        when(repositoryService.getForks(eq(new RepositoryId("owner", "name")))).thenReturn(repositories);
+        assertEquals(repositories, gitHubModule.getForks("owner", "name"));
+    }
+
+    @Test
+    public void forkRepository() throws Exception {
+        when(repositoryService.forkRepository(eq(new RepositoryId("owner", "name")))).thenReturn(repository);
+        assertEquals(repository, gitHubModule.forkRepository("owner", "name"));
+    }
+
+    @Test
+    public void forkRepositoryForOrg() throws Exception {
+        when(repositoryService.forkRepository(eq(new RepositoryId("owner", "name")), eq(ORGANIZATION))).thenReturn(repository);
+        assertEquals(repository, gitHubModule.forkRepositoryForOrg(ORGANIZATION, "owner", "name"));
+    }
+
+    @Test
+    public void getLanguages() throws Exception {
+        Map<String, Long> languages = new HashMap<String, Long>(1);
+        languages.put("C", 7888L);
+        when(repositoryService.getLanguages(eq(new RepositoryId("owner", "name")))).thenReturn(languages);
+        assertEquals(languages, gitHubModule.getLanguages("owner", "name"));
+    }
+
+    @Test
+    public void getBranches() throws Exception {
+        RepositoryBranch repositoryBranch = mock(RepositoryBranch.class);
+        List<RepositoryBranch> repositoryBranches = Arrays.asList(repositoryBranch);
+        when(repositoryService.getBranches(eq(new RepositoryId("owner", "name")))).thenReturn(repositoryBranches);
+        assertEquals(repositoryBranches, gitHubModule.getBranches("owner", "name"));
+    }
+
+    @Test
+    public void getTags() throws Exception {
+        RepositoryTag repositoryTag = mock(RepositoryTag.class);
+        List<RepositoryTag> repositoryTags = Arrays.asList(repositoryTag);
+        when(repositoryService.getTags(eq(new RepositoryId("owner", "name")))).thenReturn(repositoryTags);
+        assertEquals(repositoryTags, gitHubModule.getTags("owner", "name"));
+    }
+
+    @Test
+    public void getContributors() throws Exception {
+        Contributor contributor = mock(Contributor.class);
+        List<Contributor> contributors = Arrays.asList(contributor);
+        when(repositoryService.getContributors(eq(new RepositoryId("owner", "name")), eq(true))).thenReturn(contributors);
+        assertEquals(contributors, gitHubModule.getContributors("owner", "name", true));
     }
 
     private <T> List<T> createList(T... elements) {

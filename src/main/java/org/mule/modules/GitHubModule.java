@@ -15,18 +15,20 @@ package org.mule.modules;
 
 import org.eclipse.egit.github.core.Comment;
 import org.eclipse.egit.github.core.CommitComment;
+import org.eclipse.egit.github.core.Contributor;
 import org.eclipse.egit.github.core.Download;
 import org.eclipse.egit.github.core.DownloadResource;
 import org.eclipse.egit.github.core.Gist;
-import org.eclipse.egit.github.core.GistFile;
 import org.eclipse.egit.github.core.Issue;
 import org.eclipse.egit.github.core.IssueEvent;
 import org.eclipse.egit.github.core.Key;
 import org.eclipse.egit.github.core.Label;
 import org.eclipse.egit.github.core.Milestone;
 import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.RepositoryBranch;
 import org.eclipse.egit.github.core.RepositoryCommit;
 import org.eclipse.egit.github.core.RepositoryId;
+import org.eclipse.egit.github.core.RepositoryTag;
 import org.eclipse.egit.github.core.Team;
 import org.eclipse.egit.github.core.User;
 import org.mule.api.annotations.Configurable;
@@ -40,7 +42,6 @@ import org.mule.api.annotations.param.Optional;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +67,11 @@ public class GitHubModule {
     @Placement(order = 2)
     @Password
     private String password;
+    private ServiceFactory serviceFactory;
+
+    public GitHubModule() {
+        serviceFactory = new ServiceFactory(user, password);
+    }
 
     /**
      * Get a list of {@link Issue} objects that match the specified filter data
@@ -83,7 +89,7 @@ public class GitHubModule {
         if (filterData == null) {
             filterData = Collections.emptyMap();
         }
-        return ServiceFactory.getIssueService(this.user, password).getIssues(getUser(user), repository, filterData);
+        return serviceFactory.getIssueService().getIssues(getUser(user), repository, filterData);
     }
 
     /**
@@ -99,7 +105,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Issue> getIssuesCretedAfter(@Optional String user, String repository, int minutes) throws IOException {
-        List<Issue> issues = ServiceFactory.getIssueService(this.user, password).getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
+        List<Issue> issues = serviceFactory.getIssueService().getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
         Iterator<Issue> iterator = issues.iterator();
         Date since = new Date(System.currentTimeMillis() - minutes * 60 * 1000);
         while (iterator.hasNext()) {
@@ -123,7 +129,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Issue> getIssuesSinceNumber(@Optional String user, String repository, int fromIssueNumber) throws IOException {
-        List<Issue> issues = ServiceFactory.getIssueService(this.user, password).getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
+        List<Issue> issues = serviceFactory.getIssueService().getIssues(getUser(user), repository, Collections.<String, String>emptyMap());
         Iterator<Issue> iterator = issues.iterator();
         while (iterator.hasNext()) {
             if (fromIssueNumber >= iterator.next().getNumber()) {
@@ -155,7 +161,7 @@ public class GitHubModule {
             User assigneeUser = new User().setName(assignee);
             issue.setAssignee(assigneeUser);
         }
-        return ServiceFactory.getIssueService(this.user, password).createIssue(getUser(user), repository, issue);
+        return serviceFactory.getIssueService().createIssue(getUser(user), repository, issue);
     }
 
     /**
@@ -173,7 +179,7 @@ public class GitHubModule {
     public Issue closeIssue(@Optional String user, String repository, String issueId) throws IOException {
         Issue issue = getIssue(getUser(user), repository, issueId);
         issue.setState("closed");
-        return ServiceFactory.getIssueService(this.user, password).editIssue(getUser(user), repository, issue);
+        return serviceFactory.getIssueService().editIssue(getUser(user), repository, issue);
     }
 
     /**
@@ -189,7 +195,7 @@ public class GitHubModule {
      */
     @Processor
     public Issue getIssue(@Optional String user, String repository, String issueId) throws IOException {
-        return ServiceFactory.getIssueService(this.user, password).getIssue(getUser(user), repository, issueId);
+        return serviceFactory.getIssueService().getIssue(getUser(user), repository, issueId);
     }
 
     /**
@@ -205,7 +211,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Comment> getComments(@Optional String user, String repository, String issueId) throws IOException {
-        return ServiceFactory.getIssueService(this.user, password).getComments(getUser(user), repository, issueId);
+        return serviceFactory.getIssueService().getComments(getUser(user), repository, issueId);
     }
 
     /**
@@ -222,7 +228,7 @@ public class GitHubModule {
      */
     @Processor
     public Comment createComment(@Optional String user, String repository, String issueId, String comment) throws IOException {
-        return ServiceFactory.getIssueService(this.user, password).createComment(getUser(user), repository, issueId, comment);
+        return serviceFactory.getIssueService().createComment(getUser(user), repository, issueId, comment);
     }
 
     /**
@@ -239,9 +245,9 @@ public class GitHubModule {
      */
     @Processor
     public Comment editComment(@Optional String user, String repository, Long commentId, String body) throws IOException {
-        Comment comment = ServiceFactory.getIssueService(this.user, password).getComment(getUser(user), repository, commentId);
+        Comment comment = serviceFactory.getIssueService().getComment(getUser(user), repository, commentId);
         comment.setBody(body);
-        return ServiceFactory.getIssueService(this.user, password).editComment(getUser(user), repository, comment);
+        return serviceFactory.getIssueService().editComment(getUser(user), repository, comment);
     }
 
     /**
@@ -256,7 +262,7 @@ public class GitHubModule {
      */
     @Processor
     public void deleteComment(@Optional String user, String repository, String commentId) throws IOException {
-        ServiceFactory.getIssueService(this.user, password).deleteComment(getUser(user), repository, commentId);
+        serviceFactory.getIssueService().deleteComment(getUser(user), repository, commentId);
     }
 
     /**
@@ -272,7 +278,7 @@ public class GitHubModule {
      */
     @Processor
     public IssueEvent getIssueEvent(@Optional String user, String repository, long eventId) throws IOException {
-        return ServiceFactory.getIssueService(this.user, password).getIssueEvent(getUser(user), repository, eventId);
+        return serviceFactory.getIssueService().getIssueEvent(getUser(user), repository, eventId);
     }
 
     /**
@@ -287,7 +293,7 @@ public class GitHubModule {
      */
     @Processor
     public List<User> getWatchers(String owner, String name) throws IOException {
-        return ServiceFactory.getWatcherService(user, password).getWatchers(RepositoryId.create(owner, name));
+        return serviceFactory.getWatcherService().getWatchers(RepositoryId.create(owner, name));
     }
 
     /**
@@ -301,7 +307,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Repository> getWatched(@Optional String user) throws IOException {
-        return ServiceFactory.getWatcherService(user, password).getWatched(getUser(user));
+        return serviceFactory.getWatcherService().getWatched(getUser(user));
     }
 
     /**
@@ -316,7 +322,7 @@ public class GitHubModule {
      */
     @Processor
     public boolean isWatching(String owner, String name) throws IOException {
-        return ServiceFactory.getWatcherService(user, password).isWatching(RepositoryId.create(owner, name));
+        return serviceFactory.getWatcherService().isWatching(RepositoryId.create(owner, name));
     }
 
     /**
@@ -330,7 +336,7 @@ public class GitHubModule {
      */
     @Processor
     public void watch(String owner, String name) throws IOException {
-        ServiceFactory.getWatcherService(user, password).watch(RepositoryId.create(owner, name));
+        serviceFactory.getWatcherService().watch(RepositoryId.create(owner, name));
     }
 
     /**
@@ -344,7 +350,7 @@ public class GitHubModule {
      */
     @Processor
     public void unwatch(String owner, String name) throws IOException {
-        ServiceFactory.getWatcherService(user, password).unwatch(RepositoryId.create(owner, name));
+        serviceFactory.getWatcherService().unwatch(RepositoryId.create(owner, name));
     }
 
     /**
@@ -359,7 +365,7 @@ public class GitHubModule {
      */
     @Processor
     public List<User> getCollaborators(String owner, String name) throws IOException {
-        return ServiceFactory.getCollaboratorService(user, password).getCollaborators(RepositoryId.create(owner, name));
+        return serviceFactory.getCollaboratorService().getCollaborators(RepositoryId.create(owner, name));
     }
 
     /**
@@ -375,7 +381,7 @@ public class GitHubModule {
      */
     @Processor
     public boolean isCollaborator(String owner, String name, @Optional String user) throws IOException {
-        return ServiceFactory.getCollaboratorService(this.user, password).isCollaborator(RepositoryId.create(owner, name), getUser(user));
+        return serviceFactory.getCollaboratorService().isCollaborator(RepositoryId.create(owner, name), getUser(user));
     }
 
     /**
@@ -390,7 +396,7 @@ public class GitHubModule {
      */
     @Processor
     public void addCollaborator(String owner, String name, @Optional String user) throws IOException {
-        ServiceFactory.getCollaboratorService(this.user, password).addCollaborator(RepositoryId.create(owner, name), getUser(user));
+        serviceFactory.getCollaboratorService().addCollaborator(RepositoryId.create(owner, name), getUser(user));
     }
 
     /**
@@ -405,7 +411,7 @@ public class GitHubModule {
      */
     @Processor
     public void removeCollaborator(String owner, String name, @Optional String user) throws IOException {
-        ServiceFactory.getCollaboratorService(this.user, password).removeCollaborator(RepositoryId.create(owner, name), getUser(user));
+        serviceFactory.getCollaboratorService().removeCollaborator(RepositoryId.create(owner, name), getUser(user));
     }
 
     /**
@@ -420,7 +426,7 @@ public class GitHubModule {
      */
     @Processor
     public List<RepositoryCommit> getCommits(String owner, String name) throws IOException {
-        return ServiceFactory.getCommitService(user, password).getCommits(RepositoryId.create(owner, name));
+        return serviceFactory.getCommitService().getCommits(RepositoryId.create(owner, name));
     }
 
     /**
@@ -438,7 +444,7 @@ public class GitHubModule {
      */
     @Processor
     public List<RepositoryCommit> getCommitsBySha(String owner, String name, @Optional String sha, @Optional String path) throws IOException {
-        return ServiceFactory.getCommitService(user, password).getCommits(RepositoryId.create(owner, name), sha, path);
+        return serviceFactory.getCommitService().getCommits(RepositoryId.create(owner, name), sha, path);
     }
 
     /**
@@ -454,7 +460,7 @@ public class GitHubModule {
      */
     @Processor
     public RepositoryCommit getCommit(String owner, String name, String sha) throws IOException {
-        return ServiceFactory.getCommitService(user, password).getCommit(RepositoryId.create(owner, name), sha);
+        return serviceFactory.getCommitService().getCommit(RepositoryId.create(owner, name), sha);
     }
 
     /**
@@ -470,7 +476,7 @@ public class GitHubModule {
      */
     @Processor
     public List<CommitComment> getCommmitComments(String owner, String name, String sha) throws IOException {
-        return ServiceFactory.getCommitService(user, password).getComments(RepositoryId.create(owner, name), sha);
+        return serviceFactory.getCommitService().getComments(RepositoryId.create(owner, name), sha);
     }
 
     /**
@@ -486,7 +492,7 @@ public class GitHubModule {
      */
     @Processor
     public CommitComment getComment(String owner, String name, long commentId) throws IOException {
-        return ServiceFactory.getCommitService(user, password).getComment(RepositoryId.create(owner, name), commentId);
+        return serviceFactory.getCommitService().getComment(RepositoryId.create(owner, name), commentId);
     }
 
     /**
@@ -511,7 +517,7 @@ public class GitHubModule {
         comment.setPosition(position);
         comment.setBody(body);
 
-        ServiceFactory.getCommitService(user, password).addComment(RepositoryId.create(owner, name), commitId, comment);
+        serviceFactory.getCommitService().addComment(RepositoryId.create(owner, name), commitId, comment);
     }
 
     /**
@@ -536,7 +542,7 @@ public class GitHubModule {
         comment.setPosition(position);
         comment.setBody(body);
 
-        ServiceFactory.getCommitService(user, password).editComment(RepositoryId.create(owner, name), comment);
+        serviceFactory.getCommitService().editComment(RepositoryId.create(owner, name), comment);
     }
 
     /**
@@ -551,7 +557,7 @@ public class GitHubModule {
      */
     @Processor
     public void deleteCommitComment(String owner, String name, long commentId) throws IOException {
-        ServiceFactory.getCommitService(user, password).deleteComment(RepositoryId.create(owner, name), commentId);
+        serviceFactory.getCommitService().deleteComment(RepositoryId.create(owner, name), commentId);
     }
 
     /**
@@ -566,7 +572,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Key> getDeployKeys(String owner, String name) throws IOException {
-        return ServiceFactory.getDeployKeyService(user, password).getKeys(RepositoryId.create(owner, name));
+        return serviceFactory.getDeployKeyService().getKeys(RepositoryId.create(owner, name));
     }
 
 
@@ -583,7 +589,7 @@ public class GitHubModule {
      */
     @Processor
     public Key getDeployKey(String owner, String name, int id) throws IOException {
-        return ServiceFactory.getDeployKeyService(user, password).getKey(RepositoryId.create(owner, name), id);
+        return serviceFactory.getDeployKeyService().getKey(RepositoryId.create(owner, name), id);
     }
 
 
@@ -604,7 +610,7 @@ public class GitHubModule {
         Key k = new Key();
         k.setTitle(title);
         k.setKey(key);
-        return ServiceFactory.getDeployKeyService(user, password).createKey(RepositoryId.create(owner, name), k);
+        return serviceFactory.getDeployKeyService().createKey(RepositoryId.create(owner, name), k);
     }
 
     /**
@@ -624,7 +630,7 @@ public class GitHubModule {
         Key k = new Key();
         k.setTitle(title);
         k.setKey(key);
-        return ServiceFactory.getDeployKeyService(user, password).editKey(RepositoryId.create(owner, name), k);
+        return serviceFactory.getDeployKeyService().editKey(RepositoryId.create(owner, name), k);
     }
 
 
@@ -640,7 +646,7 @@ public class GitHubModule {
      */
     @Processor
     public void deleteDeployKey(String owner, String name, int id) throws IOException {
-        ServiceFactory.getDeployKeyService(user, password).deleteKey(RepositoryId.create(owner, name), id);
+        serviceFactory.getDeployKeyService().deleteKey(RepositoryId.create(owner, name), id);
     }
 
     /**
@@ -656,7 +662,7 @@ public class GitHubModule {
      */
     @Processor
     public Download getDownload(String owner, String name, int id) throws IOException {
-        return ServiceFactory.getDownloadService(user, password).getDownload(RepositoryId.create(owner, name), id);
+        return serviceFactory.getDownloadService().getDownload(RepositoryId.create(owner, name), id);
     }
 
     /**
@@ -671,7 +677,7 @@ public class GitHubModule {
      */
     @Processor
     public void deleteDownload(String owner, String name, int id) throws IOException {
-        ServiceFactory.getDownloadService(user, password).deleteDownload(RepositoryId.create(owner, name), id);
+        serviceFactory.getDownloadService().deleteDownload(RepositoryId.create(owner, name), id);
     }
 
     /**
@@ -695,7 +701,7 @@ public class GitHubModule {
         download.setSize(size);
         download.setDescription(description);
         download.setContentType(contentType);
-        return ServiceFactory.getDownloadService(user, password).createResource(RepositoryId.create(owner, name), download);
+        return serviceFactory.getDownloadService().createResource(RepositoryId.create(owner, name), download);
     }
 
     //TODO add upload resource and missing create download methods
@@ -711,7 +717,7 @@ public class GitHubModule {
      */
     @Processor
     public Gist getGist(String id) throws IOException {
-        return ServiceFactory.getGistService(user, password).getGist(id);
+        return serviceFactory.getGistService().getGist(id);
     }
 
     /**
@@ -724,7 +730,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Gist> getStarredGist() throws IOException {
-        return ServiceFactory.getGistService(user, password).getStarredGists();
+        return serviceFactory.getGistService().getStarredGists();
     }
 
     /**
@@ -738,48 +744,8 @@ public class GitHubModule {
      */
     @Processor
     public List<Gist> getGists(@Optional String user) throws IOException {
-        return ServiceFactory.getGistService(this.user, password).getGists(getUser(user));
+        return serviceFactory.getGistService().getGists(getUser(user));
     }
-
-    /**
-     * Creates a new gist
-     * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
-     *
-     * @param description an optional description of the gist
-     * @param isPublic    states whether the gist is public or not
-     * @param files       a Map with the gist files
-     * @return a new gist
-     * @throws IOException
-     */
-    //@Processor
-    //public Gist createGist(@Optional String description, boolean isPublic, Map<String, Map<String, String>> files) throws IOException {
-    //    Gist gist = new Gist();
-    //    gist.setDescription(description);
-    //    gist.setPublic(isPublic);
-    //    gist.setFiles(createGistFiles(files));
-    //    return ServiceFactory.getGistService(user, password).createGist(gist);
-    //}
-
-    /**
-     * Updates the given gist
-     * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
-     *
-     * @param gistId      id of the gist to be updated
-     * @param description an optional description for the gist
-     * @param files       an optional Map of files
-     * @return returns the updated gist
-     * @throws IOException
-     */
-    //@Processor
-    //public Gist updateGist(String gistId, @Optional String description, @Optional Map<String, Map<String, String>> files) throws IOException {
-    //    Gist gist = new Gist();
-    //    gist.setId(gistId);
-    //    gist.setDescription(description);
-    //    gist.setFiles(createGistFiles(files));
-    //    return ServiceFactory.getGistService(user, password).updateGist(gist);
-    //}
 
     /**
      * Creates a comment on the specified gist id
@@ -793,7 +759,7 @@ public class GitHubModule {
      */
     @Processor
     public Comment createGistComment(String gistId, String comment) throws IOException {
-        return ServiceFactory.getGistService(user, password).createComment(gistId, comment);
+        return serviceFactory.getGistService().createComment(gistId, comment);
     }
 
     /**
@@ -807,7 +773,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Comment> getGistComments(String gistId) throws IOException {
-        return ServiceFactory.getGistService(user, password).getComments(gistId);
+        return serviceFactory.getGistService().getComments(gistId);
     }
 
     /**
@@ -820,7 +786,7 @@ public class GitHubModule {
      */
     @Processor
     public void deleteGist(String gistId) throws IOException {
-        ServiceFactory.getGistService(user, password).deleteGist(gistId);
+        serviceFactory.getGistService().deleteGist(gistId);
     }
 
     /**
@@ -834,7 +800,7 @@ public class GitHubModule {
      */
     @Processor
     public Comment getGistComment(long commentId) throws IOException {
-        return ServiceFactory.getGistService(user, password).getComment(commentId);
+        return serviceFactory.getGistService().getComment(commentId);
     }
 
     /**
@@ -847,7 +813,7 @@ public class GitHubModule {
      */
     @Processor
     public void deleteGistComment(long commentId) throws IOException {
-        ServiceFactory.getGistService(user, password).deleteComment(commentId);
+        serviceFactory.getGistService().deleteComment(commentId);
     }
 
     /**
@@ -866,7 +832,7 @@ public class GitHubModule {
         comment.setId(commentId);
         comment.setBody(body);
 
-        return ServiceFactory.getGistService(user, password).editComment(comment);
+        return serviceFactory.getGistService().editComment(comment);
     }
 
     /**
@@ -880,7 +846,7 @@ public class GitHubModule {
      */
     @Processor
     public void starGist(String gistId) throws IOException {
-        ServiceFactory.getGistService(user, password).starGist(gistId);
+        serviceFactory.getGistService().starGist(gistId);
     }
 
     /**
@@ -894,7 +860,7 @@ public class GitHubModule {
      */
     @Processor
     public void unstarGist(String gistId) throws IOException {
-        ServiceFactory.getGistService(user, password).unstarGist(gistId);
+        serviceFactory.getGistService().unstarGist(gistId);
     }
 
     /**
@@ -908,7 +874,7 @@ public class GitHubModule {
      */
     @Processor
     public boolean isStarred(String gistId) throws IOException {
-        return ServiceFactory.getGistService(user, password).isStarred(gistId);
+        return serviceFactory.getGistService().isStarred(gistId);
     }
 
     /**
@@ -922,7 +888,7 @@ public class GitHubModule {
      */
     @Processor
     public Gist forkGist(String gistId) throws IOException {
-        return ServiceFactory.getGistService(user, password).forkGist(gistId);
+        return serviceFactory.getGistService().forkGist(gistId);
     }
 
     /**
@@ -937,7 +903,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Label> getLabels(@Optional String user, String repository) throws IOException {
-        return ServiceFactory.getLabelService(this.user, password).getLabels(getUser(user), repository);
+        return serviceFactory.getLabelService().getLabels(getUser(user), repository);
     }
 
     /**
@@ -953,7 +919,7 @@ public class GitHubModule {
      */
     @Processor
     public Label getLabel(@Optional String user, String repository, String label) throws IOException {
-        return ServiceFactory.getLabelService(this.user, password).getLabel(getUser(user), repository, label);
+        return serviceFactory.getLabelService().getLabel(getUser(user), repository, label);
     }
 
     /**
@@ -968,7 +934,7 @@ public class GitHubModule {
      */
     @Processor
     public void deleteLabel(@Optional String user, String repository, String label) throws IOException {
-        ServiceFactory.getLabelService(this.user, password).deleteLabel(getUser(user), repository, label);
+        serviceFactory.getLabelService().deleteLabel(getUser(user), repository, label);
     }
 
     /**
@@ -989,7 +955,7 @@ public class GitHubModule {
         label.setName(name);
         label.setColor(color);
 
-        return ServiceFactory.getLabelService(this.user, password).createLabel(getUser(user), repository, label);
+        return serviceFactory.getLabelService().createLabel(getUser(user), repository, label);
     }
 
     // TODO add set labels method
@@ -1007,7 +973,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Milestone> getMilestones(@Optional String user, String repository, String state) throws IOException {
-        return ServiceFactory.getMilestoneService(this.user, password).getMilestones(getUser(user), repository, state);
+        return serviceFactory.getMilestoneService().getMilestones(getUser(user), repository, state);
     }
 
 
@@ -1024,7 +990,7 @@ public class GitHubModule {
      */
     @Processor
     public Milestone getMilestone(@Optional String user, String repository, String number) throws IOException {
-        return ServiceFactory.getMilestoneService(this.user, password).getMilestone(getUser(user), repository, number);
+        return serviceFactory.getMilestoneService().getMilestone(getUser(user), repository, number);
     }
 
 
@@ -1040,7 +1006,7 @@ public class GitHubModule {
      */
     @Processor
     public void deleteMilestone(@Optional String user, String repository, String number) throws IOException {
-        ServiceFactory.getMilestoneService(this.user, password).deleteMilestone(getUser(user), repository, number);
+        serviceFactory.getMilestoneService().deleteMilestone(getUser(user), repository, number);
     }
 
     /**
@@ -1066,7 +1032,7 @@ public class GitHubModule {
         milestone.setDueOn(dueOn);
         milestone.setDescription(description);
 
-        return ServiceFactory.getMilestoneService(this.user, password).createMilestone(getUser(user), repository, milestone);
+        return serviceFactory.getMilestoneService().createMilestone(getUser(user), repository, milestone);
     }
 
     /**
@@ -1081,7 +1047,7 @@ public class GitHubModule {
      */
     @Processor
     public User getUserByLoginName(String loginName) throws IOException {
-        return ServiceFactory.getUserService(this.user, password).getUser(loginName);
+        return serviceFactory.getUserService().getUser(loginName);
     }
 
     /**
@@ -1095,7 +1061,7 @@ public class GitHubModule {
      */
     @Processor
     public User getCurrentUser() throws IOException {
-        return ServiceFactory.getUserService(this.user, password).getUser();
+        return serviceFactory.getUserService().getUser();
     }
 
     /**
@@ -1136,7 +1102,7 @@ public class GitHubModule {
         if (hireable != null) {
             currentUser.setHireable(hireable);
         }
-        return ServiceFactory.getUserService(this.user, password).editUser(currentUser);
+        return serviceFactory.getUserService().editUser(currentUser);
     }
 
     /**
@@ -1151,7 +1117,7 @@ public class GitHubModule {
      */
     @Processor
     public List<User> getFollowers(@Optional String user) throws IOException {
-        return ServiceFactory.getUserService(this.user, password).getFollowers(getUser(user));
+        return serviceFactory.getUserService().getFollowers(getUser(user));
     }
 
     /**
@@ -1166,7 +1132,7 @@ public class GitHubModule {
      */
     @Processor
     public List<User> getFollowing(@Optional String user) throws IOException {
-        return ServiceFactory.getUserService(this.user, password).getFollowing(getUser(user));
+        return serviceFactory.getUserService().getFollowing(getUser(user));
     }
 
     /**
@@ -1181,7 +1147,7 @@ public class GitHubModule {
      */
     @Processor
     public boolean isFollowing(String user) throws IOException {
-        return ServiceFactory.getUserService(this.user, password).isFollowing(user);
+        return serviceFactory.getUserService().isFollowing(user);
     }
 
     /**
@@ -1195,7 +1161,7 @@ public class GitHubModule {
      */
     @Processor
     public void follow(String user) throws IOException {
-        ServiceFactory.getUserService(this.user, password).follow(user);
+        serviceFactory.getUserService().follow(user);
     }
 
     /**
@@ -1209,7 +1175,7 @@ public class GitHubModule {
      */
     @Processor
     public void unfollow(String user) throws IOException {
-        ServiceFactory.getUserService(this.user, password).unfollow(user);
+        serviceFactory.getUserService().unfollow(user);
     }
 
     /**
@@ -1223,7 +1189,7 @@ public class GitHubModule {
      */
     @Processor
     public List<String> getEmails() throws IOException {
-        return ServiceFactory.getUserService(this.user, password).getEmails();
+        return serviceFactory.getUserService().getEmails();
     }
 
     /**
@@ -1237,7 +1203,7 @@ public class GitHubModule {
      */
     @Processor
     public void addEmails(List<String> emails) throws IOException {
-        ServiceFactory.getUserService(this.user, password).addEmail(emails.toArray(new String[emails.size()]));
+        serviceFactory.getUserService().addEmail(emails.toArray(new String[emails.size()]));
     }
 
     /**
@@ -1251,7 +1217,7 @@ public class GitHubModule {
      */
     @Processor
     public void removeEmails(List<String> emails) throws IOException {
-        ServiceFactory.getUserService(this.user, password).removeEmail(emails.toArray(new String[emails.size()]));
+        serviceFactory.getUserService().removeEmail(emails.toArray(new String[emails.size()]));
     }
 
     /**
@@ -1265,7 +1231,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Key> getKeys() throws IOException {
-        return ServiceFactory.getUserService(this.user, password).getKeys();
+        return serviceFactory.getUserService().getKeys();
     }
 
     /**
@@ -1280,7 +1246,7 @@ public class GitHubModule {
      */
     @Processor
     public Key getKey(int id) throws IOException {
-        return ServiceFactory.getUserService(this.user, password).getKey(id);
+        return serviceFactory.getUserService().getKey(id);
     }
 
     /**
@@ -1299,7 +1265,7 @@ public class GitHubModule {
         Key newKey = new Key();
         newKey.setTitle(title);
         newKey.setKey(key);
-        return ServiceFactory.getUserService(this.user, password).createKey(newKey);
+        return serviceFactory.getUserService().createKey(newKey);
     }
 
     /**
@@ -1323,7 +1289,7 @@ public class GitHubModule {
         if (key != null) {
             keyToEdit.setKey(key);
         }
-        return ServiceFactory.getUserService(this.user, password).editKey(keyToEdit);
+        return serviceFactory.getUserService().editKey(keyToEdit);
     }
 
     /**
@@ -1337,7 +1303,7 @@ public class GitHubModule {
      */
     @Processor
     public void deleteKey(int id) throws IOException {
-        ServiceFactory.getUserService(this.user, password).deleteKey(id);
+        serviceFactory.getUserService().deleteKey(id);
     }
 
     /**
@@ -1352,7 +1318,7 @@ public class GitHubModule {
      */
     @Processor
     public Team getTeam(int id) throws IOException {
-        return ServiceFactory.getTeamService(this.user, password).getTeam(id);
+        return serviceFactory.getTeamService().getTeam(id);
     }
 
     /**
@@ -1367,7 +1333,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Team> getTeamsForOrg(String organization) throws IOException {
-        return ServiceFactory.getTeamService(this.user, password).getTeams(organization);
+        return serviceFactory.getTeamService().getTeams(organization);
     }
 
     /**
@@ -1390,9 +1356,9 @@ public class GitHubModule {
         team.setName(teamName);
         team.setPermission(teamPermission.toString());
         if (repoNames != null) {
-            return ServiceFactory.getTeamService(this.user, password).createTeam(organization, team, repoNames);
+            return serviceFactory.getTeamService().createTeam(organization, team, repoNames);
         } else {
-            return ServiceFactory.getTeamService(this.user, password).createTeam(organization, team);
+            return serviceFactory.getTeamService().createTeam(organization, team);
         }
     }
 
@@ -1417,7 +1383,7 @@ public class GitHubModule {
         if (teamPermission != null) {
             team.setPermission(teamPermission.toString());
         }
-        return ServiceFactory.getTeamService(this.user, password).editTeam(team);
+        return serviceFactory.getTeamService().editTeam(team);
     }
 
     /**
@@ -1431,7 +1397,7 @@ public class GitHubModule {
      */
     @Processor
     public void deleteTeam(int id) throws IOException {
-        ServiceFactory.getTeamService(this.user, password).deleteTeam(id);
+        serviceFactory.getTeamService().deleteTeam(id);
     }
 
     /**
@@ -1446,7 +1412,7 @@ public class GitHubModule {
      */
     @Processor
     public List<User> getTeamMembers(int id) throws IOException {
-        return ServiceFactory.getTeamService(this.user, password).getMembers(id);
+        return serviceFactory.getTeamService().getMembers(id);
     }
 
     /**
@@ -1462,7 +1428,7 @@ public class GitHubModule {
      */
     @Processor
     public boolean isTeamMember(int id, String user) throws IOException {
-        return ServiceFactory.getTeamService(this.user, password).isMember(id, user);
+        return serviceFactory.getTeamService().isMember(id, user);
     }
 
     /**
@@ -1477,7 +1443,7 @@ public class GitHubModule {
      */
     @Processor
     public void addTeamMember(int id, String user) throws IOException {
-        ServiceFactory.getTeamService(this.user, password).addMember(id, user);
+        serviceFactory.getTeamService().addMember(id, user);
     }
 
     /**
@@ -1492,7 +1458,7 @@ public class GitHubModule {
      */
     @Processor
     public void removeTeamMember(int id, String user) throws IOException {
-        ServiceFactory.getTeamService(this.user, password).removeMember(id, user);
+        serviceFactory.getTeamService().removeMember(id, user);
     }
 
     /**
@@ -1507,7 +1473,7 @@ public class GitHubModule {
      */
     @Processor
     public List<Repository> getTeamRepositories(int id) throws IOException {
-        return ServiceFactory.getTeamService(this.user, password).getRepositories(id);
+        return serviceFactory.getTeamService().getRepositories(id);
     }
 
     /**
@@ -1523,7 +1489,7 @@ public class GitHubModule {
      */
     @Processor
     public void addTeamRepository(int id, String owner, String name) throws IOException {
-        ServiceFactory.getTeamService(this.user, password).addRepository(id, RepositoryId.create(owner, name));
+        serviceFactory.getTeamService().addRepository(id, RepositoryId.create(owner, name));
     }
 
     /**
@@ -1539,32 +1505,282 @@ public class GitHubModule {
      */
     @Processor
     public void removeTeamRepository(int id, String owner, String name) throws IOException {
-        ServiceFactory.getTeamService(this.user, password).removeRepository(id, RepositoryId.create(owner, name));
+        serviceFactory.getTeamService().removeRepository(id, RepositoryId.create(owner, name));
     }
 
-    private Map<String, GistFile> createGistFiles(Map<String, Map<String, String>> files) {
-        Map<String, GistFile> gistFiles = new HashMap<String, GistFile>();
-        for (String fileName : files.keySet()) {
-            Map<String, String> values = files.get(fileName);
-            GistFile gistFile = new GistFile();
-            gistFile.setFilename(fileName);
-            String content = values.get("content");
-            if (content != null) {
-                gistFile.setContent(content);
-            }
-            String size = values.get("size");
-            if (size != null) {
-                gistFile.setSize(Integer.valueOf(size));
-            }
-            String rawUrl = values.get("raw_url");
-            if (rawUrl != null) {
-                gistFile.setRawUrl(rawUrl);
-            }
-            gistFiles.put(fileName, gistFile);
+    /**
+     * Get repositories for the currently authenticated user
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param filterData data to filter repos, if non is specified all repos will be returned
+     * @return list of {@link Repository}
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/repos"></a>
+     */
+    @Processor
+    public List<Repository> getRepositories(@Optional Map<String, String> filterData) throws IOException {
+        return serviceFactory.getRepositoryService().getRepositories(filterData);
+    }
+
+    /**
+     * Get repositories for the given user
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param user the user for which to get the repositories for
+     * @return list of {@link Repository}
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/repos"></a>
+     */
+    @Processor
+    public List<Repository> getRepositoriesForUser(String user) throws IOException {
+        return serviceFactory.getRepositoryService().getRepositories(user);
+    }
+
+    /**
+     * Get organization repositories for the given organization
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param organization the organization for which to get the repositories for
+     * @param filterData   data to filter repos, if non is specified all repos will be returned
+     * @return list of {@link Repository}
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/repos"></a>
+     */
+    @Processor
+    public List<Repository> getOrgRepositories(String organization, @Optional Map<String, String> filterData) throws IOException {
+        return serviceFactory.getRepositoryService().getOrgRepositories(organization, filterData);
+    }
+
+    /**
+     * Create a new repository
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param name         the name of the new repository
+     * @param description  a description for the new repository
+     * @param isPrivate    true to create a private repository, false to create a public one. Creating private repositories requires a paid GitHub account. Default is false.
+     * @param hasIssues    true to enable issues for this repository, false to disable them. Default is true.
+     * @param hasWiki      true to enable the wiki for this repository, false to disable it. Default is true.
+     * @param hasDownloads true to enable downloads for this repository, false to disable them. Default is true.
+     * @return the created {@link Repository}
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/repos">Create</a>
+     */
+    @Processor
+    public Repository createRepository(String name, @Optional String description, @Optional @Default("false") boolean isPrivate,
+                                       @Optional @Default("true") boolean hasIssues, @Optional @Default("true") boolean hasWiki,
+                                       @Optional @Default("true") boolean hasDownloads) throws IOException {
+        Repository repository = new Repository();
+        repository.setName(name);
+        repository.setDescription(description);
+        repository.setPrivate(isPrivate);
+        repository.setHasIssues(hasIssues);
+        repository.setHasWiki(hasWiki);
+        repository.setHasDownloads(hasDownloads);
+        return serviceFactory.getRepositoryService().createRepository(repository);
+    }
+
+    /**
+     * Create a new repository for the given organization
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param organization the organization for the new repository
+     * @param name         the name of the new repository
+     * @param description  a description for the new repository
+     * @param isPrivate    true to create a private repository, false to create a public one. Creating private repositories requires a paid GitHub account. Default is false.
+     * @param hasIssues    true to enable issues for this repository, false to disable them. Default is true.
+     * @param hasWiki      true to enable the wiki for this repository, false to disable it. Default is true.
+     * @param hasDownloads true to enable downloads for this repository, false to disable them. Default is true.
+     * @return the created {@link Repository}
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/repos">Create</a>
+     */
+    @Processor
+    public Repository createRepositoryForOrg(String organization, String name, @Optional String description, @Optional @Default("false") boolean isPrivate,
+                                             @Optional @Default("true") boolean hasIssues, @Optional @Default("true") boolean hasWiki,
+                                             @Optional @Default("true") boolean hasDownloads) throws IOException {
+        Repository repository = new Repository();
+        repository.setName(name);
+        repository.setDescription(description);
+        repository.setPrivate(isPrivate);
+        repository.setHasIssues(hasIssues);
+        repository.setHasWiki(hasWiki);
+        repository.setHasDownloads(hasDownloads);
+        return serviceFactory.getRepositoryService().createRepository(organization, repository);
+    }
+
+    /**
+     * Get repository
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param owner the name of the user that owns the repository
+     * @param name  the name of the repository
+     * @return repository
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/repos"></a>
+     */
+    @Processor
+    public Repository getRepository(String owner, String name) throws IOException {
+        return serviceFactory.getRepositoryService().getRepository(owner, name);
+    }
+
+    /**
+     * Edit given repository. Only provide values for the attributes you need to change.
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param owner        the owner of the repository
+     * @param name         the name of the repository
+     * @param description  a new description for the repository
+     * @param isPrivate    true to turn it into a private repository, false to make it public. Private repositories require a paid GitHub account.
+     * @param hasIssues    true to enable issues for this repository, false to disable them.
+     * @param hasWiki      true to enable the wiki for this repository, false to disable it.
+     * @param hasDownloads true to enable downloads for this repository, false to disable them.
+     * @return the edited {@link Repository}
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/repos"></a>
+     */
+    @Processor
+    public Repository editRepository(String owner, String name, @Optional String description, @Optional Boolean isPrivate,
+                                     @Optional Boolean hasIssues, @Optional Boolean hasWiki, @Optional Boolean hasDownloads) throws IOException {
+        Repository repositoryToEdit = getRepository(owner, name);
+        if (description != null) {
+            repositoryToEdit.setDescription(description);
         }
-        return gistFiles;
+        if (isPrivate != null) {
+            repositoryToEdit.setPrivate(isPrivate);
+        }
+        if (hasIssues != null) {
+            repositoryToEdit.setHasIssues(hasIssues);
+        }
+        if (hasWiki != null) {
+            repositoryToEdit.setHasWiki(hasWiki);
+        }
+        if (hasDownloads != null) {
+            repositoryToEdit.setHasDownloads(hasDownloads);
+        }
+        return serviceFactory.getRepositoryService().editRepository(repositoryToEdit);
     }
 
+    /**
+     * Get all the forks of the given repository
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param owner the owner of the repository
+     * @param name  the name of the repository
+     * @return non-null but possibly empty list of repository
+     * @throws IOException
+     */
+    @Processor
+    public List<Repository> getForks(String owner, String name) throws IOException {
+        return serviceFactory.getRepositoryService().getForks(RepositoryId.create(owner, name));
+    }
+
+    /**
+     * Fork given repository into new repository under the currently
+     * authenticated user.
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param owner the owner of the repository
+     * @param name  the name of the repository
+     * @return forked repository
+     * @throws IOException
+     */
+    @Processor
+    public Repository forkRepository(String owner, String name) throws IOException {
+        return serviceFactory.getRepositoryService().forkRepository(RepositoryId.create(owner, name));
+    }
+
+    /**
+     * Fork given repository into new repository.
+     * <p/>
+     * The new repository will be under the given organization if non-null, else
+     * it will be under the currently authenticated user.
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param organization the organization where the new repository will be
+     * @param owner        the owner of the repository
+     * @param name         the name of the repository
+     * @return forked repository
+     * @throws IOException
+     */
+    @Processor
+    public Repository forkRepositoryForOrg(String organization, String owner, String name) throws IOException {
+        return serviceFactory.getRepositoryService().forkRepository(RepositoryId.create(owner, name), organization);
+    }
+
+    /**
+     * Get languages used in given repository
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param owner the owner of the repository
+     * @param name  the name of the repository
+     * @return map of language names mapped to line counts
+     * @throws IOException\
+     * @api.doc <a href="http://developer.github.com/v3/repos"></a>
+     */
+    @Processor
+    public Map<String, Long> getLanguages(String owner, String name) throws IOException {
+        return serviceFactory.getRepositoryService().getLanguages(RepositoryId.create(owner, name));
+    }
+
+    /**
+     * Get branches in given repository
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param owner the owner of the repository
+     * @param name  the name of the repository
+     * @return list of branches
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/repos"></a>
+     */
+    @Processor
+    public List<RepositoryBranch> getBranches(String owner, String name) throws IOException {
+        return serviceFactory.getRepositoryService().getBranches(RepositoryId.create(owner, name));
+    }
+
+    /**
+     * Get tags in given repository
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param owner the owner of the repository
+     * @param name  the name of the repository
+     * @return list of tags
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/repos"></a>
+     */
+    @Processor
+    public List<RepositoryTag> getTags(String owner, String name) throws IOException {
+        return serviceFactory.getRepositoryService().getTags(RepositoryId.create(owner, name));
+    }
+
+    /**
+     * Get contributors to repository
+     * <p/>
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     *
+     * @param owner            the owner of the repository
+     * @param name             the name of the repository
+     * @param includeAnonymous whether to include anonymus contributors
+     * @return list of contributors
+     * @throws IOException
+     * @api.doc <a href="http://developer.github.com/v3/repos"></a>
+     */
+    @Processor
+    public List<Contributor> getContributors(String owner, String name, @Optional @Default("false") boolean includeAnonymous) throws IOException {
+        return serviceFactory.getRepositoryService().getContributors(RepositoryId.create(owner, name), includeAnonymous);
+    }
 
     public void setuser(String user) {
         this.user = user;
