@@ -76,13 +76,14 @@ public class GitHubModule {
     /**
      * Get a list of {@link Issue} objects that match the specified filter data
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getIssues}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repostory name
      * @param filterData data to filter issues, if non is specified all issues will be returned
      * @return list of {@link Issue}
      * @throws java.io.IOException
+     * @api.doc <a href="http://developer.github.com/v3/issues/">List issues for a repository</a>
      */
     @Processor
     public List<Issue> getIssues(@Optional String user, String repository, @Optional Map<String, String> filterData) throws IOException {
@@ -95,7 +96,7 @@ public class GitHubModule {
     /**
      * Custom processor
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getIssuesCretedAfter}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repository name
@@ -119,7 +120,7 @@ public class GitHubModule {
     /**
      * Custom processor
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getIssuesSinceNumber}
      *
      * @param user            the owner of the repository, leave empty to use {@link this#user}
      * @param repository      the repository name
@@ -142,7 +143,7 @@ public class GitHubModule {
     /**
      * Creates a GitHub issue
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:createIssue}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repository name
@@ -167,7 +168,7 @@ public class GitHubModule {
     /**
      * Closes a GitHub issue
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:closeIssue}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repository name
@@ -185,7 +186,7 @@ public class GitHubModule {
     /**
      * Get the issue represented by the given issueId
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getIssue}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repostory name
@@ -201,7 +202,7 @@ public class GitHubModule {
     /**
      * Get an issue's comments
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getComments}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repostory name
@@ -217,7 +218,7 @@ public class GitHubModule {
     /**
      * Create comment on specified issue id
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:createComment}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repostory name
@@ -234,7 +235,7 @@ public class GitHubModule {
     /**
      * Edits the body of the comment represented by the given comment id
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:editComment}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repostory name
@@ -253,7 +254,7 @@ public class GitHubModule {
     /**
      * Delete the issue comment with the given id
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:deleteComment}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repostory name
@@ -268,7 +269,7 @@ public class GitHubModule {
     /**
      * Get issue event for repository
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getIssueEvent}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the repostory name
@@ -284,11 +285,11 @@ public class GitHubModule {
     /**
      * Get users watching given repository
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getWatchers}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
-     * @return non-null but possibly empty list of users
+     * @return non-null but possibly empty list of {@link User}
      * @throws IOException
      */
     @Processor
@@ -299,10 +300,10 @@ public class GitHubModule {
     /**
      * Get repositories watched by the given user
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getWatched}
      *
      * @param user the user for which the get the watched repositories, leave empty to use {@link this#user}
-     * @return non-null but possibly empty list of repositories
+     * @return non-null but possibly empty list of {@link Repository}
      * @throws IOException
      */
     @Processor
@@ -313,7 +314,7 @@ public class GitHubModule {
     /**
      * Is currently authenticated user watching given repository?
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:isWatching}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
@@ -328,7 +329,7 @@ public class GitHubModule {
     /**
      * Add currently authenticated user as a watcher of the given repository
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:watch}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
@@ -342,7 +343,7 @@ public class GitHubModule {
     /**
      * Remove currently authenticated user as a watcher of the given repository
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:unwatch}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
@@ -356,11 +357,11 @@ public class GitHubModule {
     /**
      * Returns the list of collaborators of the given repository
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getCollaborators}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
-     * @return non-null but possibly empty list of users
+     * @return non-null but possibly empty list of {@link User}
      * @throws IOException
      */
     @Processor
@@ -371,7 +372,7 @@ public class GitHubModule {
     /**
      * Returns whether the user is a collaborator of the given repository
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:isCollaborator}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
@@ -387,7 +388,7 @@ public class GitHubModule {
     /**
      * Adds a collaborator to the given repository
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:addCollaborator}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
@@ -402,7 +403,7 @@ public class GitHubModule {
     /**
      * Removes a collaborator from the given repository
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:removeCollaborator}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
@@ -417,11 +418,11 @@ public class GitHubModule {
     /**
      * Returns a list of the commits for a given repository
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getCommits}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
-     * @return non-null but possibly empty list of repository commits
+     * @return non-null but possibly empty list of {@link RepositoryCommit}
      * @throws IOException
      */
     @Processor
@@ -433,13 +434,13 @@ public class GitHubModule {
      * Returns all commits in given repository beginning at an optional commit SHA-1
      * and affecting an optional path.
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getCommitsBySha}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
      * @param sha   an optional Sha or branch to start listing commits from
      * @param path  optional Only commits containing this file path will be returned
-     * @return non-null but possibly empty list of repository commits
+     * @return non-null but possibly empty list of {@link RepositoryCommit}
      * @throws IOException
      */
     @Processor
@@ -450,12 +451,12 @@ public class GitHubModule {
     /**
      * Returns a commit with given SHA-1 from given repository
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getCommit}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
      * @param sha   Sha from comment
-     * @return a commit for the given Sha and repository
+     * @return a {@link RepositoryCommit} for the given Sha and repository
      * @throws IOException
      */
     @Processor
@@ -466,12 +467,12 @@ public class GitHubModule {
     /**
      * Returns all comments on commit with given Sha
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getCommmitComments}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
      * @param sha   Sha or branch to start listing commits comments from
-     * @return non-null but possibly empty list of commits comments
+     * @return non-null but possibly empty list of {@link CommitComment}
      * @throws IOException
      */
     @Processor
@@ -482,12 +483,12 @@ public class GitHubModule {
     /**
      * Returns a comment from commit with the given id
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getComment}
      *
      * @param owner     the name of the user that owns the repository
      * @param name      the name of the repository
      * @param commentId id from the comment
-     * @return a commit that corresponds to the given id
+     * @return a {@link CommitComment} that corresponds to the given id
      * @throws IOException
      */
     @Processor
@@ -498,7 +499,7 @@ public class GitHubModule {
     /**
      * Creates a commit comment
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:addComment}
      *
      * @param owner    the name of the user that owns the repository
      * @param name     the name of the repository
@@ -523,7 +524,7 @@ public class GitHubModule {
     /**
      * Edits a given comment
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:editCommitComment}
      *
      * @param owner    the name of the user that owns the repository
      * @param name     the name of the repository
@@ -548,7 +549,7 @@ public class GitHubModule {
     /**
      * Deletes the given comment
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:deleteCommitComment}
      *
      * @param owner     the name of the user that owns the repository
      * @param name      the name of the repository
@@ -563,11 +564,11 @@ public class GitHubModule {
     /**
      * Returns all deploys keys associated with the given repository
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getDeployKeys}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
-     * @return non-null but possibly empty list of keys
+     * @return non-null but possibly empty list of {@link Key}
      * @throws IOException
      */
     @Processor
@@ -579,12 +580,12 @@ public class GitHubModule {
     /**
      * Returns the key that corresponds to the given id
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getDeployKey}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
      * @param id    the id of the key
-     * @return the key corresponding to the given id
+     * @return the {@link Key} corresponding to the given id
      * @throws IOException
      */
     @Processor
@@ -596,13 +597,13 @@ public class GitHubModule {
     /**
      * Returns a new deploy key
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:createDeployKey}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
      * @param title the title of the key
      * @param key   ssh key
-     * @return a new Key created based on the given parameters
+     * @return a new {@link Key} created based on the given parameters
      * @throws IOException
      */
     @Processor
@@ -616,13 +617,13 @@ public class GitHubModule {
     /**
      * Edits a given deploy key
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:editDeployKey}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
      * @param title the title of the key
      * @param key   ssh key
-     * @return the modified deploy key
+     * @return the modified {@link Key}
      * @throws IOException
      */
     @Processor
@@ -637,7 +638,7 @@ public class GitHubModule {
     /**
      * Deletes a deploy key given the given id
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:deleteDeployKey}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
@@ -652,7 +653,7 @@ public class GitHubModule {
     /**
      * Returns a single download given the provided id
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getDownload}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
@@ -668,7 +669,7 @@ public class GitHubModule {
     /**
      * Deletes a download given the provided id
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:deleteDownload}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
@@ -683,15 +684,15 @@ public class GitHubModule {
     /**
      * Creates a new download resource
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:createResource}
      *
      * @param owner        the name of the user that owns the repository
      * @param name         the name of the repository
      * @param resourceName the name of the resource
-     * @param size         the size of the resource
+     * @param size         Size of file in bytes.
      * @param description  an optional description
      * @param contentType  an optional content type
-     * @return a new download resource
+     * @return a new {@link DownloadResource} resource
      * @throws IOException
      */
     @Processor
@@ -709,10 +710,10 @@ public class GitHubModule {
     /**
      * Returns the gist according to the given id
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getGist}
      *
      * @param id id of the wanted gist
-     * @return returns the gist according to the provided id
+     * @return returns the {@link Gist} according to the provided id
      * @throws IOException
      */
     @Processor
@@ -723,9 +724,9 @@ public class GitHubModule {
     /**
      * Returns the starred gists for the currently authenticated user
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getStarredGist}
      *
-     * @return list of starred gists for currently authenticated user
+     * @return list of starred {@link Gist} for currently authenticated user
      * @throws IOException
      */
     @Processor
@@ -736,7 +737,7 @@ public class GitHubModule {
     /**
      * Returns a list of gists for the specified user
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getGists}
      *
      * @param user user of the gists, leave empty to use {@link this#user}
      * @return a list of gists for the specified user
@@ -750,11 +751,11 @@ public class GitHubModule {
     /**
      * Creates a comment on the specified gist id
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:createGistComment}
      *
      * @param gistId  id of the gist
      * @param comment comment to create in the gist
-     * @return a new comment for the gist
+     * @return a new {@link Comment} for the gist
      * @throws IOException
      */
     @Processor
@@ -765,7 +766,7 @@ public class GitHubModule {
     /**
      * Returns a list of comments for the given gist
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getGistComments}
      *
      * @param gistId id of the gist
      * @return a list with the comments of the given gist
@@ -779,7 +780,7 @@ public class GitHubModule {
     /**
      * Deletes the given gist
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:deleteGist}
      *
      * @param gistId id of the gist
      * @throws IOException
@@ -792,7 +793,7 @@ public class GitHubModule {
     /**
      * Returns the comment according to the given id
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getGistComment}
      *
      * @param commentId id of the comment to be retrieved
      * @return a comment corresponding to the given id
@@ -806,7 +807,7 @@ public class GitHubModule {
     /**
      * Deletes the given comment
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:deleteGistComment}
      *
      * @param commentId id of the comment
      * @throws IOException
@@ -819,11 +820,11 @@ public class GitHubModule {
     /**
      * Updates the given comment
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:editGistComment}
      *
      * @param commentId id of the comment
      * @param body      new body of the comment
-     * @return returns the updated comment
+     * @return returns the updated {@link Comment}
      * @throws IOException
      */
     @Processor
@@ -837,7 +838,7 @@ public class GitHubModule {
 
     /**
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:starGist}
      * <p/>
      * Star the gist with the given id
      *
@@ -851,7 +852,7 @@ public class GitHubModule {
 
     /**
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:unstarGist}
      * <p/>
      * Unstar the gist with the given id
      *
@@ -866,7 +867,7 @@ public class GitHubModule {
     /**
      * Returns whether the gist is starred or not
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:isStarred}
      *
      * @param gistId id of the gist
      * @return returns true if the gist is starred, false otherwise
@@ -880,7 +881,7 @@ public class GitHubModule {
     /**
      * Forks the given gist
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:forkGist}
      *
      * @param gistId id of the gist to be forked
      * @return returns the forked gist
@@ -894,7 +895,7 @@ public class GitHubModule {
     /**
      * Returns a list of labels for the given repository and user
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getLabels}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
@@ -909,7 +910,7 @@ public class GitHubModule {
     /**
      * Returns a single label
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getLabel}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
@@ -925,7 +926,7 @@ public class GitHubModule {
     /**
      * Deletes the given label
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:deleteLabel}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
@@ -940,13 +941,13 @@ public class GitHubModule {
     /**
      * Creates a new label
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:createLabel}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
      * @param name       the name of the label
      * @param color      the color of the label, a 6 character hex code, without a leading #
-     * @return returns a new Label
+     * @return returns a new {@link Label}
      * @throws IOException
      */
     @Processor
@@ -963,12 +964,12 @@ public class GitHubModule {
     /**
      * Returns a list of milestones for the given repository
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getMilestones}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
      * @param state      state of the milestone, open or closed
-     * @return s list of milestones for the given repository
+     * @return s list of {@link Milestone} for the given repository
      * @throws IOException
      */
     @Processor
@@ -980,7 +981,7 @@ public class GitHubModule {
     /**
      * Returns a single milestone
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getMilestone}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
@@ -997,7 +998,7 @@ public class GitHubModule {
     /**
      * Deletes a given milestone
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:deleteMilestone}
      *
      * @param user       the owner of the repository, leave empty to use {@link this#user}
      * @param repository the name of the repository
@@ -1012,7 +1013,7 @@ public class GitHubModule {
     /**
      * Creates a new milestone
      * </p>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:createMilestone}
      *
      * @param user        the owner of the repository, leave empty to use {@link this#user}
      * @param repository  the name of the repository
@@ -1038,7 +1039,7 @@ public class GitHubModule {
     /**
      * Get user with given login name
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getUserByLoginName}
      *
      * @param loginName the login name of the user to look up
      * @return a {@link User} instance
@@ -1053,7 +1054,7 @@ public class GitHubModule {
     /**
      * Get the currently authenticated user
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getCurrentUser}
      *
      * @return a {@link User} instance representing the current user
      * @throws IOException
@@ -1068,7 +1069,7 @@ public class GitHubModule {
      * Updates the currently authenticated user using the given attributes. Only provide values for the attributes
      * you want to change.
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:updateCurrentUser}
      *
      * @param name     a the name for the current user
      * @param email    a publicly visibile email address for the current user
@@ -1108,7 +1109,7 @@ public class GitHubModule {
     /**
      * Returns a list of followers for given user, if no one is provided the current authenticated user will be used
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getFollowers}
      *
      * @param user the user for which to get the followers, leave empty to use current user
      * @return a collection of {@link User} that follow the current user
@@ -1123,7 +1124,7 @@ public class GitHubModule {
     /**
      * Returns a list users following the given user, if no one is provided the current authenticated user will be used
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getFollowing}
      *
      * @param user the user for which to get who is following, leave empty to use current user
      * @return a collection of {@link User} the user is following
@@ -1138,7 +1139,7 @@ public class GitHubModule {
     /**
      * Returns wether the authenticated user is following the given user
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:isFollowing}
      *
      * @param user the user to check
      * @return wether the authenticated user is following the given user
@@ -1153,7 +1154,7 @@ public class GitHubModule {
     /**
      * Make the currently authenticated user follow the given user
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:follow}
      *
      * @param user the user to follow
      * @throws IOException
@@ -1167,7 +1168,7 @@ public class GitHubModule {
     /**
      * Make the currently authenticated user unfollow the given user
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:unfollow}
      *
      * @param user the user to unfollow
      * @throws IOException
@@ -1181,7 +1182,7 @@ public class GitHubModule {
     /**
      * Get all e-mail addresses for the currently authenticated user
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getEmails}
      *
      * @return list of e-mail address
      * @throws IOException
@@ -1195,7 +1196,7 @@ public class GitHubModule {
     /**
      * Add one or more e-mail addresses to the currently authenticated user's account
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:addEmails}
      *
      * @param emails the email addresses to add
      * @throws IOException
@@ -1209,7 +1210,7 @@ public class GitHubModule {
     /**
      * Removes one or more e-mail addresses to the currently authenticated user's account
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:removeEmails}
      *
      * @param emails the email addresses to add
      * @throws IOException
@@ -1223,7 +1224,7 @@ public class GitHubModule {
     /**
      * Get all public keys for currently authenticated user
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getKeys}
      *
      * @return non-null list of {@link Key}
      * @throws IOException
@@ -1237,7 +1238,7 @@ public class GitHubModule {
     /**
      * Get key with given id
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getKey}
      *
      * @param id the id of the key of obtain
      * @return a {@link Key} instance
@@ -1252,7 +1253,7 @@ public class GitHubModule {
     /**
      * Create key for currently authenticated user
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:createKey}
      *
      * @param title the title of the new key
      * @param key   the new key
@@ -1271,7 +1272,7 @@ public class GitHubModule {
     /**
      * Edit key for currently authenticated user
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:editKey}
      *
      * @param keyId the id of the key to edit
      * @param title a new title for the key
@@ -1295,7 +1296,7 @@ public class GitHubModule {
     /**
      * Delete key with given id
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:deleteKey}
      *
      * @param id the id of the key to delete
      * @throws IOException
@@ -1309,7 +1310,7 @@ public class GitHubModule {
     /**
      * Get team with given id
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getTeam}
      *
      * @param id the id of the team
      * @return a {@link Team} instance
@@ -1324,7 +1325,7 @@ public class GitHubModule {
     /**
      * Get all teams in the given organization
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getTeamsForOrg}
      *
      * @param organization the organization for which te get the teams associated with
      * @return list of {@link Team}
@@ -1339,7 +1340,7 @@ public class GitHubModule {
     /**
      * Create the given team
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:createTeam}
      *
      * @param organization   the organization
      * @param teamName       the team name
@@ -1365,7 +1366,7 @@ public class GitHubModule {
     /**
      * Edit the given team. Only provide values for the attributes you want to update.
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:editTeam}
      *
      * @param id             the id of the team to edit
      * @param name           the new name of the team
@@ -1389,7 +1390,7 @@ public class GitHubModule {
     /**
      * Delete the team with the given id
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:deleteTeam}
      *
      * @param id the id of the team to delete.
      * @throws IOException
@@ -1403,7 +1404,7 @@ public class GitHubModule {
     /**
      * Get members of team with given id
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getTeamMembers}
      *
      * @param id the team id
      * @return team members
@@ -1418,7 +1419,7 @@ public class GitHubModule {
     /**
      * Is the given user a member of the team with the given id
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:isTeamMember}
      *
      * @param id   the team id
      * @param user the user name
@@ -1434,7 +1435,7 @@ public class GitHubModule {
     /**
      * Add given user to team with given id
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:addTeamMember}
      *
      * @param id   the team id
      * @param user the user name
@@ -1449,7 +1450,7 @@ public class GitHubModule {
     /**
      * Remove given user from team with given id
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:removeTeamMember}
      *
      * @param id   the team id
      * @param user the user name
@@ -1464,7 +1465,7 @@ public class GitHubModule {
     /**
      * Get all repositories for given team
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getTeamRepositories}
      *
      * @param id the team id
      * @return non-null list of repositories
@@ -1479,7 +1480,7 @@ public class GitHubModule {
     /**
      * Add repository to team
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:addTeamRepository}
      *
      * @param id    the team id
      * @param owner the owner of the repository
@@ -1495,7 +1496,7 @@ public class GitHubModule {
     /**
      * Remove repository from team
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:removeTeamRepository}
      *
      * @param id    the team id
      * @param owner the owner of the repository
@@ -1511,7 +1512,7 @@ public class GitHubModule {
     /**
      * Get repositories for the currently authenticated user
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getRepositories}
      *
      * @param filterData data to filter repos, if non is specified all repos will be returned
      * @return list of {@link Repository}
@@ -1526,7 +1527,7 @@ public class GitHubModule {
     /**
      * Get repositories for the given user
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getRepositoriesForUser}
      *
      * @param user the user for which to get the repositories for
      * @return list of {@link Repository}
@@ -1541,7 +1542,7 @@ public class GitHubModule {
     /**
      * Get organization repositories for the given organization
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getOrgRepositories}
      *
      * @param organization the organization for which to get the repositories for
      * @param filterData   data to filter repos, if non is specified all repos will be returned
@@ -1557,7 +1558,7 @@ public class GitHubModule {
     /**
      * Create a new repository
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:createRepository}
      *
      * @param name         the name of the new repository
      * @param description  a description for the new repository
@@ -1586,7 +1587,7 @@ public class GitHubModule {
     /**
      * Create a new repository for the given organization
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:createRepositoryForOrg}
      *
      * @param organization the organization for the new repository
      * @param name         the name of the new repository
@@ -1616,7 +1617,7 @@ public class GitHubModule {
     /**
      * Get repository
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getRepository}
      *
      * @param owner the name of the user that owns the repository
      * @param name  the name of the repository
@@ -1632,7 +1633,7 @@ public class GitHubModule {
     /**
      * Edit given repository. Only provide values for the attributes you need to change.
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:editRepository}
      *
      * @param owner        the owner of the repository
      * @param name         the name of the repository
@@ -1670,7 +1671,7 @@ public class GitHubModule {
     /**
      * Get all the forks of the given repository
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getForks}
      *
      * @param owner the owner of the repository
      * @param name  the name of the repository
@@ -1686,7 +1687,7 @@ public class GitHubModule {
      * Fork given repository into new repository under the currently
      * authenticated user.
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:forkRepository}
      *
      * @param owner the owner of the repository
      * @param name  the name of the repository
@@ -1704,7 +1705,7 @@ public class GitHubModule {
      * The new repository will be under the given organization if non-null, else
      * it will be under the currently authenticated user.
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:forkRepositoryForOrg}
      *
      * @param organization the organization where the new repository will be
      * @param owner        the owner of the repository
@@ -1720,7 +1721,7 @@ public class GitHubModule {
     /**
      * Get languages used in given repository
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getLanguages}
      *
      * @param owner the owner of the repository
      * @param name  the name of the repository
@@ -1736,7 +1737,7 @@ public class GitHubModule {
     /**
      * Get branches in given repository
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getBranches}
      *
      * @param owner the owner of the repository
      * @param name  the name of the repository
@@ -1752,7 +1753,7 @@ public class GitHubModule {
     /**
      * Get tags in given repository
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getTags}
      *
      * @param owner the owner of the repository
      * @param name  the name of the repository
@@ -1768,7 +1769,7 @@ public class GitHubModule {
     /**
      * Get contributors to repository
      * <p/>
-     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:my-processor}
+     * {@sample.xml ../../../doc/GitHub-connector.xml.sample github:getContributors}
      *
      * @param owner            the owner of the repository
      * @param name             the name of the repository

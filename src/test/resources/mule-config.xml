@@ -24,13 +24,420 @@
       xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd
         http://www.mulesoft.org/schema/mule/github http://www.mulesoft.org/schema/mule/github/1.0/mule-github.xsd">
 
-    <github:config user="##" password="##"/>
+    <github:config user="mulesoft" password="##"/>
 
-    <!--<flow name="testFlow">-->
-    <!--<github:create-issue user="evangelina" repository="github-connector" title="Test issue" body="Testing issue"/>-->
-    <!--<github:get-issues-creted-after user="evangelina" repository="github-connector" minutes="5"/>-->
-    <!--<logger level="WARN" message="#[payload]"/>-->
-    <!--<null-component/>-->
-    <!--</flow>-->
+    <flow name="getIssues">
+        <github:get-issues repository="mule-devkit">
+            <github:filter-data>
+                <github:filter-datum key="state">closed</github:filter-datum>
+            </github:filter-data>
+        </github:get-issues>
+    </flow>
 
+    <flow name="getIssuesCretedAfter">
+        <github:get-issues-creted-after repository="mule-devkit" minutes="10"/>
+    </flow>
+
+    <flow name="getIssuesSinceNumber">
+        <github:get-issues-since-number repository="mule-devkit" fromIssueNumber="25"/>
+    </flow>
+
+    <flow name="createIssue">
+        <github:create-issue repository="mule-devkit" title="issue title" body="issue body" assignee="federecio"/>
+    </flow>
+
+    <flow name="closeIssue">
+        <github:close-issue repository="mule-devkit" issueId="1"/>
+    </flow>
+
+    <flow name="getIssue">
+        <github:get-issue repository="mule-devkit" issueId="1"/>
+    </flow>
+
+    <flow name="getComments">
+        <github:get-comments repository="mule-devkit" issueId="1"/>
+    </flow>
+
+    <flow name="createComment">
+        <github:create-comment repository="mule-devkit" issueId="1" comment="bla bla"/>
+    </flow>
+
+    <flow name="editComment">
+        <github:edit-comment repository="mule-devkit" commentId="123" body="bla bla"/>
+    </flow>
+
+    <flow name="deleteComment">
+        <github:delete-comment repository="mule-devkit" commentId="123"/>
+    </flow>
+
+    <flow name="getIssueEvent">
+        <github:get-issue-event repository="mule-devkit" eventId="333"/>
+    </flow>
+
+    <flow name="getWatchers">
+        <github:get-watchers owner="mulesoft" name="mule-devkit"/>
+    </flow>
+
+    <flow name="getWatched">
+        <github:get-watched user="federecio"/>
+    </flow>
+
+    <flow name="isWatching">
+        <github:is-watching owner="KentBeck" name="junit"/>
+    </flow>
+
+    <flow name="watch">
+        <github:watch owner="KentBeck" name="junit"/>
+    </flow>
+
+    <flow name="unwatch">
+        <github:unwatch owner="KentBeck" name="junit"/>
+    </flow>
+
+    <flow name="getCollaborators">
+        <github:get-collaborators owner="KentBeck" name="junit"/>
+    </flow>
+
+    <flow name="isCollaborator">
+        <github:is-collaborator owner="mulesoft" name="mule-devkit" user="federecio"/>
+    </flow>
+
+    <flow name="addCollaborator">
+        <github:add-collaborator owner="mulesoft" name="mule-devkit" user="federecio"/>
+    </flow>
+
+    <flow name="removeCollaborator">
+        <github:remove-collaborator owner="mulesoft" name="mule-devkit" user="federecio"/>
+    </flow>
+
+    <flow name="getCommits">
+        <github:get-commits owner="mulesoft" name="mule-devkit"/>
+    </flow>
+
+    <flow name="getCommitsBySha">
+        <github:get-commits-by-sha owner="mulesoft" name="mule-devkit" sha="8f7e98b8191285483e07f50b64a69c9bba341c5b"/>
+    </flow>
+
+    <flow name="getCommit">
+        <github:get-commits-by-sha owner="mulesoft" name="mule-devkit" sha="8f7e98b8191285483e07f50b64a69c9bba341c5b"/>
+    </flow>
+
+    <flow name="getCommmitComments">
+        <github:get-commmit-comments owner="mulesoft" name="mule-devkit"
+                                     sha="8f7e98b8191285483e07f50b64a69c9bba341c5b"/>
+    </flow>
+
+    <flow name="getComment">
+        <github:get-comment owner="mulesoft" name="mule-devkit" commentId="3332"/>
+    </flow>
+
+    <flow name="addComment">
+        <github:add-comment owner="mulesoft" name="mule-devkit" body="commit comment body" commitId="443" line="150"
+                            path="config.properties" position="4"/>
+    </flow>
+
+    <flow name="editCommitComment">
+        <github:edit-commit-comment owner="mulesoft" name="mule-devkit" body="commit comment body" commitId="443"
+                                    line="150" path="config.properties" position="4"/>
+    </flow>
+
+    <flow name="deleteCommitComment">
+        <github:delete-commit-comment owner="mulesoft" name="mule-devkit" commentId="123"/>
+    </flow>
+
+    <flow name="getDeployKeys">
+        <github:get-deploy-keys owner="mulesoft" name="mule-devkit"/>
+    </flow>
+
+    <flow name="getDeployKey">
+        <github:get-deploy-key owner="mulesoft" name="mule-devkit" id="33"/>
+    </flow>
+
+    <flow name="createDeployKey">
+        <github:create-deploy-key owner="mulesoft" name="mule-devkit" title="key title" key="1111"/>
+    </flow>
+
+    <flow name="editDeployKey">
+        <github:edit-deploy-key owner="mulesoft" name="mule-devkit" title="key title" key="1111"/>
+    </flow>
+
+    <flow name="deleteDeployKey">
+        <github:delete-deploy-key owner="mulesoft" name="mule-devkit" id="1"/>
+    </flow>
+
+    <flow name="getDownload">
+        <github:get-download owner="mulesoft" name="mule-devkit" id="1"/>
+    </flow>
+
+    <flow name="deleteDownload">
+        <github:delete-download owner="mulesoft" name="mule-devkit" id="1"/>
+    </flow>
+
+    <flow name="createResource">
+        <github:create-resource owner="mulesoft" name="mule-devkit" resourceName="resource name" size="1000"/>
+    </flow>
+
+    <flow name="getGist">
+        <github:get-gist id="3334"/>
+    </flow>
+
+    <flow name="getStarredGist">
+        <github:get-starred-gist/>
+    </flow>
+
+    <flow name="getGists">
+        <github:get-gists/>
+    </flow>
+
+    <flow name="createGistComment">
+        <github:create-gist-comment gistId="1430386" comment="comment on gist"/>
+    </flow>
+
+    <flow name="getGistComments">
+        <github:get-gist-comments gistId="1430386"/>
+    </flow>
+
+    <flow name="deleteGist">
+        <github:delete-gist gistId="1430386"/>
+    </flow>
+
+    <flow name="getGistComment">
+        <github:get-gist-comment commentId="4455"/>
+    </flow>
+
+    <flow name="deleteGistComment">
+        <github:delete-gist-comment commentId="4455"/>
+    </flow>
+
+    <flow name="editGistComment">
+        <github:edit-gist-comment commentId="4455" body="bla bla"/>
+    </flow>
+
+    <flow name="starGist">
+        <github:star-gist gistId="1430386"/>
+    </flow>
+
+    <flow name="unstarGist">
+        <github:unstar-gist gistId="1430386"/>
+    </flow>
+
+    <flow name="isStarred">
+        <github:is-starred gistId="1430386"/>
+    </flow>
+
+    <flow name="forkGist">
+        <github:fork-gist gistId="1430386"/>
+    </flow>
+
+    <flow name="getLabels">
+        <github:get-labels repository="mule-devkit"/>
+    </flow>
+
+    <flow name="getLabel">
+        <github:get-label repository="mule-devkit" label="some-label"/>
+    </flow>
+
+    <flow name="deleteLabel">
+        <github:delete-label repository="mule-devkit" label="some-label"/>
+    </flow>
+
+    <flow name="createLabel">
+        <github:create-label repository="mule-devkit" name="some-label" color="f29513"/>
+    </flow>
+
+    <flow name="getMilestones">
+        <github:get-milestones repository="mule-devkit" state="open"/>
+    </flow>
+
+    <flow name="getMilestone">
+        <github:get-milestone repository="mule-devkit" number="1"/>
+    </flow>
+
+    <flow name="deleteMilestone">
+        <github:delete-milestone repository="mule-devkit" number="1"/>
+    </flow>
+
+    <flow name="createMilestone">
+        <github:create-milestone repository="mule-devkit" title="1.0" description="Milestone 1.0 description"
+                                 state="open"/>
+    </flow>
+
+    <flow name="getUserByLoginName">
+        <github:get-user-by-login-name loginName="federecio"/>
+    </flow>
+
+    <flow name="getCurrentUser">
+        <github:get-current-user/>
+    </flow>
+
+    <flow name="updateCurrentUser">
+        <github:update-current-user company="MuleSoft" location="Buenos Aires" blog="blogs.mulesoft.org"/>
+    </flow>
+
+    <flow name="getFollowers">
+        <github:get-followers/>
+    </flow>
+
+    <flow name="getFollowing">
+        <github:get-following/>
+    </flow>
+
+    <flow name="isFollowing">
+        <github:is-following user="federecio"/>
+    </flow>
+
+    <flow name="follow">
+        <github:follow user="federecio"/>
+    </flow>
+
+    <flow name="unfollow">
+        <github:unfollow user="federecio"/>
+    </flow>
+
+    <flow name="getEmails">
+        <github:get-emails/>
+    </flow>
+
+    <flow name="addEmails">
+        <github:add-emails>
+            <github:emails>
+                <github:email>email1</github:email>
+                <github:email>email2</github:email>
+            </github:emails>
+        </github:add-emails>
+    </flow>
+
+    <flow name="removeEmails">
+        <github:remove-emails>
+            <github:emails>
+                <github:email>email1</github:email>
+                <github:email>email2</github:email>
+            </github:emails>
+        </github:remove-emails>
+    </flow>
+
+    <flow name="getKeys">
+        <github:get-keys/>
+    </flow>
+
+    <flow name="getKey">
+        <github:get-key id="1"/>
+    </flow>
+
+    <flow name="createKey">
+        <github:create-key title="title" key="key"/>
+    </flow>
+
+    <flow name="editKey">
+        <github:edit-key keyId="1" title="new title" key="new key"/>
+    </flow>
+
+    <flow name="deleteKey">
+        <github:delete-key id="1"/>
+    </flow>
+
+    <flow name="getTeam">
+        <github:get-team id="1"/>
+    </flow>
+
+    <flow name="getTeamsForOrg">
+        <github:get-teams-for-org organization="some org"/>
+    </flow>
+
+    <flow name="createTeam">
+        <github:create-team organization="some org" teamName="some team name" config-ref=""/>
+    </flow>
+
+    <flow name="editTeam">
+        <github:edit-team id="1" name="new name" teamPermission="ADMIN"/>
+    </flow>
+
+    <flow name="deleteTeam">
+        <github:delete-team id="1"/>
+    </flow>
+
+    <flow name="getTeamMembers">
+        <github:get-team-members id="1"/>
+    </flow>
+
+    <flow name="isTeamMember">
+        <github:is-team-member id="1" user="federecio"/>
+    </flow>
+
+    <flow name="addTeamMember">
+        <github:add-team-member id="1" user="federecio"/>
+    </flow>
+
+    <flow name="removeTeamMember">
+        <github:remove-team-member id="1" user="federecio"/>
+    </flow>
+
+    <flow name="getTeamRepositories">
+        <github:get-team-repositories id="1"/>
+    </flow>
+
+    <flow name="addTeamRepository">
+        <github:add-team-repository id="1" owner="mulesoft" name="mule-devkit"/>
+    </flow>
+
+    <flow name="removeTeamRepository">
+        <github:remove-team-repository id="1" owner="mulesoft" name="mule-devkit"/>
+    </flow>
+
+    <flow name="getRepositories">
+        <github:get-repositories/>
+    </flow>
+
+    <flow name="getRepositoriesForUser">
+        <github:get-repositories-for-user user="federecio"/>
+    </flow>
+
+    <flow name="getOrgRepositories">
+        <github:get-org-repositories organization="some org"/>
+    </flow>
+
+    <flow name="createRepository">
+        <github:create-repository name="cool-repo" description="this is a cool repo" hasIssues="true"/>
+    </flow>
+
+    <flow name="createRepositoryForOrg">
+        <github:create-repository-for-org organization="some org" name="cool-repo" description="this is a cool repo"
+                                          hasIssues="true"/>
+    </flow>
+
+    <flow name="getRepository">
+        <github:get-repository owner="mulesoft" name="mule-devkit"/>
+    </flow>
+
+    <flow name="editRepository">
+        <github:edit-repository owner="mulesoft" name="mule-devkit" hasWiki="false"/>
+    </flow>
+
+    <flow name="getForks">
+        <github:get-forks owner="mulesoft" name="mule-devkit"/>
+    </flow>
+
+    <flow name="forkRepository">
+        <github:fork-repository owner="mulesoft" name="mule-devkit"/>
+    </flow>
+
+    <flow name="forkRepositoryForOrg">
+        <github:fork-repository-for-org organization="some org" owner="mulesoft" name="mule-devkit"/>
+    </flow>
+
+    <flow name="getLanguages">
+        <github:get-languages owner="mulesoft" name="mule-devkit"/>
+    </flow>
+
+    <flow name="getBranches">
+        <github:get-branches owner="mulesoft" name="mule-devkit"/>
+    </flow>
+
+    <flow name="getTags">
+        <github:get-tags owner="mulesoft" name="mule-devkit"/>
+    </flow>
+
+    <flow name="getContributors">
+        <github:get-contributors owner="mulesoft" name="mule-devkit"/>
+    </flow>
 </mule>
