@@ -8,7 +8,7 @@
  * LICENSE.txt file.
  */
 
-package org.mule.modules;
+package org.mule.modules.github;
 
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.CollaboratorService;

@@ -8,7 +8,7 @@
  * LICENSE.txt file.
  */
 
-package org.mule.modules.config;
+package org.mule.modules.github.config;
 
 import org.junit.Test;
 import org.mule.tck.junit4.FunctionalTestCase;

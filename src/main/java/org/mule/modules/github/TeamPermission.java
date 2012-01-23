@@ -8,7 +8,7 @@
  * LICENSE.txt file.
  */
 
-package org.mule.modules;
+package org.mule.modules.github;
 
 public enum TeamPermission {
 
