@@ -1,4 +1,6 @@
-org.mule.modules
 org.mule.modules.config
 org.mule.modules.config.spring
+org.mule.modules.github
+org.mule.modules.github.config
+org.mule.modules.github.config.spring
 

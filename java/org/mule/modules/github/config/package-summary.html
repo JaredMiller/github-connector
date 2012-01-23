@@ -1,0 +1,816 @@
+
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <meta name="description" content="Documentation for Mule GitHub Connector." />
+
+<link rel="shortcut icon" type="image/x-icon" href="../../../../../../favicon.ico" />
+<title>
+
+  org.mule.modules.github.config
+
+
+| Mule GitHub Connector
+
+</title>
+<link href="../../../../../../assets/mule-developer-docs.css" rel="stylesheet" type="text/css" />
+<link href="../../../../../../assets/mule-developer-prettify.css" rel="stylesheet" type="text/css" />
+<link href="../../../../../../assets/customizations.css" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:300' rel='stylesheet' type='text/css'>
+<script src="../../../../../../assets/search_autocomplete.js" type="text/javascript"></script>
+<script src="../../../../../../assets/jquery-resizable.min.js" type="text/javascript"></script>
+<script src="../../../../../../assets/mule-developer-docs.js" type="text/javascript"></script>
+<script src="../../../../../../assets/prettify.js" type="text/javascript"></script>
+<script type="text/javascript">
+  setToRoot("../../../../../../", "../../../../../../assets/");
+</script>
+<script src="../../../../../../assets/mule-developer-reference.js" type="text/javascript"></script>
+<script src="../../../../../../assets/navtree_data.js" type="text/javascript"></script>
+<script src="../../../../../../assets/customizations.js" type="text/javascript"></script>
+<noscript>
+  <style type="text/css">
+    html,body{overflow:auto;}
+    #body-content{position:relative; top:0;}
+    #doc-content{overflow:visible;border-left:3px solid #666;}
+    #side-nav{padding:0;}
+    #side-nav .toggle-list ul {display:block;}
+    #resize-packages-nav{border-bottom:3px solid #666;}
+  </style>
+</noscript>
+</head>
+
+<body class="">
+
+<div id="header">
+    <div id="headerLeft">
+    
+      <span id="masthead-title">Mule GitHub Connector</span>
+    
+    <ul id="header-tabs" class="java">
+    
+    	<li id="guide"><a href="../../../../../../guide/install.html">
+	    	<span class="en">Install Guide</span>
+    	</a></li>
+    
+    	<li id="java"><a href="../../../../../../java/packages.html">
+	    	<span class="en">Java API Reference</span>
+    	</a></li>
+    
+    	<li id="mule"><a href="../../../../../../mule/modules.html">
+	    	<span class="en">Mule API Reference</span>
+    	</a></li>
+    
+    </ul>
+    </div>
+    <div id="headerRight">
+      <a href="http://www.mulesoft.com" tabindex="-1">
+      <img src="../../../../../../assets//images/mulesoft-logo-final.gif" alt="MuleSoft" border="0" id="mulesoftlogo"></a><br/>
+      
+  <div id="search" >
+      <div id="searchForm">
+          <form accept-charset="utf-8" class="gsc-search-box" 
+                onsubmit="return submit_search()">
+            <table class="gsc-search-box" cellpadding="0" cellspacing="0"><tbody>
+                <tr>
+                  <td class="gsc-input">
+                    <input id="search_autocomplete" class="gsc-input" type="text" size="33" autocomplete="off"
+                      title="search developer docs" name="q"
+                      value="search developer docs"
+                      onFocus="search_focus_changed(this, true)"
+                      onBlur="search_focus_changed(this, false)"
+                      onkeydown="return search_changed(event, true, '../../../../../../')"
+                      onkeyup="return search_changed(event, false, '../../../../../../')" />
+                  <div id="search_filtered_div" class="no-display">
+                      <table id="search_filtered" cellspacing=0>
+                      </table>
+                  </div>
+                  </td>
+                  <td class="gsc-search-button">
+                    <input type="submit" value="Search" title="search" id="search-button" class="gsc-search-button" />
+                  </td>
+                  <td class="gsc-clear-button">
+                    <div title="clear results" class="gsc-clear-button">&nbsp;</div>
+                  </td>
+                </tr></tbody>
+              </table>
+          </form>
+      </div><!-- searchForm -->
+  </div><!-- search -->
+      
+    </div>
+</div><!-- header -->
+
+
+  <div class="g-section g-tpl-240" id="body-content">
+    <div class="g-unit g-first side-nav-resizable" id="side-nav">
+      <div id="swapper">
+        <div id="nav-panels">
+          <div id="resize-packages-nav">
+            <div id="packages-nav">
+              <div id="index-links">
+                <a href="../../../../../../java/packages.html"  >Package Index</a> |
+                <a href="../../../../../../java/classes.html" >Class Index</a>
+              </div>
+              <ul>
+                
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/config/package-summary.html">org.mule.modules.config</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/config/spring/package-summary.html">org.mule.modules.config.spring</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/github/package-summary.html">org.mule.modules.github</a></li>
+    <li class="selected api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/github/config/package-summary.html">org.mule.modules.github.config</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/github/config/spring/package-summary.html">org.mule.modules.github.config.spring</a></li>
+              </ul><br/>
+            </div> <!-- end packages -->
+          </div> <!-- end resize-packages -->
+          <div id="classes-nav">
+            <ul>
+              
+              
+    <li><h2>Classes</h2>
+      <ul>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/AddCollaboratorMessageProcessor.html">AddCollaboratorMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/AddCommentMessageProcessor.html">AddCommentMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/AddEmailsMessageProcessor.html">AddEmailsMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/AddTeamMemberMessageProcessor.html">AddTeamMemberMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/AddTeamRepositoryMessageProcessor.html">AddTeamRepositoryMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/CloseIssueMessageProcessor.html">CloseIssueMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/CreateCommentMessageProcessor.html">CreateCommentMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/CreateDeployKeyMessageProcessor.html">CreateDeployKeyMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/CreateGistCommentMessageProcessor.html">CreateGistCommentMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/CreateIssueMessageProcessor.html">CreateIssueMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/CreateKeyMessageProcessor.html">CreateKeyMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/CreateLabelMessageProcessor.html">CreateLabelMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/CreateMilestoneMessageProcessor.html">CreateMilestoneMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/CreateRepositoryForOrgMessageProcessor.html">CreateRepositoryForOrgMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/CreateRepositoryMessageProcessor.html">CreateRepositoryMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/CreateResourceMessageProcessor.html">CreateResourceMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/CreateTeamMessageProcessor.html">CreateTeamMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/DeleteCommentMessageProcessor.html">DeleteCommentMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/DeleteCommitCommentMessageProcessor.html">DeleteCommitCommentMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/DeleteDeployKeyMessageProcessor.html">DeleteDeployKeyMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/DeleteDownloadMessageProcessor.html">DeleteDownloadMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/DeleteGistCommentMessageProcessor.html">DeleteGistCommentMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/DeleteGistMessageProcessor.html">DeleteGistMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/DeleteKeyMessageProcessor.html">DeleteKeyMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/DeleteLabelMessageProcessor.html">DeleteLabelMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/DeleteMilestoneMessageProcessor.html">DeleteMilestoneMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/DeleteTeamMessageProcessor.html">DeleteTeamMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/EditCommentMessageProcessor.html">EditCommentMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/EditCommitCommentMessageProcessor.html">EditCommitCommentMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/EditDeployKeyMessageProcessor.html">EditDeployKeyMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/EditGistCommentMessageProcessor.html">EditGistCommentMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/EditKeyMessageProcessor.html">EditKeyMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/EditRepositoryMessageProcessor.html">EditRepositoryMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/EditTeamMessageProcessor.html">EditTeamMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/FollowMessageProcessor.html">FollowMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/ForkGistMessageProcessor.html">ForkGistMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/ForkRepositoryForOrgMessageProcessor.html">ForkRepositoryForOrgMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/ForkRepositoryMessageProcessor.html">ForkRepositoryMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetBranchesMessageProcessor.html">GetBranchesMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetCollaboratorsMessageProcessor.html">GetCollaboratorsMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetCommentMessageProcessor.html">GetCommentMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetCommentsMessageProcessor.html">GetCommentsMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetCommitMessageProcessor.html">GetCommitMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetCommitsByShaMessageProcessor.html">GetCommitsByShaMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetCommitsMessageProcessor.html">GetCommitsMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetCommmitCommentsMessageProcessor.html">GetCommmitCommentsMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetContributorsMessageProcessor.html">GetContributorsMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetCurrentUserMessageProcessor.html">GetCurrentUserMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetDeployKeyMessageProcessor.html">GetDeployKeyMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetDeployKeysMessageProcessor.html">GetDeployKeysMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetDownloadMessageProcessor.html">GetDownloadMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetEmailsMessageProcessor.html">GetEmailsMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetFollowersMessageProcessor.html">GetFollowersMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetFollowingMessageProcessor.html">GetFollowingMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetForksMessageProcessor.html">GetForksMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetGistCommentMessageProcessor.html">GetGistCommentMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetGistCommentsMessageProcessor.html">GetGistCommentsMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetGistMessageProcessor.html">GetGistMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetGistsMessageProcessor.html">GetGistsMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetIssueEventMessageProcessor.html">GetIssueEventMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetIssueMessageProcessor.html">GetIssueMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetIssuesCretedAfterMessageProcessor.html">GetIssuesCretedAfterMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetIssuesMessageProcessor.html">GetIssuesMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetIssuesSinceNumberMessageProcessor.html">GetIssuesSinceNumberMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetKeyMessageProcessor.html">GetKeyMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetKeysMessageProcessor.html">GetKeysMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetLabelMessageProcessor.html">GetLabelMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetLabelsMessageProcessor.html">GetLabelsMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetLanguagesMessageProcessor.html">GetLanguagesMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetMilestoneMessageProcessor.html">GetMilestoneMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetMilestonesMessageProcessor.html">GetMilestonesMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetOrgRepositoriesMessageProcessor.html">GetOrgRepositoriesMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetRepositoriesForUserMessageProcessor.html">GetRepositoriesForUserMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetRepositoriesMessageProcessor.html">GetRepositoriesMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetRepositoryMessageProcessor.html">GetRepositoryMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetStarredGistMessageProcessor.html">GetStarredGistMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetTagsMessageProcessor.html">GetTagsMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetTeamMembersMessageProcessor.html">GetTeamMembersMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetTeamMessageProcessor.html">GetTeamMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetTeamRepositoriesMessageProcessor.html">GetTeamRepositoriesMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetTeamsForOrgMessageProcessor.html">GetTeamsForOrgMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetUserByLoginNameMessageProcessor.html">GetUserByLoginNameMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetWatchedMessageProcessor.html">GetWatchedMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GetWatchersMessageProcessor.html">GetWatchersMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GitHubModuleCapabilitiesAdapter.html">GitHubModuleCapabilitiesAdapter</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/GitHubModuleLifecycleAdapter.html">GitHubModuleLifecycleAdapter</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/IsCollaboratorMessageProcessor.html">IsCollaboratorMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/IsFollowingMessageProcessor.html">IsFollowingMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/IsStarredMessageProcessor.html">IsStarredMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/IsTeamMemberMessageProcessor.html">IsTeamMemberMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/IsWatchingMessageProcessor.html">IsWatchingMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/RemoveCollaboratorMessageProcessor.html">RemoveCollaboratorMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/RemoveEmailsMessageProcessor.html">RemoveEmailsMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/RemoveTeamMemberMessageProcessor.html">RemoveTeamMemberMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/RemoveTeamRepositoryMessageProcessor.html">RemoveTeamRepositoryMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/StarGistMessageProcessor.html">StarGistMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/StringToDateTransformer.html">StringToDateTransformer</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/TeamPermissionEnumTransformer.html">TeamPermissionEnumTransformer</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/UnfollowMessageProcessor.html">UnfollowMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/UnstarGistMessageProcessor.html">UnstarGistMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/UnwatchMessageProcessor.html">UnwatchMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/UpdateCurrentUserMessageProcessor.html">UpdateCurrentUserMessageProcessor</a></li>
+        <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/github/config/WatchMessageProcessor.html">WatchMessageProcessor</a></li>
+      </ul>
+    </li>
+              
+              
+              
+              
+            </ul><br/>
+          </div><!-- end classes -->
+        </div><!-- end nav-panels -->
+        <div id="nav-tree" style="display:none">
+          <div id="index-links">
+            <a href="../../../../../../packages.html"  >Package Index</a> | 
+            <a href="../../../../../../classes.html" >Class Index</a>
+          </div>
+        </div><!-- end nav-tree -->
+      </div><!-- end swapper -->
+    </div> <!-- end side-nav -->
+    <script>
+      if (!isMobile) {
+        $("<a href='#' id='nav-swap' onclick='swapNav();return false;' style='font-size:10px;line-height:9px;margin-left:1em;text-decoration:none;'><span id='tree-link'>Use Tree Navigation</span><span id='panel-link' style='display:none'>Use Panel Navigation</span></a>").appendTo("#side-nav");
+        chooseDefaultNav();
+        if ($("#nav-tree").is(':visible')) {
+          init_default_navtree("../../../../../../");
+        } else {
+          addLoadEvent(function() {
+            scrollIntoView("packages-nav");
+            scrollIntoView("classes-nav");
+          });
+        }
+        $("#swapper").css({borderBottom:"2px solid #aaa"});
+      } else {
+        swapNav(); // tree view should be used on mobile
+      }
+    </script>
+
+
+
+<div class="g-unit" id="doc-content">
+
+<div id="api-info-block">
+<div class="api-level">
+  
+
+
+  
+  
+
+</div>
+</div>
+
+<div id="jd-header">
+  package
+  <h1>org.mule.modules.github.config</h1>
+</div><!-- end header -->
+
+<div id="naMessage"></div>
+
+<div id="jd-content" class="api apilevel-">
+
+
+
+
+
+
+  
+
+
+  
+    <h2>Classes</h2>
+    <div class="jd-sumtable">
+    
+  <table class="jd-sumtable-expando">
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/AddCollaboratorMessageProcessor.html">AddCollaboratorMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">AddCollaboratorMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#addCollaborator(java.lang.String, java.lang.String, java.lang.String)">addCollaborator(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/AddCommentMessageProcessor.html">AddCommentMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">AddCommentMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#addComment(java.lang.String, java.lang.String, java.lang.String, java.lang.String, int, java.lang.String, int)">addComment(java.lang.String, java.lang.String, java.lang.String, java.lang.String, int, java.lang.String, int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/AddEmailsMessageProcessor.html">AddEmailsMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">AddEmailsMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#addEmails(java.util.List<java.lang.String>)">addEmails(java.util.List)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/AddTeamMemberMessageProcessor.html">AddTeamMemberMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">AddTeamMemberMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#addTeamMember(int, java.lang.String)">addTeamMember(int, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/AddTeamRepositoryMessageProcessor.html">AddTeamRepositoryMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">AddTeamRepositoryMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#addTeamRepository(int, java.lang.String, java.lang.String)">addTeamRepository(int, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/CloseIssueMessageProcessor.html">CloseIssueMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">CloseIssueMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#closeIssue(java.lang.String, java.lang.String, java.lang.String)">closeIssue(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/CreateCommentMessageProcessor.html">CreateCommentMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">CreateCommentMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#createComment(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">createComment(java.lang.String, java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/CreateDeployKeyMessageProcessor.html">CreateDeployKeyMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">CreateDeployKeyMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#createDeployKey(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">createDeployKey(java.lang.String, java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/CreateGistCommentMessageProcessor.html">CreateGistCommentMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">CreateGistCommentMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#createGistComment(java.lang.String, java.lang.String)">createGistComment(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/CreateIssueMessageProcessor.html">CreateIssueMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">CreateIssueMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#createIssue(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">createIssue(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/CreateKeyMessageProcessor.html">CreateKeyMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">CreateKeyMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#createKey(java.lang.String, java.lang.String)">createKey(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/CreateLabelMessageProcessor.html">CreateLabelMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">CreateLabelMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#createLabel(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">createLabel(java.lang.String, java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/CreateMilestoneMessageProcessor.html">CreateMilestoneMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">CreateMilestoneMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#createMilestone(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.Date)">createMilestone(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.Date)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/CreateRepositoryForOrgMessageProcessor.html">CreateRepositoryForOrgMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">CreateRepositoryForOrgMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#createRepositoryForOrg(java.lang.String, java.lang.String, java.lang.String, boolean, boolean, boolean, boolean)">createRepositoryForOrg(java.lang.String, java.lang.String, java.lang.String, boolean, boolean, boolean, boolean)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/CreateRepositoryMessageProcessor.html">CreateRepositoryMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">CreateRepositoryMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#createRepository(java.lang.String, java.lang.String, boolean, boolean, boolean, boolean)">createRepository(java.lang.String, java.lang.String, boolean, boolean, boolean, boolean)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/CreateResourceMessageProcessor.html">CreateResourceMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">CreateResourceMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#createResource(java.lang.String, java.lang.String, java.lang.String, long, java.lang.String, java.lang.String)">createResource(java.lang.String, java.lang.String, java.lang.String, long, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/CreateTeamMessageProcessor.html">CreateTeamMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">CreateTeamMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#createTeam(java.lang.String, java.lang.String, org.mule.modules.github.TeamPermission, java.util.List<java.lang.String>)">createTeam(java.lang.String, java.lang.String, org.mule.modules.github.TeamPermission, java.util.List)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/DeleteCommentMessageProcessor.html">DeleteCommentMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">DeleteCommentMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#deleteComment(java.lang.String, java.lang.String, java.lang.String)">deleteComment(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/DeleteCommitCommentMessageProcessor.html">DeleteCommitCommentMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">DeleteCommitCommentMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#deleteCommitComment(java.lang.String, java.lang.String, long)">deleteCommitComment(java.lang.String, java.lang.String, long)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/DeleteDeployKeyMessageProcessor.html">DeleteDeployKeyMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">DeleteDeployKeyMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#deleteDeployKey(java.lang.String, java.lang.String, int)">deleteDeployKey(java.lang.String, java.lang.String, int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/DeleteDownloadMessageProcessor.html">DeleteDownloadMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">DeleteDownloadMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#deleteDownload(java.lang.String, java.lang.String, int)">deleteDownload(java.lang.String, java.lang.String, int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/DeleteGistCommentMessageProcessor.html">DeleteGistCommentMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">DeleteGistCommentMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#deleteGistComment(long)">deleteGistComment(long)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/DeleteGistMessageProcessor.html">DeleteGistMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">DeleteGistMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#deleteGist(java.lang.String)">deleteGist(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/DeleteKeyMessageProcessor.html">DeleteKeyMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">DeleteKeyMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#deleteKey(int)">deleteKey(int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/DeleteLabelMessageProcessor.html">DeleteLabelMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">DeleteLabelMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#deleteLabel(java.lang.String, java.lang.String, java.lang.String)">deleteLabel(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/DeleteMilestoneMessageProcessor.html">DeleteMilestoneMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">DeleteMilestoneMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#deleteMilestone(java.lang.String, java.lang.String, java.lang.String)">deleteMilestone(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/DeleteTeamMessageProcessor.html">DeleteTeamMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">DeleteTeamMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#deleteTeam(int)">deleteTeam(int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/EditCommentMessageProcessor.html">EditCommentMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">EditCommentMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#editComment(java.lang.String, java.lang.String, java.lang.Long, java.lang.String)">editComment(java.lang.String, java.lang.String, java.lang.Long, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/EditCommitCommentMessageProcessor.html">EditCommitCommentMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">EditCommitCommentMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#editCommitComment(java.lang.String, java.lang.String, java.lang.String, java.lang.String, int, java.lang.String, int)">editCommitComment(java.lang.String, java.lang.String, java.lang.String, java.lang.String, int, java.lang.String, int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/EditDeployKeyMessageProcessor.html">EditDeployKeyMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">EditDeployKeyMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#editDeployKey(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">editDeployKey(java.lang.String, java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/EditGistCommentMessageProcessor.html">EditGistCommentMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">EditGistCommentMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#editGistComment(long, java.lang.String)">editGistComment(long, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/EditKeyMessageProcessor.html">EditKeyMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">EditKeyMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#editKey(int, java.lang.String, java.lang.String)">editKey(int, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/EditRepositoryMessageProcessor.html">EditRepositoryMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">EditRepositoryMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#editRepository(java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean)">editRepository(java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/EditTeamMessageProcessor.html">EditTeamMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">EditTeamMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#editTeam(int, java.lang.String, org.mule.modules.github.TeamPermission)">editTeam(int, java.lang.String, org.mule.modules.github.TeamPermission)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/FollowMessageProcessor.html">FollowMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">FollowMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#follow(java.lang.String)">follow(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/ForkGistMessageProcessor.html">ForkGistMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">ForkGistMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#forkGist(java.lang.String)">forkGist(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/ForkRepositoryForOrgMessageProcessor.html">ForkRepositoryForOrgMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">ForkRepositoryForOrgMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#forkRepositoryForOrg(java.lang.String, java.lang.String, java.lang.String)">forkRepositoryForOrg(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/ForkRepositoryMessageProcessor.html">ForkRepositoryMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">ForkRepositoryMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#forkRepository(java.lang.String, java.lang.String)">forkRepository(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetBranchesMessageProcessor.html">GetBranchesMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetBranchesMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getBranches(java.lang.String, java.lang.String)">getBranches(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetCollaboratorsMessageProcessor.html">GetCollaboratorsMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetCollaboratorsMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getCollaborators(java.lang.String, java.lang.String)">getCollaborators(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetCommentMessageProcessor.html">GetCommentMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetCommentMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getComment(java.lang.String, java.lang.String, long)">getComment(java.lang.String, java.lang.String, long)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetCommentsMessageProcessor.html">GetCommentsMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetCommentsMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getComments(java.lang.String, java.lang.String, java.lang.String)">getComments(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetCommitMessageProcessor.html">GetCommitMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetCommitMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getCommit(java.lang.String, java.lang.String, java.lang.String)">getCommit(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetCommitsByShaMessageProcessor.html">GetCommitsByShaMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetCommitsByShaMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getCommitsBySha(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">getCommitsBySha(java.lang.String, java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetCommitsMessageProcessor.html">GetCommitsMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetCommitsMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getCommits(java.lang.String, java.lang.String)">getCommits(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetCommmitCommentsMessageProcessor.html">GetCommmitCommentsMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetCommmitCommentsMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getCommmitComments(java.lang.String, java.lang.String, java.lang.String)">getCommmitComments(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetContributorsMessageProcessor.html">GetContributorsMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetContributorsMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getContributors(java.lang.String, java.lang.String, boolean)">getContributors(java.lang.String, java.lang.String, boolean)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetCurrentUserMessageProcessor.html">GetCurrentUserMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetCurrentUserMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getCurrentUser()">getCurrentUser()</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetDeployKeyMessageProcessor.html">GetDeployKeyMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetDeployKeyMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getDeployKey(java.lang.String, java.lang.String, int)">getDeployKey(java.lang.String, java.lang.String, int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetDeployKeysMessageProcessor.html">GetDeployKeysMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetDeployKeysMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getDeployKeys(java.lang.String, java.lang.String)">getDeployKeys(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetDownloadMessageProcessor.html">GetDownloadMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetDownloadMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getDownload(java.lang.String, java.lang.String, int)">getDownload(java.lang.String, java.lang.String, int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetEmailsMessageProcessor.html">GetEmailsMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetEmailsMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getEmails()">getEmails()</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetFollowersMessageProcessor.html">GetFollowersMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetFollowersMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getFollowers(java.lang.String)">getFollowers(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetFollowingMessageProcessor.html">GetFollowingMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetFollowingMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getFollowing(java.lang.String)">getFollowing(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetForksMessageProcessor.html">GetForksMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetForksMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getForks(java.lang.String, java.lang.String)">getForks(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetGistCommentMessageProcessor.html">GetGistCommentMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetGistCommentMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getGistComment(long)">getGistComment(long)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetGistCommentsMessageProcessor.html">GetGistCommentsMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetGistCommentsMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getGistComments(java.lang.String)">getGistComments(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetGistMessageProcessor.html">GetGistMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetGistMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getGist(java.lang.String)">getGist(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetGistsMessageProcessor.html">GetGistsMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetGistsMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getGists(java.lang.String)">getGists(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetIssueEventMessageProcessor.html">GetIssueEventMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetIssueEventMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getIssueEvent(java.lang.String, java.lang.String, long)">getIssueEvent(java.lang.String, java.lang.String, long)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetIssueMessageProcessor.html">GetIssueMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetIssueMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getIssue(java.lang.String, java.lang.String, java.lang.String)">getIssue(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetIssuesCretedAfterMessageProcessor.html">GetIssuesCretedAfterMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetIssuesCretedAfterMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getIssuesCretedAfter(java.lang.String, java.lang.String, int)">getIssuesCretedAfter(java.lang.String, java.lang.String, int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetIssuesMessageProcessor.html">GetIssuesMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetIssuesMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getIssues(java.lang.String, java.lang.String, java.util.Map<java.lang.String, java.lang.String>)">getIssues(java.lang.String, java.lang.String, java.util.Map)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetIssuesSinceNumberMessageProcessor.html">GetIssuesSinceNumberMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetIssuesSinceNumberMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getIssuesSinceNumber(java.lang.String, java.lang.String, int)">getIssuesSinceNumber(java.lang.String, java.lang.String, int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetKeyMessageProcessor.html">GetKeyMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetKeyMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getKey(int)">getKey(int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetKeysMessageProcessor.html">GetKeysMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetKeysMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getKeys()">getKeys()</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetLabelMessageProcessor.html">GetLabelMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetLabelMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getLabel(java.lang.String, java.lang.String, java.lang.String)">getLabel(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetLabelsMessageProcessor.html">GetLabelsMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetLabelsMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getLabels(java.lang.String, java.lang.String)">getLabels(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetLanguagesMessageProcessor.html">GetLanguagesMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetLanguagesMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getLanguages(java.lang.String, java.lang.String)">getLanguages(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetMilestoneMessageProcessor.html">GetMilestoneMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetMilestoneMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getMilestone(java.lang.String, java.lang.String, java.lang.String)">getMilestone(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetMilestonesMessageProcessor.html">GetMilestonesMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetMilestonesMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getMilestones(java.lang.String, java.lang.String, java.lang.String)">getMilestones(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetOrgRepositoriesMessageProcessor.html">GetOrgRepositoriesMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetOrgRepositoriesMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getOrgRepositories(java.lang.String, java.util.Map<java.lang.String, java.lang.String>)">getOrgRepositories(java.lang.String, java.util.Map)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetRepositoriesForUserMessageProcessor.html">GetRepositoriesForUserMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetRepositoriesForUserMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getRepositoriesForUser(java.lang.String)">getRepositoriesForUser(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetRepositoriesMessageProcessor.html">GetRepositoriesMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetRepositoriesMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getRepositories(java.util.Map<java.lang.String, java.lang.String>)">getRepositories(java.util.Map)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetRepositoryMessageProcessor.html">GetRepositoryMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetRepositoryMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getRepository(java.lang.String, java.lang.String)">getRepository(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetStarredGistMessageProcessor.html">GetStarredGistMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetStarredGistMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getStarredGist()">getStarredGist()</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetTagsMessageProcessor.html">GetTagsMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetTagsMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getTags(java.lang.String, java.lang.String)">getTags(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetTeamMembersMessageProcessor.html">GetTeamMembersMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetTeamMembersMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getTeamMembers(int)">getTeamMembers(int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetTeamMessageProcessor.html">GetTeamMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetTeamMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getTeam(int)">getTeam(int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetTeamRepositoriesMessageProcessor.html">GetTeamRepositoriesMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetTeamRepositoriesMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getTeamRepositories(int)">getTeamRepositories(int)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetTeamsForOrgMessageProcessor.html">GetTeamsForOrgMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetTeamsForOrgMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getTeamsForOrg(java.lang.String)">getTeamsForOrg(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetUserByLoginNameMessageProcessor.html">GetUserByLoginNameMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetUserByLoginNameMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getUserByLoginName(java.lang.String)">getUserByLoginName(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetWatchedMessageProcessor.html">GetWatchedMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetWatchedMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getWatched(java.lang.String)">getWatched(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GetWatchersMessageProcessor.html">GetWatchersMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">GetWatchersMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#getWatchers(java.lang.String, java.lang.String)">getWatchers(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GitHubModuleCapabilitiesAdapter.html">GitHubModuleCapabilitiesAdapter</a></td>
+              <td class="jd-descrcol" width="100%">A <code>GitHubModuleCapabilitiesAdapter</code> is a wrapper around <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code> that implements org.mule.api.Capabilities interface.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/GitHubModuleLifecycleAdapter.html">GitHubModuleLifecycleAdapter</a></td>
+              <td class="jd-descrcol" width="100%">A <code>GitHubModuleLifecycleAdapter</code> is a wrapper around <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code> that adds lifecycle methods to the pojo.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/IsCollaboratorMessageProcessor.html">IsCollaboratorMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">IsCollaboratorMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#isCollaborator(java.lang.String, java.lang.String, java.lang.String)">isCollaborator(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/IsFollowingMessageProcessor.html">IsFollowingMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">IsFollowingMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#isFollowing(java.lang.String)">isFollowing(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/IsStarredMessageProcessor.html">IsStarredMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">IsStarredMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#isStarred(java.lang.String)">isStarred(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/IsTeamMemberMessageProcessor.html">IsTeamMemberMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">IsTeamMemberMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#isTeamMember(int, java.lang.String)">isTeamMember(int, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/IsWatchingMessageProcessor.html">IsWatchingMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">IsWatchingMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#isWatching(java.lang.String, java.lang.String)">isWatching(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/RemoveCollaboratorMessageProcessor.html">RemoveCollaboratorMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">RemoveCollaboratorMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#removeCollaborator(java.lang.String, java.lang.String, java.lang.String)">removeCollaborator(java.lang.String, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/RemoveEmailsMessageProcessor.html">RemoveEmailsMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">RemoveEmailsMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#removeEmails(java.util.List<java.lang.String>)">removeEmails(java.util.List)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/RemoveTeamMemberMessageProcessor.html">RemoveTeamMemberMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">RemoveTeamMemberMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#removeTeamMember(int, java.lang.String)">removeTeamMember(int, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/RemoveTeamRepositoryMessageProcessor.html">RemoveTeamRepositoryMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">RemoveTeamRepositoryMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#removeTeamRepository(int, java.lang.String, java.lang.String)">removeTeamRepository(int, java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/StarGistMessageProcessor.html">StarGistMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">StarGistMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#starGist(java.lang.String)">starGist(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/StringToDateTransformer.html">StringToDateTransformer</a></td>
+              <td class="jd-descrcol" width="100%">&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/TeamPermissionEnumTransformer.html">TeamPermissionEnumTransformer</a></td>
+              <td class="jd-descrcol" width="100%">&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/UnfollowMessageProcessor.html">UnfollowMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">UnfollowMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#unfollow(java.lang.String)">unfollow(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/UnstarGistMessageProcessor.html">UnstarGistMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">UnstarGistMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#unstarGist(java.lang.String)">unstarGist(java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/UnwatchMessageProcessor.html">UnwatchMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">UnwatchMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#unwatch(java.lang.String, java.lang.String)">unwatch(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class=" api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/UpdateCurrentUserMessageProcessor.html">UpdateCurrentUserMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">UpdateCurrentUserMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#updateCurrentUser(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean)">updateCurrentUser(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/github/config/WatchMessageProcessor.html">WatchMessageProcessor</a></td>
+              <td class="jd-descrcol" width="100%">WatchMessageProcessor invokes the <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html#watch(java.lang.String, java.lang.String)">watch(java.lang.String, java.lang.String)</a></code> method in <code><a href="../../../../../../java/org/mule/modules/github/GitHubModule.html">GitHubModule</a></code>.&nbsp;</td>
+          </tr>
+  </table>
+    </div>
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+<div id="footer">
+Generated by <a href="http://www.mulesoft.com/devkit">Mule DevKit</a>. Document generation technology based on <a href="http://code.google.com/p/doclava/">Google's Doclava</a>.
+</div> <!-- end footer -->
+
+</div><!-- end jd-content -->
+</div><!-- doc-content -->
+
+</div> <!-- end body-content --> 
+
+<script type="text/javascript">
+init(); /* initialize mule-developer-docs.js */
+</script>
+
+</body>
+</html>
